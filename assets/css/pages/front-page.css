@@ -1749,3 +1749,18 @@
           outline-offset: 3px;
         }
       
+/* ===== 共通ヘッダー(白背景) ===== */
+.keikyo-interview-header { background: #ffffff !important; border-bottom: 1px solid rgba(0,0,0,0.08) !important; }
+.keikyo-interview-header__inner { display: flex !important; align-items: center !important; justify-content: space-between !important; }
+.keikyo-interview-header__inner::before, .keikyo-interview-header__inner::after { display: none !important; content: none !important; }
+.keikyo-interview-header__brand-text { color: #0f1a33 !important; }
+.keikyo-interview-header__nav-link { color: #0f1a33 !important; }
+.keikyo-interview-header__nav-link:hover { color: #b11f2a !important; }
+.keikyo-interview-header__actions { display: flex !important; align-items: center !important; }
+.keikyo-interview-header__cta-group { display: flex !important; align-items: center !important; gap: 10px; }
+.keikyo-interview-header__cta { display: inline-flex !important; align-items: center !important; justify-content: center !important; height: 38px !important; padding: 0 18px !important; line-height: 1 !important; border-radius: 3px !important; }
+.keikyo-interview-header__cta--secondary { background: transparent !important; border: 1.5px solid #0f1a33 !important; color: #0f1a33 !important; }
+.keikyo-interview-header__cta--secondary:hover { background: #0f1a33 !important; color: #fff !important; }
+.keikyo-interview-header__cta--primary { background: #b11f2a !important; border: none !important; color: #fff !important; }
+.keikyo-interview-header__cta--primary:hover { background: #8e1822 !important; }
+.keikyo-interview-header__menu-toggle { display: none !important; }
