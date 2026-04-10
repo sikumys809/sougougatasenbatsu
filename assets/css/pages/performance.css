@@ -1,0 +1,219 @@
+/* ============================================================
+   performance.css — 合格実績ページ専用スタイル
+   ============================================================ */
+
+/* ----------------------------------------
+   SECTION 01: HERO
+   ---------------------------------------- */
+.perf-hero {
+  background: var(--navy);
+  min-height: 75vh;
+  padding: 100px 0 80px;
+}
+.perf-hero__inner {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 64px;
+  align-items: center;
+}
+@media (max-width: 1023px) {
+  .perf-hero__inner { grid-template-columns: 1fr; gap: 48px; }
+}
+@media (max-width: 767px) {
+  .perf-hero { padding: 60px 0; min-height: auto; }
+}
+.perf-hero__h1 {
+  font-family: var(--font-en);
+  font-size: clamp(44px, 6vw, 72px);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.1;
+  margin: 16px 0 20px;
+}
+.perf-hero__h1 span { color: #e07070; }
+.perf-hero__lead { font-size: 18px; font-weight: 500; color: var(--white); margin-bottom: 8px; }
+.perf-hero__sub { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 32px; }
+.perf-hero__cta { display: flex; gap: 16px; flex-wrap: wrap; }
+.perf-hero__cards { display: flex; flex-direction: column; gap: 20px; }
+.perf-hero__card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 32px;
+  position: relative;
+}
+.perf-hero__card::before {
+  content: '';
+  position: absolute;
+  top: 16px; left: 16px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+.perf-hero__card--red::before { background: var(--red); }
+.perf-hero__card--navy::before { background: rgba(255,255,255,0.3); }
+.perf-hero__card-value {
+  font-family: var(--font-en);
+  font-size: 64px;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1;
+}
+@media (max-width: 767px) { .perf-hero__card-value { font-size: 48px; } }
+.perf-hero__card-label { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 8px; }
+.perf-hero__card-note { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 4px; }
+
+/* ----------------------------------------
+   SECTION 02: NUMBERS
+   ---------------------------------------- */
+.numbers { background: var(--cream); padding: 100px 0; }
+@media (max-width: 767px) { .numbers { padding: 60px 0; } }
+.numbers__h2 {
+  font-family: var(--font-jp);
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 700;
+  color: var(--navy);
+  text-align: center;
+  margin-bottom: 48px;
+}
+.numbers__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 767px) { .numbers__grid { grid-template-columns: repeat(2, 1fr); } }
+.numbers__card { background: var(--white); border-radius: 4px; padding: 28px 24px; text-align: center; }
+.numbers__card--red { border-top: 3px solid var(--red); }
+.numbers__card--navy { border-top: 3px solid var(--navy); }
+.numbers__card-value {
+  font-family: var(--font-en);
+  font-size: 52px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1;
+}
+@media (max-width: 767px) { .numbers__card-value { font-size: 36px; } }
+.numbers__card-label { font-size: 13px; font-weight: 600; color: var(--navy); margin-top: 8px; }
+.numbers__note { font-size: 11px; color: rgba(0,0,0,0.35); text-align: center; margin-top: 20px; }
+
+/* ----------------------------------------
+   SECTION 03: UNIVERSITIES
+   ---------------------------------------- */
+.universities { background: var(--white); padding: 100px 0; }
+@media (max-width: 767px) { .universities { padding: 60px 0; } }
+.universities__h2 {
+  font-family: var(--font-jp);
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 700;
+  color: var(--navy);
+  text-align: center;
+  margin-bottom: 48px;
+}
+.uni-group { margin-bottom: 0; }
+.uni-group__header { padding: 14px 24px; display: flex; align-items: center; gap: 12px; }
+.uni-group__header--dark { background: var(--navy); }
+.uni-group__header--light { background: var(--cream); }
+.uni-group__title { font-family: var(--font-en); font-size: 20px; font-weight: 600; }
+.uni-group__header--dark .uni-group__title { color: var(--white); }
+.uni-group__header--light .uni-group__title { color: var(--navy); }
+.uni-group__badge { background: var(--red); color: var(--white); font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 2px; }
+.uni-group__list { display: grid; grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 767px) { .uni-group__list { grid-template-columns: 1fr; } }
+.uni-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  gap: 16px;
+}
+@media (max-width: 767px) { .uni-item { flex-direction: column; align-items: flex-start; gap: 4px; } }
+.uni-item__left { display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap; }
+.uni-item__name { font-size: 14px; font-weight: 600; color: var(--navy); }
+.uni-item__dept { font-size: 13px; color: rgba(0,0,0,0.55); }
+.uni-item__rate { font-size: 11px; font-weight: 500; color: var(--red); white-space: nowrap; }
+
+/* ----------------------------------------
+   SECTION 04: STORIES
+   ---------------------------------------- */
+.perf-stories { background: var(--sand); padding: 100px 0; }
+@media (max-width: 767px) { .perf-stories { padding: 60px 0; } }
+.perf-stories__header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; flex-wrap: wrap; gap: 24px; }
+.perf-stories__h2 { font-family: var(--font-jp); font-size: clamp(24px, 3vw, 32px); font-weight: 700; color: var(--navy); margin: 12px 0 8px; }
+.perf-stories__sub { font-size: 14px; color: rgba(0,0,0,0.6); max-width: 500px; }
+.perf-stories__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+@media (max-width: 1023px) { .perf-stories__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 767px) { .perf-stories__grid { grid-template-columns: 1fr; } }
+
+/* story-cardはabout.cssと共通のため省略（base.cssに移行予定） */
+.story-card { background: var(--white); border-radius: 4px; overflow: hidden; transition: transform 0.3s; }
+.story-card:hover { transform: translateY(-4px); }
+.story-card__link { display: block; text-decoration: none; color: inherit; }
+.story-card__image { position: relative; aspect-ratio: 3/4; background: #e0dbd2; overflow: hidden; display: flex; align-items: center; justify-content: center; color: rgba(0,0,0,0.2); font-size: 12px; }
+.story-card__image img { width: 100%; height: 100%; object-fit: cover; }
+.story-card__image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.story-card__badge { position: absolute; top: 12px; left: 12px; background: var(--red); color: var(--white); font-size: 10px; font-weight: 600; padding: 4px 10px; border-radius: 2px; }
+.story-card__origin { position: absolute; top: 12px; right: 12px; background: rgba(26,26,46,0.85); color: rgba(255,255,255,0.85); font-size: 10px; padding: 4px 8px; border-radius: 2px; }
+.story-card__profile { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.7)); padding: 48px 16px 16px; color: var(--white); }
+.story-card__name { font-size: 15px; font-weight: 600; }
+.story-card__school { font-size: 12px; opacity: 0.8; }
+
+/* ----------------------------------------
+   SECTION 05: WHY RESULTS
+   ---------------------------------------- */
+.why-results { background: var(--navy); padding: 100px 0; }
+@media (max-width: 767px) { .why-results { padding: 60px 0; } }
+.why-results__header { text-align: center; max-width: 640px; margin: 0 auto 56px; }
+.why-results__h2 { font-family: var(--font-jp); font-size: clamp(24px, 3vw, 32px); font-weight: 700; color: var(--white); margin: 12px 0 16px; }
+.why-results__sub { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.8; }
+.why-results__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+@media (max-width: 1023px) { .why-results__grid { grid-template-columns: 1fr; gap: 20px; } }
+.why-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-top: 3px solid var(--red); border-radius: 6px; padding: 36px 28px; }
+.why-card__num { font-family: var(--font-en); font-size: 48px; font-weight: 700; color: rgba(255,255,255,0.1); display: block; margin-bottom: 16px; }
+.why-card__title { font-size: 17px; font-weight: 600; color: var(--white); margin-bottom: 10px; }
+.why-card__text { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.75; }
+
+/* ----------------------------------------
+   SECTION 06: DIAGNOSIS
+   ---------------------------------------- */
+.perf-diagnosis { background: var(--cream); padding: 80px 0; }
+.perf-diagnosis__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+@media (max-width: 1023px) { .perf-diagnosis__inner { grid-template-columns: 1fr; gap: 40px; } }
+.perf-diagnosis__h2 { font-family: var(--font-jp); font-size: clamp(24px, 3vw, 32px); font-weight: 700; color: var(--navy); margin: 12px 0 16px; }
+.perf-diagnosis__sub { font-size: 15px; color: rgba(0,0,0,0.6); line-height: 1.8; margin-bottom: 24px; }
+.perf-diagnosis__chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.perf-diagnosis__chip { background: rgba(192,57,43,0.1); color: var(--red); border: 1px solid rgba(192,57,43,0.2); font-size: 12px; font-weight: 500; padding: 6px 12px; border-radius: 2px; }
+
+/* ----------------------------------------
+   LINE SECTION
+   ---------------------------------------- */
+.perf-line { background: linear-gradient(90deg, var(--navy) 50%, #06C755 50%); padding: 80px 0; }
+@media (max-width: 767px) { .perf-line { background: var(--navy); padding: 60px 0; } }
+.perf-line__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+@media (max-width: 1023px) { .perf-line__inner { grid-template-columns: 1fr; gap: 40px; } }
+.perf-line__h2 { font-family: var(--font-jp); font-size: clamp(22px, 3vw, 30px); font-weight: 700; color: var(--white); margin: 12px 0 16px; line-height: 1.4; }
+.perf-line__text { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.8; }
+.perf-line__panel { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 32px; }
+.perf-line__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 24px; }
+.perf-line__card { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; padding: 14px; position: relative; }
+.perf-line__num { font-family: var(--font-en); font-size: 22px; font-weight: 700; color: rgba(255,255,255,0.2); position: absolute; top: 8px; right: 10px; line-height: 1; }
+.perf-line__title { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9); line-height: 1.4; }
+.perf-line__panel .btn--line { width: 100%; display: flex; }
+.perf-line__note { font-size: 11px; color: rgba(255,255,255,0.5); text-align: center; margin-top: 12px; }
+
+/* ----------------------------------------
+   SECTION 07: FINAL CTA
+   ---------------------------------------- */
+.perf-final-cta { background: var(--cream); padding: 100px 0; }
+@media (max-width: 767px) { .perf-final-cta { padding: 60px 0; } }
+.perf-final-cta__card { background: var(--navy); border-radius: 8px; padding: clamp(40px, 6vw, 72px); }
+.perf-final-cta__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+@media (max-width: 1023px) { .perf-final-cta__inner { grid-template-columns: 1fr; gap: 32px; } }
+.perf-final-cta__h2 { font-family: var(--font-jp); font-size: clamp(24px, 3vw, 32px); font-weight: 700; color: var(--white); margin: 12px 0 16px; }
+.perf-final-cta__sub { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.8; }
+.perf-final-cta__buttons { display: flex; flex-direction: column; gap: 12px; }
+.perf-final-cta__buttons .btn { width: 100%; display: flex; }
+
+/* ヘッダー上書き（白背景） */
+.keikyo-interview-header { background: #ffffff !important; border-bottom: 1px solid rgba(0,0,0,0.08) !important; }
+.keikyo-interview-header__brand-text { color: #0f1a33 !important; }
+.keikyo-interview-header__nav-link { color: #0f1a33 !important; }
+.keikyo-interview-header__nav-link:hover { color: #b11f2a !important; }
+.keikyo-interview-header__cta--secondary { background: transparent !important; border: 1.5px solid #0f1a33 !important; color: #0f1a33 !important; }
+.keikyo-interview-header__cta--secondary:hover { background: #0f1a33 !important; color: #fff !important; }
+.keikyo-interview-header__cta--primary { background: #b11f2a !important; border: none !important; color: #fff !important; }

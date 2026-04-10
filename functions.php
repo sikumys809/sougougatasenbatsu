@@ -65,6 +65,7 @@ add_action( 'wp_enqueue_scripts', function() {
         'front-page'           => 'pages/front-page.css',
         'page-about'           => 'pages/about.css',
         'page-keikyo-about'    => 'pages/about.css',
+        'page-performance'     => 'pages/performance.css',
         'page-lp'              => 'pages/page-lp.css',
         'single-interview'     => 'pages/single-interview.css',
         'single'               => 'pages/single.css',
