@@ -1,0 +1,68 @@
+/* ============================================================
+   navi.css — 総合型選抜合格ナビ一覧
+   ============================================================ */
+
+.navi-hero { background: var(--navy); padding: 100px 0 80px; }
+.navi-hero__inner { text-align: center; }
+.navi-hero__h1 { font-family: var(--font-jp); font-size: clamp(32px,5vw,48px); font-weight: 700; color: var(--white); margin: 16px 0; letter-spacing: 0.05em; }
+.navi-hero__sub { font-size: 15px; color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto; line-height: 1.8; }
+
+.tag-filter { background: var(--cream); padding: 24px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+.tag-filter__tabs { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.tag-tab { font-size: 13px; padding: 10px 20px; background: transparent; border: 1px solid rgba(0,0,0,0.12); border-radius: 4px; color: var(--navy); cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
+.tag-tab:hover { background: rgba(0,0,0,0.04); }
+.tag-tab--active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+.article-grid-section { background: var(--cream); padding: 64px 0; }
+.article-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; margin-bottom: 48px; }
+@media (max-width: 1023px) { .article-grid { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 767px) { .article-grid { grid-template-columns: 1fr; } }
+
+.article-card { background: var(--white); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); transition: transform 0.3s, box-shadow 0.3s; }
+.article-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+.article-card__image { aspect-ratio: 16/9; background: var(--sand); overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 12px; color: rgba(0,0,0,0.3); letter-spacing: 0.1em; }
+.article-card__image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.article-card__body { padding: 20px; }
+.article-card__meta { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.article-card__category { font-size: 11px; padding: 4px 10px; background: var(--red); color: var(--white); border-radius: 2px; font-weight: 600; }
+.article-card__date { font-size: 12px; color: rgba(0,0,0,0.5); }
+.article-card__title { font-size: 16px; font-weight: 600; line-height: 1.5; margin-bottom: 8px; }
+.article-card__title a { color: var(--navy); text-decoration: none; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.article-card__title a:hover { color: var(--red); }
+.article-card__excerpt { font-size: 13px; line-height: 1.7; color: rgba(0,0,0,0.6); margin-bottom: 16px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.article-card__link { font-size: 13px; color: var(--red); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+.article-card__link:hover { text-decoration: underline; }
+
+.banner-section { margin-bottom: 48px; }
+.banner-placeholder { width: 100%; height: 120px; background: var(--sand); border: 1px dashed rgba(0,0,0,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: rgba(0,0,0,0.4); letter-spacing: 0.1em; }
+
+/* Pagination */
+.pagination-wrap { margin-bottom: 80px; display: flex; justify-content: center; }
+.pagination-wrap .page-numbers { display: flex; gap: 8px; list-style: none; padding: 0; margin: 0; flex-wrap: wrap; justify-content: center; }
+.pagination-wrap .page-numbers li a,
+.pagination-wrap .page-numbers li span { font-size: 13px; padding: 10px 16px; background: var(--white); border: 1px solid rgba(0,0,0,0.12); border-radius: 4px; color: var(--navy); text-decoration: none; transition: all 0.2s; display: block; }
+.pagination-wrap .page-numbers li a:hover { background: var(--sand); }
+.pagination-wrap .page-numbers li span.current { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+.no-posts { text-align: center; padding: 80px 0; color: rgba(0,0,0,0.4); font-size: 15px; }
+
+.navi-cta { background: var(--navy); padding: 80px 0; text-align: center; }
+.navi-cta__text { font-size: 18px; color: rgba(255,255,255,0.8); margin-bottom: 32px; }
+.navi-cta__buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+/* ヘッダー/フッター上書き */
+.keikyo-interview-header { background: #ffffff !important; border-bottom: 1px solid rgba(0,0,0,0.08) !important; }
+.keikyo-interview-header__inner { display: flex !important; align-items: center !important; justify-content: space-between !important; }
+.keikyo-interview-header__inner::before, .keikyo-interview-header__inner::after { display: none !important; content: none !important; }
+.keikyo-interview-header__brand-text { color: #0f1a33 !important; }
+.keikyo-interview-header__nav-link { color: #0f1a33 !important; }
+.keikyo-interview-header__nav-link:hover { color: #b11f2a !important; }
+.keikyo-interview-header__actions { display: flex !important; align-items: center !important; }
+.keikyo-interview-header__cta-group { display: flex !important; align-items: center !important; gap: 10px; }
+.keikyo-interview-header__cta { display: inline-flex !important; align-items: center !important; justify-content: center !important; height: 38px !important; padding: 0 18px !important; line-height: 1 !important; border-radius: 3px !important; }
+.keikyo-interview-header__cta--secondary { background: transparent !important; border: 1.5px solid #0f1a33 !important; color: #0f1a33 !important; }
+.keikyo-interview-header__cta--secondary:hover { background: #0f1a33 !important; color: #fff !important; }
+.keikyo-interview-header__cta--primary { background: #b11f2a !important; border: none !important; color: #fff !important; }
+.keikyo-interview-header__menu-toggle { display: none !important; }
+.keikyo-interview-site-footer__grid { display: grid !important; grid-template-columns: 2fr 1fr 1fr 1fr !important; gap: 48px !important; margin-bottom: 48px !important; }
+@media (max-width: 768px) { .keikyo-interview-site-footer__grid { grid-template-columns: 1fr 1fr !important; } }

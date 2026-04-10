@@ -69,6 +69,8 @@ add_action( 'wp_enqueue_scripts', function() {
         'template-diagnosis'   => 'pages/diagnosis.css',
         'page-lp'              => 'pages/page-lp.css',
         'single-interview'     => 'pages/single-interview.css',
+        'archive-interview'    => 'pages/interview.css',
+        'page-navi'            => 'pages/navi.css',
         'single'               => 'pages/single.css',
         'archive'              => 'pages/archive.css',
         'category'             => 'pages/category.css',
@@ -81,6 +83,7 @@ add_action( 'wp_enqueue_scripts', function() {
             || ( 'single-interview' === $template && is_singular( 'interview' ) )
             || ( 'single' === $template && is_singular( 'post' ) )
             || ( 'archive' === $template && is_post_type_archive() )
+            || ( 'archive-interview' === $template && is_post_type_archive( 'interview' ) )
             || ( 'category' === $template && is_category() )
             || ( 'taxonomy-interview-tag' === $template && is_tax( 'interview_tag' ) )
             || ( 'page-lp' === $template && is_page_template( 'page-lp.php' ) )
