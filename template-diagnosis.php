@@ -11,18 +11,6 @@ get_header();
   <!-- 診断開始画面 -->
   <section id="diagnosis-intro" class="diagnosis-section active">
 
-    <!-- バナー画像（差し替え可能） -->
-    <?php
-    $banner_id  = get_theme_mod( 'diagnosis_banner_image' );
-    $banner_url = $banner_id ? wp_get_attachment_image_url( $banner_id, 'full' )
-                             : 'https://www.keikyo-seminar.jp/wp-content/uploads/2026/03/eikichi_shindan.jpeg';
-    ?>
-    <div class="diagnosis-banner-wrap">
-      <img src="<?php echo esc_url( $banner_url ); ?>"
-           alt="総合型選抜適性診断"
-           class="diagnosis-banner-img">
-    </div>
-
     <div class="intro-content">
       <p class="intro-kicker">Aptitude Diagnosis</p>
       <h1 class="intro-title">総合型選抜<br>適性診断</h1>
