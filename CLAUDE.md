@@ -20,3 +20,19 @@
 ## 参考情報
 - Notion管理ページ: https://www.notion.so/33eec81ceecf810d9494d4845a11d454
 - GitHub: https://github.com/sikumys809/sougougatasenbatsu
+
+## 新規ページCSSの必須追記ルール
+新しいページCSSを作るときは、必ずファイル末尾に以下のヘッダー上書きCSSを含めること。
+これを忘れると全ページでヘッダーとフッターが崩れる。
+
+```css
+/* ===== ヘッダー白背景（全ページ共通・必須） ===== */
+.keikyo-interview-header { background: #ffffff !important; border-bottom: 1px solid rgba(0,0,0,0.08) !important; }
+.keikyo-interview-header__brand-text { color: #0f1a33 !important; }
+.keikyo-interview-header__nav-link { color: #0f1a33 !important; }
+.keikyo-interview-header__nav-link:hover { color: #b11f2a !important; }
+.keikyo-interview-header__cta--secondary { background: transparent !important; border: 1.5px solid #0f1a33 !important; color: #0f1a33 !important; }
+.keikyo-interview-header__cta--secondary:hover { background: #0f1a33 !important; color: #fff !important; }
+.keikyo-interview-header__cta--primary { background: #b11f2a !important; border: none !important; color: #fff !important; }
+.keikyo-interview-site-footer__grid { display: grid !important; grid-template-columns: 2fr 1fr 1fr 1fr !important; }
+```
