@@ -66,6 +66,7 @@ add_action( 'wp_enqueue_scripts', function() {
         'page-about'           => 'pages/about.css',
         'page-keikyo-about'    => 'pages/about.css',
         'page-performance'     => 'pages/performance.css',
+        'template-diagnosis'   => 'pages/diagnosis.css',
         'page-lp'              => 'pages/page-lp.css',
         'single-interview'     => 'pages/single-interview.css',
         'single'               => 'pages/single.css',
@@ -95,6 +96,11 @@ add_action( 'wp_enqueue_scripts', function() {
     // カテゴリーページのみ絞り込みJSを読み込む
     if ( is_category() || is_tax() ) {
         wp_enqueue_script( 'keikyo-filter', KEIKYO_URI . '/assets/js/category-filter.js', [ 'keikyo-main' ], $v, true );
+    }
+
+    // 診断ページのみ diagnosis.js を読み込む
+    if ( is_page_template( 'template-diagnosis.php' ) ) {
+        wp_enqueue_script( 'keikyo-diagnosis', KEIKYO_URI . '/assets/js/diagnosis.js', [ 'jquery' ], $v, true );
     }
 
     // JS に WordPress 情報を渡す
