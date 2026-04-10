@@ -1,0 +1,1101 @@
+@charset "UTF-8";
+
+/**
+ * Design reminder: Neo Editorial Academia common shell.
+ * - 通常固定ページ・投稿詳細・投稿アーカイブに適用する共通ヘッダー / フッター。
+ * - about / performance / diagnosis の専用テンプレート群とタクソノミー系は対象外。
+ * - Deep navy を基調に、crimson は CTA と強調に限定して静かな熱量を保つ。
+ */
+
+:root {
+  --keikyo-shell-bg: #07152d;
+  --keikyo-shell-bg-2: #0b2246;
+  --keikyo-shell-bg-3: #13274b;
+  --keikyo-shell-cream: #f7f0e8;
+  --keikyo-shell-cream-soft: #ffd6da;
+  --keikyo-shell-white: rgba(255, 255, 255, 0.92);
+  --keikyo-shell-white-soft: rgba(255, 255, 255, 0.72);
+  --keikyo-shell-border: rgba(255, 255, 255, 0.12);
+  --keikyo-shell-red: #c5303c;
+  --keikyo-shell-red-hover: #dd3948;
+  --keikyo-shell-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+  --keikyo-shell-inner: 1200px;
+  --keikyo-shell-radius: 32px;
+}
+
+.keikyo-shell-header {
+  position: relative;
+  isolation: isolate;
+  color: #fff;
+  background: linear-gradient(135deg, var(--keikyo-shell-bg) 0%, var(--keikyo-shell-bg-2) 58%, var(--keikyo-shell-bg-3) 100%);
+  overflow: hidden;
+}
+
+.keikyo-shell-header::before,
+.keikyo-shell-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.keikyo-shell-header::before {
+  background:
+    radial-gradient(circle at 16% 10%, rgba(197, 48, 60, 0.32), transparent 28%),
+    radial-gradient(circle at 90% 14%, rgba(255, 255, 255, 0.08), transparent 18%);
+}
+
+.keikyo-shell-header::after,
+.keikyo-shell-footer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.07;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.18) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+.keikyo-shell-inner {
+  position: relative;
+  z-index: 1;
+  width: min(calc(100% - 32px), var(--keikyo-shell-inner));
+  margin: 0 auto;
+}
+
+.keikyo-shell-header__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 92px;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.keikyo-shell-brand {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  flex-shrink: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.keikyo-shell-brand__logo-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.keikyo-shell-brand__logo {
+  display: block;
+  width: auto;
+  height: clamp(34px, 4vw, 52px);
+  max-width: min(220px, 34vw);
+  object-fit: contain;
+}
+
+.keikyo-shell-nav {
+  display: none;
+  align-items: center;
+  gap: 24px;
+}
+
+.keikyo-shell-nav a,
+.keikyo-shell-footer a,
+.keikyo-shell-button {
+  transition: 0.3s ease;
+}
+
+.keikyo-shell-nav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.78);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.keikyo-shell-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: #d74a57;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.keikyo-shell-nav a:hover,
+.keikyo-shell-nav a:focus-visible {
+  color: #fff;
+}
+
+.keikyo-shell-nav a:hover::after,
+.keikyo-shell-nav a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.keikyo-shell-actions {
+  display: none;
+  align-items: center;
+  gap: 12px;
+}
+
+.keikyo-shell-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.keikyo-shell-button--ghost {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  backdrop-filter: blur(12px);
+}
+
+.keikyo-shell-button--ghost:hover,
+.keikyo-shell-button--ghost:focus-visible {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.keikyo-shell-button--primary {
+  border: 1px solid transparent;
+  background: var(--keikyo-shell-red);
+  color: #fff;
+  box-shadow: 0 18px 38px rgba(197, 48, 60, 0.34);
+}
+
+.keikyo-shell-button--primary:hover,
+.keikyo-shell-button--primary:focus-visible {
+  background: var(--keikyo-shell-red-hover);
+  color: #fff;
+}
+
+.keikyo-shell-button__arrow {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.keikyo-shell-mobile-actions {
+  display: flex;
+  gap: 10px;
+  padding: 14px 0 20px;
+}
+
+.keikyo-shell-mobile-actions .keikyo-shell-button {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0 16px;
+  font-size: 0.79rem;
+}
+
+.keikyo-shell-footer {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, #08152d 0%, #061022 100%);
+}
+
+.keikyo-shell-footer::before {
+  background:
+    radial-gradient(circle at 10% 10%, rgba(197, 48, 60, 0.2), transparent 24%),
+    radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.06), transparent 20%);
+}
+
+.keikyo-shell-footer__cta {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 24px;
+  margin-bottom: 48px;
+  padding: 28px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--keikyo-shell-radius);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: var(--keikyo-shell-shadow);
+  backdrop-filter: blur(12px);
+}
+
+.keikyo-shell-footer__kicker {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  color: #ffb7bd;
+}
+
+.keikyo-shell-footer__title {
+  margin: 12px 0 0;
+  font-family: 'Cormorant Garamond', 'Noto Serif JP', serif;
+  font-size: clamp(1.9rem, 4vw, 2.2rem);
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+  color: var(--keikyo-shell-cream);
+}
+
+.keikyo-shell-footer__title em {
+  font-style: normal;
+  color: var(--keikyo-shell-cream-soft);
+}
+
+.keikyo-shell-footer__lead {
+  max-width: 720px;
+  margin-top: 16px;
+  font-size: 0.97rem;
+  line-height: 2;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.keikyo-shell-footer__cta-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.keikyo-shell-footer__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 40px;
+  padding: 0 0 56px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 48px;
+}
+
+.keikyo-shell-footer__brand h3 {
+  margin: 12px 0 0;
+  font-family: 'Cormorant Garamond', 'Noto Serif JP', serif;
+  font-size: 1.7rem;
+  letter-spacing: 0.08em;
+  color: var(--keikyo-shell-cream);
+}
+
+.keikyo-shell-footer__brand p,
+.keikyo-shell-footer__list a,
+.keikyo-shell-footer__meta {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.keikyo-shell-footer__description {
+  margin-top: 20px;
+  font-size: 0.95rem;
+  line-height: 2;
+}
+
+.keikyo-shell-footer__meta {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+  font-size: 0.92rem;
+  line-height: 1.8;
+}
+
+.keikyo-shell-footer__col h4 {
+  margin: 0 0 16px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.keikyo-shell-footer__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.keikyo-shell-footer__list a {
+  text-decoration: none;
+}
+
+.keikyo-shell-footer__list a:hover,
+.keikyo-shell-footer__list a:focus-visible {
+  color: #fff;
+}
+
+.keikyo-shell-footer__bottom {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 0 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.46);
+}
+
+@media (min-width: 960px) {
+  .keikyo-shell-nav,
+  .keikyo-shell-actions {
+    display: flex;
+  }
+
+  .keikyo-shell-mobile-actions {
+    display: none;
+  }
+
+  .keikyo-shell-footer__cta {
+    grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.7fr);
+    align-items: center;
+    padding: 32px 32px;
+  }
+
+  .keikyo-shell-footer__grid {
+    grid-template-columns: minmax(0, 1.2fr) repeat(3, minmax(0, 0.8fr));
+  }
+}
+
+@media (max-width: 959px) {
+  .keikyo-shell-header__bar {
+    min-height: auto;
+    padding-bottom: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .keikyo-shell-inner {
+    width: min(calc(100% - 24px), var(--keikyo-shell-inner));
+  }
+
+  .keikyo-shell-brand__logo {
+    height: 32px;
+    max-width: 180px;
+  }
+
+  .keikyo-shell-footer__cta,
+  .keikyo-shell-footer__grid {
+    gap: 24px;
+  }
+
+  .keikyo-shell-footer__title {
+    font-size: 1.75rem;
+  }
+}
+
+
+/**
+ * Front page styles: Neo Editorial Academia body sections.
+ * - 共通ヘッダー / フッターと自然につながる本文構成。
+ * - 非対称グリッド、濃紺と生成りの面切替、写真カードで情報の強弱をつくる。
+ * - front-page.php 専用だが、将来の部品化を想定してセクション単位で命名する。
+ */
+
+.keikyo-front-page {
+  position: relative;
+  color: #0d2243;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(197, 48, 60, 0.08), transparent 22%),
+    linear-gradient(180deg, #07152d 0%, #0a1730 19%, #f7f3ee 19%, #f7f3ee 100%);
+}
+
+.keikyo-home-shell {
+  width: min(calc(100% - 32px), 1200px);
+  margin: 0 auto;
+}
+
+.keikyo-home-hero {
+  position: relative;
+  padding: 42px 0 80px;
+  color: #fff;
+}
+
+.keikyo-home-hero__grid {
+  display: grid;
+  gap: 40px;
+  align-items: center;
+}
+
+.keikyo-home-badge,
+.keikyo-home-chip,
+.keikyo-home-mini-meta span,
+.keikyo-home-pill-link,
+.keikyo-home-strength-card__icon,
+.keikyo-home-story-card__kicker,
+.keikyo-home-story-card__profile,
+.keikyo-home-check-item__icon,
+.keikyo-home-inline-link,
+.keikyo-home-quote,
+.keikyo-home-kicker {
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.keikyo-home-badge--lead {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 18px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 0.92rem;
+  backdrop-filter: blur(10px);
+}
+
+.keikyo-home-hero__title,
+.keikyo-home-title {
+  margin: 0;
+  font-family: 'Cormorant Garamond', 'Noto Serif JP', serif;
+  letter-spacing: 0.035em;
+}
+
+.keikyo-home-hero__title {
+  margin-top: 24px;
+  font-size: clamp(2.6rem, 7vw, 4.9rem);
+  line-height: 1.14;
+  color: #f8f1e9;
+}
+
+.keikyo-home-hero__title span {
+  display: block;
+}
+
+.keikyo-home-hero__title .is-accent {
+  color: #ffd6da;
+}
+
+.keikyo-home-hero__lead {
+  max-width: 680px;
+  margin-top: 24px;
+  font-size: 1rem;
+  line-height: 2;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.keikyo-home-chip-list,
+.keikyo-home-mini-meta,
+.keikyo-home-action-row,
+.keikyo-home-action-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.keikyo-home-chip-list {
+  margin-top: 28px;
+}
+
+.keikyo-home-chip,
+.keikyo-home-mini-meta span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.84rem;
+  letter-spacing: 0.1em;
+}
+
+.keikyo-home-action-row {
+  margin-top: 32px;
+}
+
+.keikyo-home-action-row .keikyo-shell-button,
+.keikyo-home-action-stack .keikyo-shell-button,
+.keikyo-home-button--light {
+  min-height: 52px;
+  padding: 0 26px;
+}
+
+.keikyo-home-mini-meta {
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.keikyo-home-hero__visual {
+  position: relative;
+}
+
+.keikyo-home-hero__frame {
+  position: relative;
+  min-height: 580px;
+  border-radius: 34px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.28);
+}
+
+.keikyo-home-hero__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.keikyo-home-hero__frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 18, 38, 0.08) 0%, rgba(8, 18, 38, 0.4) 56%, rgba(8, 18, 38, 0.82) 100%);
+}
+
+.keikyo-home-hero__overlay-card {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1;
+  width: min(100% - 48px, 390px);
+  padding: 24px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 28px;
+  background: rgba(8, 18, 38, 0.64);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+}
+
+.keikyo-home-kicker {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #c5303c;
+}
+
+.keikyo-home-hero__card-copy {
+  margin: 14px 0 0;
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.22rem;
+  line-height: 1.9;
+  color: #f7f0e8;
+}
+
+.keikyo-home-hero__card-copy span {
+  color: #ffd6da;
+}
+
+.keikyo-home-hero__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.keikyo-home-hero__stat {
+  padding: 14px 10px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.06);
+  text-align: center;
+}
+
+.keikyo-home-hero__stat-value,
+.keikyo-home-metric-card__value {
+  margin: 0;
+  font-family: 'Cormorant Garamond', 'Noto Serif JP', serif;
+  letter-spacing: 0.04em;
+  color: #f7f0e8;
+}
+
+.keikyo-home-hero__stat-value {
+  font-size: 1.6rem;
+}
+
+.keikyo-home-hero__stat-label {
+  margin: 6px 0 0;
+  font-size: 0.76rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.keikyo-home-section {
+  position: relative;
+  padding: 88px 0;
+}
+
+.keikyo-home-section--navy {
+  background:
+    radial-gradient(circle at 10% 10%, rgba(197, 48, 60, 0.16), transparent 24%),
+    linear-gradient(180deg, #08152d 0%, #09162d 100%);
+  color: #fff;
+}
+
+.keikyo-home-section--cream {
+  background: #f7f3ee;
+}
+
+.keikyo-home-section--sand {
+  background: linear-gradient(180deg, #efe7dd 0%, #f7f3ee 100%);
+}
+
+.keikyo-home-section--diagnosis {
+  background:
+    radial-gradient(circle at 86% 20%, rgba(197, 48, 60, 0.12), transparent 18%),
+    linear-gradient(180deg, #08152d 0%, #10274b 100%);
+  color: #fff;
+}
+
+.keikyo-home-heading,
+.keikyo-home-performance__intro,
+.keikyo-home-diagnosis__intro {
+  max-width: 700px;
+}
+
+.keikyo-home-title {
+  margin-top: 18px;
+  font-size: clamp(2rem, 4.4vw, 3.5rem);
+  line-height: 1.3;
+  color: #f7f0e8;
+}
+
+.keikyo-home-section--cream .keikyo-home-title,
+.keikyo-home-section--sand .keikyo-home-title,
+.keikyo-home-section--consultation .keikyo-home-title {
+  color: #102446;
+}
+
+.keikyo-home-title span {
+  color: #c5303c;
+}
+
+.keikyo-home-copy {
+  margin-top: 22px;
+  font-size: 1rem;
+  line-height: 2;
+  color: rgba(16, 36, 70, 0.76);
+}
+
+.keikyo-home-section--navy .keikyo-home-copy,
+.keikyo-home-section--diagnosis .keikyo-home-copy {
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.keikyo-home-strength-grid,
+.keikyo-home-story-grid {
+  display: grid;
+  gap: 22px;
+  margin-top: 34px;
+}
+
+.keikyo-home-strength-card,
+.keikyo-home-metric-card,
+.keikyo-home-story-card,
+.keikyo-home-diagnosis__panel,
+.keikyo-home-consultation-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.08);
+}
+
+.keikyo-home-strength-card {
+  padding: 28px 24px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.keikyo-home-strength-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(197, 48, 60, 0.16);
+  color: #ffd6da;
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.keikyo-home-strength-card h3,
+.keikyo-home-metric-card h3,
+.keikyo-home-story-card h3 {
+  margin: 18px 0 0;
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.28rem;
+  line-height: 1.7;
+}
+
+.keikyo-home-strength-card p,
+.keikyo-home-metric-card p,
+.keikyo-home-story-card p,
+.keikyo-home-check-item p {
+  margin: 14px 0 0;
+  line-height: 2;
+}
+
+.keikyo-home-strength-card p {
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.keikyo-home-performance {
+  display: grid;
+  gap: 30px;
+  align-items: start;
+}
+
+.keikyo-home-performance__cards {
+  display: grid;
+  gap: 18px;
+}
+
+.keikyo-home-metric-card {
+  padding: 28px 24px;
+  border-radius: 30px;
+  background: #fff;
+  border-color: rgba(16, 36, 70, 0.08);
+}
+
+.keikyo-home-metric-card__value {
+  font-size: clamp(2.2rem, 5vw, 3.3rem);
+  color: #102446;
+}
+
+.keikyo-home-metric-card p {
+  color: rgba(16, 36, 70, 0.72);
+}
+
+.keikyo-home-quote {
+  margin-top: 24px;
+  padding: 20px 22px;
+  border-left: 3px solid #c5303c;
+  background: rgba(197, 48, 60, 0.05);
+  color: rgba(16, 36, 70, 0.74);
+  line-height: 2;
+}
+
+.keikyo-home-inline-link,
+.keikyo-home-pill-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.keikyo-home-inline-link {
+  margin-top: 24px;
+  color: #102446;
+  font-size: 0.94rem;
+  font-weight: 700;
+}
+
+.keikyo-home-inline-link:hover,
+.keikyo-home-pill-link:hover,
+.keikyo-home-inline-link:focus-visible,
+.keikyo-home-pill-link:focus-visible {
+  opacity: 0.8;
+}
+
+.keikyo-home-section-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.keikyo-home-pill-link {
+  width: fit-content;
+  min-height: 46px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(16, 36, 70, 0.12);
+  background: rgba(255, 255, 255, 0.6);
+  color: #102446;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.keikyo-home-story-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(16, 36, 70, 0.08);
+}
+
+.keikyo-home-story-card__image-wrap {
+  position: relative;
+  display: block;
+  min-height: 360px;
+  color: inherit;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.keikyo-home-story-card__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.keikyo-home-story-card__image-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 20, 40, 0.08) 0%, rgba(10, 20, 40, 0.2) 30%, rgba(10, 20, 40, 0.82) 100%);
+}
+
+.keikyo-home-story-card:hover .keikyo-home-story-card__image,
+.keikyo-home-story-card:focus-within .keikyo-home-story-card__image {
+  transform: scale(1.04);
+}
+
+.keikyo-home-story-card__kicker,
+.keikyo-home-story-card__profile {
+  position: absolute;
+  z-index: 1;
+  left: 22px;
+}
+
+.keikyo-home-story-card__kicker {
+  top: 20px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(8, 18, 38, 0.54);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+}
+
+.keikyo-home-story-card__profile {
+  right: 22px;
+  bottom: 22px;
+  left: 22px;
+  display: grid;
+  gap: 4px;
+  padding: 16px 18px;
+  border-radius: 22px;
+  background: rgba(8, 18, 38, 0.66);
+  backdrop-filter: blur(12px);
+}
+
+.keikyo-home-story-card__profile strong,
+.keikyo-home-story-card__profile em {
+  font-style: normal;
+}
+
+.keikyo-home-story-card__profile strong {
+  color: #f7f0e8;
+  font-size: 1rem;
+}
+
+.keikyo-home-story-card__profile em {
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 0.84rem;
+}
+
+.keikyo-home-story-card__body {
+  padding: 24px 22px 26px;
+}
+
+.keikyo-home-story-card__body p {
+  color: rgba(16, 36, 70, 0.72);
+}
+
+.keikyo-home-diagnosis {
+  display: grid;
+  gap: 30px;
+  align-items: center;
+}
+
+.keikyo-home-diagnosis__panel {
+  padding: 28px 24px;
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.keikyo-home-check-list {
+  display: grid;
+  gap: 14px;
+}
+
+.keikyo-home-check-item {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding: 16px 18px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.keikyo-home-check-item__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(197, 48, 60, 0.18);
+  color: #ffd6da;
+  font-weight: 700;
+}
+
+.keikyo-home-check-item p {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.keikyo-home-action-stack {
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: 22px;
+}
+
+.keikyo-home-action-stack .keikyo-shell-button,
+.keikyo-home-button--light {
+  width: 100%;
+}
+
+.keikyo-home-button--light {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(16, 36, 70, 0.14);
+  background: rgba(255, 255, 255, 0.82);
+  color: #102446;
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.keikyo-home-section--consultation {
+  padding-top: 0;
+}
+
+.keikyo-home-consultation-card {
+  display: grid;
+  gap: 26px;
+  margin-top: -20px;
+  padding: 30px 24px;
+  border-radius: 34px;
+  background: linear-gradient(135deg, #fff 0%, #f7efe6 100%);
+  border-color: rgba(16, 36, 70, 0.08);
+}
+
+.keikyo-home-consultation-card .keikyo-home-copy {
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .keikyo-home-hero {
+    padding: 56px 0 92px;
+  }
+
+  .keikyo-home-strength-grid,
+  .keikyo-home-performance__cards,
+  .keikyo-home-story-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .keikyo-home-hero__grid {
+    grid-template-columns: minmax(0, 1.02fr) minmax(340px, 0.98fr);
+    gap: 40px;
+  }
+
+  .keikyo-home-performance,
+  .keikyo-home-diagnosis,
+  .keikyo-home-consultation-card {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.92fr);
+  }
+
+  .keikyo-home-strength-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .keikyo-home-story-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .keikyo-home-section-bar {
+    flex-direction: row;
+    align-items: end;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 1023px) {
+  .keikyo-home-hero__frame {
+    min-height: 500px;
+  }
+}
+
+@media (max-width: 767px) {
+  .keikyo-home-shell {
+    width: min(calc(100% - 24px), 1200px);
+  }
+
+  .keikyo-front-page {
+    background: linear-gradient(180deg, #07152d 0%, #0a1730 15%, #f7f3ee 15%, #f7f3ee 100%);
+  }
+
+  .keikyo-home-section {
+    padding: 68px 0;
+  }
+
+  .keikyo-home-hero__frame {
+    min-height: 440px;
+    border-radius: 26px;
+  }
+
+  .keikyo-home-hero__overlay-card,
+  .keikyo-home-diagnosis__panel,
+  .keikyo-home-consultation-card,
+  .keikyo-home-strength-card,
+  .keikyo-home-metric-card,
+  .keikyo-home-story-card {
+    border-radius: 24px;
+  }
+
+  .keikyo-home-hero__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .keikyo-home-story-card__image-wrap {
+    min-height: 320px;
+  }
+}
+
+
+/* Archive compatibility fix: keep parent-theme archive cards visible when child shell header/footer is active. */
+.archive.keikyo-common-shell-active .loop-section .wow,
+.archive.keikyo-common-shell-active .loop-section .fadeInUp,
+.archive.keikyo-common-shell-active .loop-section .loop-article {
+  visibility: visible !important;
+  opacity: 1 !important;
+  animation: none !important;
+}
+
+/* Standard pages/posts: keep Genique content wrapper, replace only header/footer with the child common shell. */
+.keikyo-common-shell-active.single-post:not(.single-interview) #header_bar,
+.keikyo-common-shell-active.page:not(.page-template-page-keikyo-about):not(.page-template-page-gokakusha-jisseki-lp):not(.page-template-template-diagnosis):not(.page-template-template-diagnosis-lead-gen) #header_bar,
+.keikyo-common-shell-active.single-post:not(.single-interview) #footer.footer,
+.keikyo-common-shell-active.page:not(.page-template-page-keikyo-about):not(.page-template-page-gokakusha-jisseki-lp):not(.page-template-template-diagnosis):not(.page-template-template-diagnosis-lead-gen) #footer.footer {
+  display: none !important;
+}

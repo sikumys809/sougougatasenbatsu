@@ -1,0 +1,235 @@
+/* ============================================================
+   about.css — 慶教ゼミナールとは？ページ専用スタイル
+   ============================================================ */
+
+/* ----------------------------------------
+   SECTION 01: HERO
+   ---------------------------------------- */
+.about-hero {
+  background: var(--navy);
+  min-height: 80vh;
+  padding: 100px 0 80px;
+}
+.about-hero__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: center;
+}
+@media (min-width: 1024px) {
+  .about-hero__inner { grid-template-columns: 1fr 1fr; gap: 64px; }
+}
+.about-hero__pill {
+  display: inline-block;
+  background: rgba(192,57,43,0.15);
+  color: var(--red);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+}
+.about-hero__title {
+  font-family: var(--font-en);
+  font-size: clamp(44px, 6vw, 72px);
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+.about-hero__title span { display: block; }
+.about-hero__subtitle { font-size: 18px; font-weight: 600; color: var(--white); margin-bottom: 16px; }
+.about-hero__text { font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.9; margin-bottom: 32px; }
+.about-hero__cta { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+.about-hero__cards { display: flex; flex-direction: column; gap: 16px; }
+.about-hero__card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 24px;
+}
+.about-hero__card-icon { font-family: var(--font-en); font-size: 24px; color: var(--red); margin-bottom: 12px; }
+.about-hero__card-text { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.7; }
+.about-hero__card-text strong { color: var(--white); font-weight: 600; }
+
+/* ----------------------------------------
+   SECTION 02: PHILOSOPHY
+   ---------------------------------------- */
+.about-philosophy { background: var(--cream); padding: 100px 0; }
+.about-philosophy__inner { max-width: 800px; margin: 0 auto; text-align: center; }
+.about-philosophy__message { font-size: clamp(18px, 2.5vw, 22px); line-height: 1.9; color: var(--navy); margin-bottom: 48px; }
+.about-philosophy__message strong { color: var(--red); font-weight: 600; }
+.about-philosophy__cards { display: grid; grid-template-columns: 1fr; gap: 24px; text-align: left; margin-bottom: 48px; }
+@media (min-width: 768px) { .about-philosophy__cards { grid-template-columns: repeat(2,1fr); } }
+.about-philosophy__card { background: var(--white); border-left: 4px solid var(--red); border-radius: 0 8px 8px 0; padding: 32px; }
+.about-philosophy__card-title { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+.about-philosophy__card-text { font-size: 14px; color: rgba(0,0,0,0.6); line-height: 1.8; }
+.about-philosophy__note { border-left: 3px solid rgba(192,57,43,0.3); padding-left: 20px; font-style: italic; font-size: 14px; color: rgba(0,0,0,0.6); text-align: left; line-height: 1.8; }
+
+/* ----------------------------------------
+   SECTION 03: WHY CHOOSE US
+   ---------------------------------------- */
+.about-why { background: var(--navy); padding: 100px 0; }
+.about-why__header { text-align: center; margin-bottom: 48px; }
+.about-why__header .section-heading { color: var(--white); }
+.about-why__lead { font-size: 16px; color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto; }
+.about-why__stats { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; margin-bottom: 12px; }
+@media (min-width: 768px) { .about-why__stats { grid-template-columns: repeat(4,1fr); } }
+.stat-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 24px 16px; text-align: center; }
+.stat-card__value { font-family: var(--font-en); font-size: clamp(32px,4vw,52px); font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 8px; }
+.stat-card__label { font-size: 12px; color: rgba(255,255,255,0.6); }
+.about-why__note { font-size: 11px; color: rgba(255,255,255,0.4); text-align: center; margin-bottom: 48px; }
+.about-why__reasons { display: grid; grid-template-columns: 1fr; gap: 20px; margin-bottom: 48px; }
+@media (min-width: 768px) { .about-why__reasons { grid-template-columns: repeat(3,1fr); } }
+.reason-card { background: rgba(255,255,255,0.04); border-top: 3px solid var(--red); border-radius: 4px; padding: 28px; }
+.reason-card__num { font-family: var(--font-en); font-size: 36px; font-weight: 700; color: rgba(255,255,255,0.15); margin-bottom: 12px; }
+.reason-card__title { font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 12px; }
+.reason-card__text { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.75; }
+.about-why__cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; align-items: center; }
+
+/* ----------------------------------------
+   SECTION 04: INSTRUCTORS
+   ---------------------------------------- */
+.about-instructors { background: var(--cream); padding: 100px 0; }
+.about-instructors__header { margin-bottom: 48px; }
+.about-instructors__sub { font-size: 15px; color: rgba(0,0,0,0.6); max-width: 640px; line-height: 1.8; }
+.about-instructors__grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+@media (min-width: 768px) { .about-instructors__grid { grid-template-columns: repeat(3,1fr); } }
+.instructor-card { background: var(--white); border: 0.5px solid rgba(0,0,0,0.08); border-radius: 8px; overflow: hidden; }
+.instructor-card__photo { aspect-ratio: 4/3; background: #e8e4dc; overflow: hidden; }
+.instructor-card__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.instructor-card__body { padding: 24px; }
+.instructor-card__role { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--red); margin-bottom: 8px; }
+.instructor-card__name { font-family: var(--font-en); font-size: 24px; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+.instructor-card__badge { display: inline-block; background: var(--sand); color: var(--navy); font-size: 11px; padding: 4px 10px; border-radius: 2px; margin-bottom: 16px; }
+.instructor-card__bio { font-size: 13px; color: rgba(0,0,0,0.6); line-height: 1.75; }
+
+/* ----------------------------------------
+   SECTION 05: PROFESSIONAL TEAM
+   ---------------------------------------- */
+.about-pro-team { background: var(--navy); padding: 100px 0; }
+.about-pro-team__header { max-width: 720px; margin: 0 auto 48px; text-align: center; }
+.about-pro-team__header .section-heading { color: var(--white); }
+.about-pro-team__lead { border-left: 4px solid var(--red); padding-left: 24px; font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.9; text-align: left; max-width: 720px; margin: 0 auto 48px; }
+.about-pro-team__grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+@media (min-width: 768px) { .about-pro-team__grid { grid-template-columns: repeat(3,1fr); } }
+.role-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 32px; }
+.role-card__num { font-family: var(--font-en); font-size: 48px; font-weight: 700; color: rgba(255,255,255,0.1); line-height: 1; margin-bottom: 16px; }
+.role-card__title { font-size: 17px; font-weight: 600; color: var(--white); margin-bottom: 12px; }
+.role-card__text { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.75; }
+
+/* ----------------------------------------
+   SECTION 06: SUCCESS STORIES
+   ---------------------------------------- */
+.about-stories { background: var(--sand); padding: 100px 0; }
+.about-stories__header { display: flex; flex-direction: column; gap: 16px; margin-bottom: 48px; }
+@media (min-width: 768px) { .about-stories__header { flex-direction: row; justify-content: space-between; align-items: flex-end; } }
+.about-stories__sub { font-size: 14px; color: rgba(0,0,0,0.6); max-width: 560px; line-height: 1.8; }
+.about-stories__grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+@media (min-width: 768px) { .about-stories__grid { grid-template-columns: repeat(3,1fr); } }
+.story-card { background: var(--white); border-radius: 4px; overflow: hidden; transition: transform 0.3s ease; }
+.story-card:hover { transform: translateY(-4px); }
+.story-card__link { display: block; text-decoration: none; color: inherit; }
+.story-card__image { position: relative; aspect-ratio: 3/4; background: #e0dbd2; overflow: hidden; }
+.story-card__image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.story-card__image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: rgba(0,0,0,0.2); font-size: 12px; letter-spacing: 0.1em; }
+.story-card__badge { position: absolute; top: 14px; left: 14px; background: var(--red); color: var(--white); font-size: 10px; font-weight: 600; padding: 4px 10px; border-radius: 2px; }
+.story-card__origin { position: absolute; top: 14px; right: 14px; background: rgba(26,26,46,0.8); color: var(--white); font-size: 10px; padding: 4px 8px; border-radius: 2px; }
+.story-card__profile { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent,rgba(0,0,0,0.7)); padding: 48px 16px 16px; color: var(--white); }
+.story-card__name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.story-card__school { font-size: 12px; opacity: 0.8; }
+.story-card__body { padding: 20px; }
+.story-card__title { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+.story-card__excerpt { font-size: 13px; color: rgba(0,0,0,0.55); line-height: 1.7; }
+
+/* ----------------------------------------
+   SECTION 07: LINE
+   ---------------------------------------- */
+.about-line { background: linear-gradient(90deg, var(--navy) 50%, #06C755 50%); padding: 100px 0; }
+@media (max-width: 1023px) { .about-line { background: var(--navy); } }
+.about-line__inner { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
+@media (min-width: 1024px) { .about-line__inner { grid-template-columns: 1fr 1fr; gap: 80px; } }
+.about-line__h2 { font-family: var(--font-jp); font-size: clamp(24px,3vw,36px); font-weight: 700; color: var(--white); line-height: 1.4; margin: 12px 0 16px; }
+.about-line__text { font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.85; }
+.about-line__panel { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 36px; }
+.about-line__grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin-bottom: 24px; }
+.about-line__card { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; padding: 14px; position: relative; }
+.about-line__num { font-family: var(--font-en); font-size: 22px; font-weight: 700; color: rgba(255,255,255,0.2); position: absolute; top: 8px; right: 10px; line-height: 1; }
+.about-line__title { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9); line-height: 1.4; }
+.about-line__panel .btn--line { width: 100%; display: flex; }
+.about-line__note { font-size: 11px; color: rgba(255,255,255,0.5); text-align: center; margin-top: 12px; }
+
+/* ----------------------------------------
+   SECTION 08: FINAL CTA
+   ---------------------------------------- */
+.about-final-cta { background: var(--cream); padding: 100px 0; }
+.about-final-cta__card { background: var(--navy); border-radius: 8px; padding: clamp(40px,6vw,72px); }
+.about-final-cta__inner { display: grid; grid-template-columns: 1fr; gap: 48px; }
+@media (min-width: 1024px) { .about-final-cta__inner { grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; } }
+.about-final-cta__title { font-family: var(--font-en); font-size: clamp(28px,4vw,40px); font-weight: 600; color: var(--white); line-height: 1.3; margin-bottom: 16px; }
+.about-final-cta__sub { font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.8; }
+.about-final-cta__actions { display: flex; flex-direction: column; gap: 16px; }
+.cta-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 24px; }
+.cta-card__title { font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
+.cta-card__text { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 16px; line-height: 1.6; }
+.cta-card .btn { width: 100%; display: flex; }
+
+@media (prefers-reduced-motion: reduce) { .story-card { transition: none; } }
+
+/* about.css末尾 — ヘッダー白背景・フッターグリッド強制適用 */
+.keikyo-interview-header {
+  background: #ffffff !important;
+  border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+}
+.keikyo-interview-header__brand-text { color: #0f1a33 !important; }
+.keikyo-interview-header__nav-link { color: #0f1a33 !important; }
+.keikyo-interview-header__nav-link:hover { color: #b11f2a !important; }
+.keikyo-interview-header__cta--secondary {
+  background: transparent !important;
+  border: 1.5px solid #0f1a33 !important;
+  color: #0f1a33 !important;
+}
+.keikyo-interview-header__cta--secondary:hover {
+  background: #0f1a33 !important;
+  color: #fff !important;
+}
+.keikyo-interview-site-footer__grid {
+  display: grid !important;
+  grid-template-columns: 2fr 1fr 1fr 1fr !important;
+  gap: 48px !important;
+  margin-bottom: 48px !important;
+}
+@media (max-width: 768px) {
+  .keikyo-interview-site-footer__grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 28px !important;
+  }
+}
+
+/* === ヘッダー白背景・フッターグリッド(動作確認済み) === */
+.keikyo-interview-header { background: #ffffff !important; border-bottom: 1px solid rgba(0,0,0,0.08) !important; }
+.keikyo-interview-header__inner { display: flex !important; align-items: center !important; justify-content: space-between !important; }
+.keikyo-interview-header__inner::before, .keikyo-interview-header__inner::after { display: none !important; content: none !important; }
+.keikyo-interview-header__brand-text { color: #0f1a33 !important; }
+.keikyo-interview-header__nav-link { color: #0f1a33 !important; }
+.keikyo-interview-header__nav-link:hover { color: #b11f2a !important; }
+.keikyo-interview-header__actions { display: flex !important; align-items: center !important; }
+.keikyo-interview-header__cta-group { display: flex !important; align-items: center !important; gap: 10px; }
+.keikyo-interview-header__cta { display: inline-flex !important; align-items: center !important; justify-content: center !important; height: 38px !important; padding: 0 18px !important; line-height: 1 !important; border-radius: 3px !important; }
+.keikyo-interview-header__cta--secondary { background: transparent !important; border: 1.5px solid #0f1a33 !important; color: #0f1a33 !important; }
+.keikyo-interview-header__cta--secondary:hover { background: #0f1a33 !important; color: #fff !important; }
+.keikyo-interview-header__cta--primary { background: #b11f2a !important; border: none !important; color: #fff !important; }
+.keikyo-interview-header__cta--primary:hover { background: #8e1822 !important; }
+.keikyo-interview-header__menu-toggle { display: none !important; }
+.keikyo-interview-site-footer { background: #0f1a33 !important; padding: 64px 0 32px; }
+.keikyo-interview-site-footer__container { max-width: min(1120px, calc(100vw - 40px)); margin: 0 auto; padding: 0 20px; }
+.keikyo-interview-site-footer__grid { display: grid !important; grid-template-columns: 2fr 1fr 1fr 1fr !important; gap: 48px !important; margin-bottom: 48px !important; }
+.keikyo-interview-site-footer__brand-name { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 12px; display: block; }
+.keikyo-interview-site-footer__brand-text { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.7; }
+.keikyo-interview-site-footer__heading { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: 0.12em; margin-bottom: 16px; display: block; }
+.keikyo-interview-site-footer__column a { display: block; font-size: 13px; color: rgba(255,255,255,0.6); text-decoration: none; margin-bottom: 10px; }
+.keikyo-interview-site-footer__column a:hover { color: #fff; }
+.keikyo-interview-site-footer__bottom { font-size: 12px; color: rgba(255,255,255,0.3); text-align: center; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.08); }
+@media (max-width: 768px) {
+  .keikyo-interview-site-footer__grid { grid-template-columns: 1fr 1fr !important; gap: 28px !important; }
+}

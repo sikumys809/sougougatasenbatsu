@@ -1,0 +1,54 @@
+/* ==========================================================================
+   Components — 共通コンポーネント
+   ========================================================================== */
+
+/* Header */
+.site-header {
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+}
+
+.site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.site-header__logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+/* Footer */
+.site-footer {
+    background-color: #f5f5f5;
+    padding: 30px 0;
+    margin-top: 60px;
+}
+
+.site-footer__copy {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #666;
+    margin-top: 20px;
+}
+
+/* LP Header */
+.lp-header {
+    background-color: #fff;
+    padding: 15px 0;
+    text-align: center;
+}
+
+/* LP Footer */
+.lp-footer {
+    background-color: #f5f5f5;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.lp-footer__copy {
+    font-size: 0.875rem;
+    color: #666;
+}

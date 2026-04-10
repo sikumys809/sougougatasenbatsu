@@ -1,0 +1,19 @@
+/* ==========================================================================
+   Layout — サイト全体のレイアウト
+   ========================================================================== */
+
+.site-header__inner,
+.site-footer__inner,
+.lp-header__inner,
+.lp-footer__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.site-main,
+.lp-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}

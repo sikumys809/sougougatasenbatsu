@@ -1,0 +1,1751 @@
+
+        /* ========================================
+           慶教ゼミナール トップページ フルデザイン
+           ======================================== */
+        
+        :root {
+          --navy: #1a1a2e;
+          --red: #c0392b;
+          --cream: #f8f6f1;
+          --sand: #f4f0e8;
+          --white: #ffffff;
+          --line-green: #06C755;
+          --font-en: 'Cormorant Garamond', serif;
+          --font-jp: 'Noto Sans JP', sans-serif;
+        }
+        
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        
+        body {
+          font-family: var(--font-jp);
+          color: var(--navy);
+          line-height: 1.8;
+          -webkit-font-smoothing: antialiased;
+          overflow-x: hidden;
+        }
+        
+        .shell {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 clamp(16px, 4vw, 48px);
+        }
+        
+        /* Buttons */
+        .btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          height: 52px;
+          padding: 0 32px;
+          border-radius: 3px;
+          font-size: 15px;
+          font-weight: 600;
+          text-decoration: none;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          border: none;
+        }
+        
+        .btn--red {
+          background: var(--red);
+          color: var(--white);
+        }
+        
+        .btn--red:hover {
+          background: #a5321f;
+        }
+        
+        .btn--outline {
+          background: transparent;
+          border: 1.5px solid var(--navy);
+          color: var(--navy);
+        }
+        
+        .btn--outline:hover {
+          background: var(--navy);
+          color: var(--white);
+        }
+        
+        .btn--outline-light {
+          background: transparent;
+          border: 1.5px solid rgba(255,255,255,0.4);
+          color: rgba(255,255,255,0.85);
+        }
+        
+        .btn--outline-light:hover {
+          background: rgba(255,255,255,0.1);
+          border-color: rgba(255,255,255,0.6);
+        }
+        
+        .btn--line {
+          background: var(--line-green);
+          color: var(--white);
+        }
+        
+        .btn--line:hover {
+          background: #05b04c;
+        }
+        
+        /* Kicker */
+        .kicker {
+          font-family: var(--font-en);
+          font-size: 12px;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: var(--red);
+          margin-bottom: 16px;
+        }
+        
+        .kicker--light {
+          color: rgba(255,255,255,0.4);
+        }
+        
+        /* Banner Placeholder */
+        .banner-placeholder {
+          background: #e8e8e8;
+          border: 2px dashed #ccc;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #999;
+          font-size: 14px;
+        }
+        
+        /* ========================================
+           HEADER
+           ======================================== */
+        .header {
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+          background: var(--white);
+          height: 64px;
+          border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+        
+        .header__inner {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 100%;
+        }
+        
+        .header__logo {
+          font-size: 18px;
+          font-weight: 700;
+          color: var(--navy);
+          text-decoration: none;
+        }
+        
+        .header__nav {
+          display: none;
+        }
+        
+        @media (min-width: 1024px) {
+          .header__nav {
+            display: flex;
+            gap: 32px;
+          }
+        }
+        
+        .header__nav a {
+          font-size: 14px;
+          color: var(--navy);
+          text-decoration: none;
+          transition: color 0.2s;
+        }
+        
+        .header__nav a:hover {
+          color: var(--red);
+        }
+        
+        .header__cta {
+          display: flex;
+          gap: 12px;
+        }
+        
+        .header__cta .btn {
+          height: 40px;
+          padding: 0 20px;
+          font-size: 13px;
+        }
+        
+        /* ========================================
+           SECTION 01: HERO
+           ======================================== */
+        .hero {
+          background: var(--navy);
+          min-height: 100vh;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .hero::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 40px,
+            rgba(255,255,255,0.02) 40px,
+            rgba(255,255,255,0.02) 41px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 40px,
+            rgba(255,255,255,0.02) 40px,
+            rgba(255,255,255,0.02) 41px
+          );
+          pointer-events: none;
+        }
+        
+        .hero__inner {
+          position: relative;
+          z-index: 1;
+          display: grid;
+          gap: 48px;
+          padding: 80px 0;
+          min-height: 100vh;
+          align-items: center;
+        }
+        
+        @media (min-width: 1024px) {
+          .hero__inner {
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+          }
+        }
+        
+        .hero__badge {
+          display: inline-block;
+          background: rgba(192, 57, 43, 0.15);
+          border: 1px solid rgba(192, 57, 43, 0.3);
+          color: var(--red);
+          font-size: 12px;
+          font-weight: 500;
+          padding: 6px 14px;
+          border-radius: 2px;
+          margin-bottom: 24px;
+        }
+        
+        .hero__h1 {
+          font-family: var(--font-jp);
+          font-size: clamp(28px, 5vw, 44px);
+          font-weight: 700;
+          color: var(--white);
+          line-height: 1.4;
+          margin-bottom: 8px;
+        }
+        
+        .hero__h1--accent {
+          color: var(--red);
+        }
+        
+        .hero__sub {
+          font-size: 16px;
+          color: rgba(255,255,255,0.7);
+          margin-bottom: 24px;
+        }
+        
+        .hero__lead {
+          font-size: 15px;
+          color: rgba(255,255,255,0.6);
+          line-height: 2;
+          margin-bottom: 32px;
+        }
+        
+        .hero__stats {
+          display: flex;
+          gap: 32px;
+          margin-bottom: 40px;
+          flex-wrap: wrap;
+        }
+        
+        .hero__stat-value {
+          font-family: var(--font-en);
+          font-size: 40px;
+          font-weight: 600;
+          color: var(--white);
+        }
+        
+        .hero__stat-label {
+          font-size: 12px;
+          color: rgba(255,255,255,0.5);
+        }
+        
+        .hero__cta {
+          display: flex;
+          gap: 16px;
+          flex-wrap: wrap;
+          margin-bottom: 16px;
+        }
+        
+        .hero__meta {
+          font-size: 12px;
+          color: rgba(255,255,255,0.4);
+        }
+        
+        .hero__visual {
+          position: relative;
+        }
+        
+        .hero-slideshow {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 4/3;
+          min-height: 360px;
+        }
+        
+        .hero-slide {
+          position: absolute;
+          inset: 0;
+          opacity: 0;
+          transition: opacity 0.6s ease;
+          border-radius: 4px;
+          overflow: hidden;
+        }
+        
+        .hero-slide--active {
+          opacity: 1;
+        }
+        
+        .hero-slide__placeholder {
+          width: 100%;
+          height: 100%;
+          background: rgba(255,255,255,0.06);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: rgba(255,255,255,0.3);
+          font-size: 14px;
+          letter-spacing: 0.1em;
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 4px;
+        }
+        
+        .hero-slide__dots {
+          position: absolute;
+          bottom: 16px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          gap: 8px;
+          z-index: 10;
+        }
+        
+        .hero-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.3);
+          cursor: pointer;
+          transition: background 0.3s;
+          border: none;
+          padding: 0;
+        }
+        
+        .hero-dot--active {
+          background: var(--red);
+        }
+        
+        .hero__overlay-card {
+          position: absolute;
+          bottom: -24px;
+          right: -16px;
+          background: var(--white);
+          border-left: 4px solid var(--red);
+          border-radius: 4px;
+          padding: 24px;
+          max-width: 280px;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        }
+        
+        @media (max-width: 767px) {
+          .hero__overlay-card {
+            position: static;
+            margin-top: 24px;
+            max-width: 100%;
+          }
+        }
+        
+        .hero__card-kicker {
+          font-family: var(--font-en);
+          font-size: 11px;
+          letter-spacing: 0.1em;
+          color: var(--red);
+          margin-bottom: 8px;
+        }
+        
+        .hero__card-text {
+          font-size: 14px;
+          line-height: 1.7;
+          color: var(--navy);
+        }
+        
+        /* ========================================
+           SECTION 02: WHY ONLINE WINS
+           ======================================== */
+        .why-online {
+          background: var(--cream);
+          padding: 100px 0;
+        }
+        
+        .why-online__inner {
+          display: grid;
+          gap: 48px;
+        }
+        
+        @media (min-width: 1024px) {
+          .why-online__inner {
+            grid-template-columns: 1fr 1.5fr;
+            gap: 64px;
+          }
+        }
+        
+        .why-online__heading {
+          align-self: start;
+        }
+        
+        @media (min-width: 1024px) {
+          .why-online__heading {
+            position: sticky;
+            top: 100px;
+          }
+        }
+        
+        .why-online__h2 {
+          font-size: clamp(24px, 3.5vw, 32px);
+          font-weight: 700;
+          line-height: 1.5;
+          margin-bottom: 16px;
+        }
+        
+        .why-online__h2 span {
+          color: var(--red);
+        }
+        
+        .why-online__lead {
+          font-size: 15px;
+          color: #666;
+          line-height: 1.9;
+        }
+        
+        .why-online__cards {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+        
+        .compare-card {
+          background: var(--white);
+          border-radius: 6px;
+          padding: 28px;
+          border-left: 3px solid;
+        }
+        
+        .compare-card--gray {
+          border-left-color: #d0cdc8;
+        }
+        
+        .compare-card--dark {
+          border-left-color: #888;
+        }
+        
+        .compare-card--red {
+          border-left-color: var(--red);
+          background: rgba(192,57,43,0.03);
+        }
+        
+        .compare-card__label {
+          font-size: 12px;
+          font-weight: 600;
+          margin-bottom: 8px;
+        }
+        
+        .compare-card--gray .compare-card__label,
+        .compare-card--dark .compare-card__label {
+          color: #888;
+        }
+        
+        .compare-card--red .compare-card__label {
+          color: var(--red);
+        }
+        
+        .compare-card__header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 10px;
+        }
+        
+        .compare-badge {
+          font-size: 11px;
+          font-weight: 700;
+          padding: 3px 10px;
+          border-radius: 2px;
+          white-space: nowrap;
+        }
+        
+        .compare-badge--ok {
+          background: rgba(192,57,43,0.12);
+          color: var(--red);
+        }
+        
+        .compare-badge--mid {
+          background: rgba(0,0,0,0.06);
+          color: #888;
+        }
+        
+        .compare-badge--ng {
+          background: rgba(0,0,0,0.05);
+          color: #bbb;
+        }
+        
+        .compare-card__text {
+          font-size: 15px;
+          line-height: 1.8;
+          color: #444;
+        }
+        
+        .why-online__cta {
+          display: flex;
+          gap: 16px;
+          flex-wrap: wrap;
+          margin-top: 40px;
+        }
+        
+        /* ========================================
+           SECTION 03: PERFORMANCE
+           ======================================== */
+        .performance {
+          background: var(--cream);
+          padding: 0 0 100px;
+        }
+        
+        .performance__inner {
+          display: grid;
+          gap: 48px;
+        }
+        
+        @media (min-width: 1024px) {
+          .performance__inner {
+            grid-template-columns: 1fr 1.2fr;
+            gap: 64px;
+          }
+        }
+        
+        .performance__heading {
+          align-self: start;
+        }
+        
+        @media (min-width: 1024px) {
+          .performance__heading {
+            position: sticky;
+            top: 100px;
+          }
+        }
+        
+        .performance__h2 {
+          font-size: clamp(24px, 3.5vw, 32px);
+          font-weight: 700;
+          line-height: 1.5;
+          margin-bottom: 20px;
+        }
+        
+        .performance__h2 span {
+          color: var(--red);
+        }
+        
+        .performance__text {
+          font-size: 15px;
+          color: #666;
+          line-height: 1.9;
+          margin-bottom: 24px;
+        }
+        
+        .performance__quote {
+          border-left: 3px solid var(--red);
+          padding: 20px 24px;
+          background: rgba(192,57,43,0.03);
+          font-size: 14px;
+          color: #555;
+          line-height: 1.9;
+          font-style: italic;
+          margin-bottom: 24px;
+        }
+        
+        .performance__link {
+          color: var(--red);
+          font-size: 14px;
+          font-weight: 500;
+          text-decoration: none;
+        }
+        
+        .performance__link:hover {
+          text-decoration: underline;
+        }
+        
+        .performance__metrics {
+          display: flex;
+          flex-direction: column;
+        }
+        
+        .metric-card {
+          padding: 32px 0;
+          border-top: 1px solid rgba(0,0,0,0.08);
+          display: grid;
+          grid-template-columns: auto 1fr;
+          gap: 24px;
+          align-items: start;
+        }
+        
+        .metric-card__value {
+          font-family: var(--font-en);
+          font-size: 52px;
+          font-weight: 600;
+          color: var(--navy);
+          line-height: 1;
+        }
+        
+        .metric-card__content {
+          padding-top: 8px;
+        }
+        
+        .metric-card__label {
+          font-size: 16px;
+          font-weight: 600;
+          margin-bottom: 4px;
+        }
+        
+        .metric-card__note {
+          font-size: 14px;
+          color: #888;
+        }
+        
+        /* ========================================
+           SECTION 04: INSTRUCTORS
+           ======================================== */
+        .instructors {
+          background: var(--navy);
+          padding: 100px 0;
+        }
+        
+        .instructors__heading {
+          text-align: center;
+          margin-bottom: 60px;
+        }
+        
+        .instructors__kicker {
+          color: rgba(255,255,255,0.4);
+        }
+        
+        .instructors__h2 {
+          font-size: clamp(24px, 3.5vw, 32px);
+          font-weight: 700;
+          color: var(--white);
+          line-height: 1.5;
+          margin-bottom: 16px;
+        }
+        
+        .instructors__h2 span {
+          color: var(--red);
+        }
+        
+        .instructors__lead {
+          font-size: 15px;
+          color: rgba(255,255,255,0.6);
+          max-width: 600px;
+          margin: 0 auto;
+        }
+        
+        .instructors__grid {
+          display: grid;
+          gap: 24px;
+        }
+        
+        @media (min-width: 768px) {
+          .instructors__grid {
+            grid-template-columns: repeat(3, 1fr);
+          }
+        }
+        
+        .instructor-card {
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 4px;
+          overflow: hidden;
+        }
+        
+        .instructor-card__photo {
+          width: 100%;
+          aspect-ratio: 1/1;
+          background: rgba(255,255,255,0.1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: rgba(255,255,255,0.3);
+          font-size: 12px;
+        }
+        
+        .instructor-card__content {
+          padding: 24px;
+        }
+        
+        .instructor-card__role {
+          font-size: 10px;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          color: var(--red);
+          margin-bottom: 6px;
+        }
+        
+        .instructor-card__name {
+          font-size: 18px;
+          font-weight: 600;
+          color: var(--white);
+          margin-bottom: 8px;
+        }
+        
+        .instructor-card__badge {
+          display: inline-block;
+          background: rgba(255,255,255,0.07);
+          color: rgba(255,255,255,0.6);
+          font-size: 11px;
+          padding: 4px 10px;
+          border-radius: 2px;
+          margin-bottom: 16px;
+        }
+        
+        .instructor-card__bio {
+          font-size: 14px;
+          color: rgba(255,255,255,0.65);
+          line-height: 1.8;
+        }
+        
+        .instructors__cta {
+          text-align: center;
+          margin-top: 48px;
+        }
+        
+        /* ========================================
+           SECTION 05: STORIES
+           ======================================== */
+        .stories {
+          background: var(--sand);
+          padding: 100px 0;
+        }
+        
+        .stories__header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+          margin-bottom: 48px;
+          flex-wrap: wrap;
+          gap: 16px;
+        }
+        
+        .stories__h2 {
+          font-size: clamp(24px, 3.5vw, 32px);
+          font-weight: 700;
+          line-height: 1.5;
+          margin-bottom: 8px;
+        }
+        
+        .stories__h2 span {
+          color: var(--red);
+        }
+        
+        .stories__sub {
+          font-size: 15px;
+          color: #666;
+          max-width: 500px;
+        }
+        
+        .stories__link {
+          color: var(--red);
+          font-size: 14px;
+          font-weight: 500;
+          text-decoration: none;
+        }
+        
+        .stories__link:hover {
+          text-decoration: underline;
+        }
+        
+        .stories__grid {
+          display: grid;
+          gap: 24px;
+        }
+        
+        @media (min-width: 768px) {
+          .stories__grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+        
+        @media (min-width: 1024px) {
+          .stories__grid {
+            grid-template-columns: repeat(3, 1fr);
+          }
+        }
+        
+        .story-card {
+          background: var(--white);
+          border-radius: 6px;
+          overflow: hidden;
+          transition: transform 0.3s;
+        }
+        
+        .story-card:hover {
+          transform: translateY(-4px);
+        }
+        
+        .story-card__image {
+          position: relative;
+          aspect-ratio: 3/4;
+          background: #e0dbd2;
+          overflow: hidden;
+        }
+        
+        .story-card__image-placeholder {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #999;
+          font-size: 12px;
+        }
+        
+        .story-card__badge {
+          position: absolute;
+          top: 12px;
+          left: 12px;
+          background: var(--red);
+          color: var(--white);
+          font-size: 11px;
+          font-weight: 500;
+          padding: 4px 10px;
+          border-radius: 2px;
+        }
+        
+        .story-card__profile {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: linear-gradient(transparent, rgba(0,0,0,0.7));
+          color: var(--white);
+          padding: 48px 16px 16px;
+        }
+        
+        .story-card__name {
+          font-size: 14px;
+          font-weight: 600;
+          margin-bottom: 2px;
+        }
+        
+        .story-card__school {
+          font-size: 12px;
+          opacity: 0.8;
+        }
+        
+        /* ========================================
+           SECTION 06: FREE CONSULTATION
+           ======================================== */
+        .consultation {
+          background: var(--white);
+          padding: 100px 0;
+        }
+        
+        .consultation__inner {
+          display: grid;
+          gap: 48px;
+        }
+        
+        @media (min-width: 1024px) {
+          .consultation__inner {
+            grid-template-columns: 1.2fr 1fr;
+            gap: 64px;
+          }
+        }
+        
+        .consultation__h2 {
+          font-size: clamp(24px, 3.5vw, 32px);
+          font-weight: 700;
+          line-height: 1.5;
+          margin-bottom: 12px;
+        }
+        
+        .consultation__h2 span {
+          color: var(--red);
+        }
+        
+        .consultation__sub {
+          font-size: 15px;
+          color: #666;
+          margin-bottom: 40px;
+        }
+        
+        .consultation__list {
+          display: flex;
+          flex-direction: column;
+          gap: 32px;
+        }
+        
+        .consultation__item {
+          display: grid;
+          grid-template-columns: 48px 1fr;
+          gap: 20px;
+        }
+        
+        .consultation__num {
+          font-family: var(--font-en);
+          font-size: 36px;
+          font-weight: 600;
+          color: rgba(192,57,43,0.2);
+          line-height: 1;
+        }
+        
+        .consultation__item-title {
+          font-size: 16px;
+          font-weight: 600;
+          margin-bottom: 6px;
+        }
+        
+        .consultation__item-text {
+          font-size: 14px;
+          color: #666;
+          line-height: 1.7;
+        }
+        
+        .consultation__panel {
+          align-self: start;
+        }
+        
+        @media (min-width: 1024px) {
+          .consultation__panel {
+            position: sticky;
+            top: 100px;
+          }
+        }
+        
+        .consultation__card {
+          background: var(--navy);
+          border-radius: 6px;
+          padding: 40px;
+          color: var(--white);
+        }
+        
+        .consultation__card-title {
+          font-size: 20px;
+          font-weight: 700;
+          margin-bottom: 16px;
+        }
+        
+        .consultation__card-text {
+          font-size: 14px;
+          color: rgba(255,255,255,0.7);
+          line-height: 1.8;
+          margin-bottom: 28px;
+        }
+        
+        .consultation__card .btn {
+          width: 100%;
+          margin-bottom: 12px;
+        }
+        
+        .consultation__card-note {
+          font-size: 12px;
+          color: rgba(255,255,255,0.5);
+          text-align: center;
+        }
+        
+        /* ========================================
+           SECTION 07: DIAGNOSIS
+           ======================================== */
+        .diagnosis {
+          background: var(--navy);
+          padding: 100px 0;
+        }
+        
+        .diagnosis__inner {
+          display: grid;
+          gap: 48px;
+        }
+        
+        @media (min-width: 1024px) {
+          .diagnosis__inner {
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+          }
+        }
+        
+        .diagnosis__h2 {
+          font-size: clamp(24px, 3.5vw, 32px);
+          font-weight: 700;
+          color: var(--white);
+          line-height: 1.5;
+          margin-bottom: 20px;
+        }
+        
+        .diagnosis__h2 span {
+          color: var(--red);
+        }
+        
+        .diagnosis__text {
+          font-size: 15px;
+          color: rgba(255,255,255,0.65);
+          line-height: 1.9;
+          margin-bottom: 24px;
+        }
+        
+        .diagnosis__chips {
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
+        }
+        
+        .diagnosis__chip {
+          background: rgba(255,255,255,0.1);
+          border: 1px solid rgba(255,255,255,0.15);
+          color: rgba(255,255,255,0.7);
+          font-size: 13px;
+          padding: 8px 16px;
+          border-radius: 4px;
+        }
+        
+        .diagnosis__checklist {
+          display: flex;
+          flex-direction: column;
+        }
+        
+        .diagnosis__check {
+          display: flex;
+          gap: 16px;
+          padding: 20px 0;
+          border-bottom: 1px solid rgba(255,255,255,0.08);
+          align-items: flex-start;
+        }
+        
+        .diagnosis__check-icon {
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+          background: var(--red);
+          color: var(--white);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 12px;
+          flex-shrink: 0;
+        }
+        
+        .diagnosis__check-text,
+        .diagnosis__check p {
+          font-size: 15px;
+          color: rgba(255,255,255,0.85);
+          line-height: 1.6;
+        }
+        
+        .diagnosis__cta {
+          display: flex;
+          gap: 16px;
+          margin-top: 32px;
+          flex-wrap: wrap;
+        }
+        
+        /* ========================================
+           SECTION 08: LINE登録
+           ======================================== */
+        .line-section {
+          background: linear-gradient(90deg, var(--navy) 50%, var(--line-green) 50%);
+          padding: 100px 0;
+        }
+        
+        @media (max-width: 1023px) {
+          .line-section {
+            background: var(--navy);
+          }
+        }
+        
+        .line-section__inner {
+          display: grid;
+          gap: 48px;
+        }
+        
+        @media (min-width: 1024px) {
+          .line-section__inner {
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+          }
+        }
+        
+        .line-section__h2 {
+          font-size: clamp(24px, 3.5vw, 32px);
+          font-weight: 700;
+          color: var(--white);
+          line-height: 1.5;
+          margin-bottom: 20px;
+        }
+        
+        .line-section__text {
+          font-size: 15px;
+          color: rgba(255,255,255,0.65);
+          line-height: 1.9;
+        }
+        
+        .line-section__panel {
+          background: rgba(255,255,255,0.1);
+          border-radius: 8px;
+          padding: 32px;
+        }
+        
+        @media (max-width: 1023px) {
+          .line-section__panel {
+            background: var(--line-green);
+          }
+        }
+        
+        .line-section__list {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          margin-bottom: 32px;
+        }
+        
+        .line-section__item {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+        }
+        
+        .line-section__num {
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.2);
+          color: var(--white);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 13px;
+          font-weight: 600;
+          flex-shrink: 0;
+        }
+        
+        .line-section__item-text {
+          font-size: 15px;
+          color: var(--white);
+        }
+        
+        .line-section .btn--line {
+          width: 100%;
+          border: 2px solid var(--white);
+        }
+        
+        .line-section__note {
+          font-size: 12px;
+          color: rgba(255,255,255,0.6);
+          text-align: center;
+          margin-top: 12px;
+        }
+        
+        /* ========================================
+           SECTION 09: FINAL CTA
+           ======================================== */
+        .final-cta {
+          background: var(--cream);
+          padding: 100px 0;
+        }
+        
+        .final-cta__card {
+          background: var(--navy);
+          border-radius: 8px;
+          padding: 60px;
+          display: grid;
+          gap: 40px;
+          align-items: center;
+        }
+        
+        @media (min-width: 1024px) {
+          .final-cta__card {
+            grid-template-columns: 1.5fr 1fr;
+            gap: 64px;
+          }
+        }
+        
+        .final-cta__kicker {
+          color: rgba(255,255,255,0.4);
+        }
+        
+        .final-cta__h2 {
+          font-size: clamp(22px, 3vw, 28px);
+          font-weight: 700;
+          color: var(--white);
+          line-height: 1.5;
+          margin-bottom: 16px;
+        }
+        
+        .final-cta__h2 span {
+          color: var(--red);
+        }
+        
+        .final-cta__text {
+          font-size: 15px;
+          color: rgba(255,255,255,0.65);
+          line-height: 1.8;
+        }
+        
+        .final-cta__buttons {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+        
+        .final-cta__buttons .btn {
+          width: 100%;
+        }
+        
+        /* ========================================
+           SECTION 10: NAVIGATION
+           ======================================== */
+        .navigation {
+          background: var(--white);
+          padding: 100px 0;
+        }
+        
+        .navigation__header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+          margin-bottom: 48px;
+          flex-wrap: wrap;
+          gap: 16px;
+        }
+        
+        .navigation__h2 {
+          font-size: clamp(24px, 3.5vw, 32px);
+          font-weight: 700;
+          margin-bottom: 8px;
+        }
+        
+        .navigation__sub {
+          font-size: 15px;
+          color: #666;
+        }
+        
+        .navigation__link {
+          color: var(--red);
+          font-size: 14px;
+          font-weight: 500;
+          text-decoration: none;
+        }
+        
+        .navigation__link:hover {
+          text-decoration: underline;
+        }
+        
+        .navigation__grid {
+          display: grid;
+          gap: 24px;
+        }
+        
+        @media (min-width: 768px) {
+          .navigation__grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+        
+        @media (min-width: 1024px) {
+          .navigation__grid {
+            grid-template-columns: repeat(3, 1fr);
+          }
+        }
+        
+        .article-card {
+          border: 1px solid #e5e5e5;
+          border-radius: 6px;
+          overflow: hidden;
+          transition: border-color 0.2s;
+        }
+        
+        .article-card:hover {
+          border-color: var(--red);
+        }
+        
+        .article-card__image {
+          aspect-ratio: 16/9;
+          background: #f0f0f0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #999;
+          font-size: 12px;
+        }
+        
+        .article-card__body {
+          padding: 20px;
+        }
+        
+        .article-card__meta {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+          margin-bottom: 12px;
+        }
+        
+        .article-card__cat {
+          background: var(--navy);
+          color: var(--white);
+          font-size: 10px;
+          padding: 3px 8px;
+          border-radius: 2px;
+        }
+        
+        .article-card__date {
+          font-size: 12px;
+          color: #999;
+        }
+        
+        .article-card__title {
+          font-size: 15px;
+          font-weight: 600;
+          line-height: 1.6;
+          margin-bottom: 8px;
+        }
+        
+        .article-card__excerpt {
+          font-size: 13px;
+          color: #666;
+          line-height: 1.7;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        
+        .navigation__banner {
+          margin-top: 48px;
+        }
+        
+        /* ========================================
+           FOOTER
+           ======================================== */
+        .footer {
+          background: var(--navy);
+          padding: 80px 0 40px;
+        }
+        
+        .footer__grid {
+          display: grid;
+          gap: 48px;
+          margin-bottom: 60px;
+        }
+        
+        @media (min-width: 768px) {
+          .footer__grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+        
+        @media (min-width: 1024px) {
+          .footer__grid {
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+          }
+        }
+        
+        .footer__brand {
+          font-size: 18px;
+          font-weight: 700;
+          color: var(--white);
+          margin-bottom: 16px;
+        }
+        
+        .footer__desc {
+          font-size: 14px;
+          color: rgba(255,255,255,0.5);
+          line-height: 1.8;
+        }
+        
+        .footer__title {
+          font-size: 12px;
+          font-weight: 600;
+          color: rgba(255,255,255,0.4);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          margin-bottom: 20px;
+        }
+        
+        .footer__links {
+          list-style: none;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+        
+        .footer__links a {
+          font-size: 14px;
+          color: rgba(255,255,255,0.7);
+          text-decoration: none;
+          transition: color 0.2s;
+        }
+        
+        .footer__links a:hover {
+          color: var(--white);
+        }
+        
+        .footer__copy {
+          text-align: center;
+          font-size: 12px;
+          color: rgba(255,255,255,0.3);
+          padding-top: 40px;
+          border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        
+        /* ========================================
+           VISUAL ENHANCEMENTS
+           ======================================== */
+        
+        /* 強化① Hero — 日本地図 + 点滅アニメーション */
+        .japan-map {
+          position: relative;
+          aspect-ratio: 4/3;
+          background: rgba(255,255,255,0.03);
+          border-radius: 8px;
+          overflow: hidden;
+        }
+        
+        .japan-map__svg {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0.08;
+        }
+        
+        .japan-map__dots {
+          position: absolute;
+          inset: 0;
+        }
+        
+        @keyframes pulse-dot {
+          0%, 100% { opacity: 0.3; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.4); }
+        }
+        
+        .map-dot {
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: var(--red);
+          animation: pulse-dot 3s infinite;
+        }
+        
+        .map-dot__label {
+          position: absolute;
+          font-size: 10px;
+          color: rgba(255,255,255,0.6);
+          white-space: nowrap;
+          left: 16px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+        
+        .map-dot--okinawa { bottom: 15%; left: 20%; animation-delay: 0s; }
+        .map-dot--ogasawara { bottom: 25%; right: 20%; animation-delay: 0.6s; }
+        .map-dot--hokkaido { top: 10%; right: 25%; animation-delay: 1.2s; }
+        .map-dot--sanin { top: 45%; left: 25%; animation-delay: 1.8s; }
+        .map-dot--tokyo { top: 40%; right: 35%; animation-delay: 2.4s; }
+        
+        .japan-map__caption {
+          position: absolute;
+          bottom: 16px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 12px;
+          color: rgba(255,255,255,0.5);
+          white-space: nowrap;
+        }
+        
+        @media (max-width: 767px) {
+          .japan-map { display: none; }
+        }
+        
+        /* 強化② Why Online — 比較表 */
+        .comparison-table {
+          margin-top: 16px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        
+        .comparison-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 13px;
+        }
+        
+        .comparison-label {
+          color: #666;
+        }
+        
+        .comparison-mark {
+          font-weight: 700;
+          font-size: 16px;
+        }
+        
+        .comparison-mark--ok { color: var(--red); }
+        .comparison-mark--ng { color: #ccc; }
+        .comparison-mark--mid { color: #999; }
+        
+        .compare-card--red .comparison-label { color: #444; }
+        
+        /* 強化③ Performance — 大学ロゴスライダー（全幅） */
+        .university-logo-slider-wrapper {
+          position: relative;
+          width: 100vw;
+          left: 0;
+          right: 0;
+          margin-left: -50vw;
+          margin-right: -50vw;
+          left: 50%;
+          overflow: hidden;
+          background: var(--sand);
+          padding: 40px 0;
+          border-top: 1px solid rgba(0,0,0,0.06);
+          border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        
+        .university-logo-slider__label {
+          font-size: 11px;
+          color: rgba(0,0,0,0.4);
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          margin-bottom: 24px;
+          text-align: center;
+        }
+        
+        .university-logo-track {
+          display: flex;
+          gap: 20px;
+          animation: logo-scroll 50s linear infinite;
+          width: fit-content;
+        }
+        
+        .university-logo-card {
+          flex-shrink: 0;
+          width: 160px;
+          height: 80px;
+          background: #fff;
+          border: 1px solid rgba(0,0,0,0.06);
+          border-radius: 6px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 13px;
+          font-weight: 600;
+          color: rgba(0,0,0,0.6);
+          text-align: center;
+          padding: 16px;
+          line-height: 1.3;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        }
+        
+        @keyframes logo-scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        
+        /* 強化④ Instructors — タイムライン */
+        .instructor-timeline {
+          margin-top: 48px;
+          padding: 32px;
+          background: rgba(255,255,255,0.04);
+          border-radius: 6px;
+          border: 1px solid rgba(255,255,255,0.08);
+        }
+        
+        .timeline-track {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0;
+          margin-bottom: 16px;
+        }
+        
+        .timeline-node {
+          text-align: center;
+          flex-shrink: 0;
+        }
+        
+        .timeline-node__dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.3);
+          margin: 0 auto 8px;
+        }
+        
+        .timeline-node__dot--red { background: var(--red); }
+        
+        .timeline-node__label {
+          font-size: 11px;
+          color: rgba(255,255,255,0.55);
+          line-height: 1.4;
+        }
+        
+        .timeline-line {
+          flex: 1;
+          height: 1px;
+          background: rgba(255,255,255,0.15);
+          margin: 0 8px 24px;
+          min-width: 40px;
+        }
+        
+        .timeline-caption {
+          text-align: center;
+          font-size: 13px;
+          color: rgba(255,255,255,0.5);
+        }
+        
+        @media (max-width: 767px) {
+          .timeline-track {
+            flex-wrap: wrap;
+            gap: 16px;
+          }
+          .timeline-line { display: none; }
+        }
+        
+        /* 強化⑤ Stories — 出身地バッジ */
+        .story-card__origin {
+          position: absolute;
+          top: 14px;
+          right: 14px;
+          background: rgba(26,26,46,0.85);
+          color: rgba(255,255,255,0.85);
+          font-size: 10px;
+          padding: 4px 8px;
+          border-radius: 2px;
+          letter-spacing: 0.05em;
+        }
+        
+        /* 強化⑥ LINE — プレゼントカードグリッド */
+        .line-gifts-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+          margin-bottom: 24px;
+        }
+        
+        @media (max-width: 767px) {
+          .line-gifts-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+        
+        .gift-card {
+          background: rgba(255,255,255,0.08);
+          border: 1px solid rgba(255,255,255,0.12);
+          border-radius: 6px;
+          padding: 16px;
+          position: relative;
+        }
+        
+        .gift-card__num {
+          font-family: var(--font-en);
+          font-size: 24px;
+          font-weight: 700;
+          color: rgba(255,255,255,0.15);
+          position: absolute;
+          top: 10px;
+          right: 12px;
+          line-height: 1;
+        }
+        
+        .gift-card__icon {
+          font-size: 20px;
+          margin-bottom: 8px;
+        }
+        
+        .gift-card__title {
+          font-size: 12px;
+          font-weight: 600;
+          color: rgba(255,255,255,0.85);
+          line-height: 1.4;
+        }
+        
+        /* 強化⑦ Stats Ticker */
+        .stats-ticker {
+          background: var(--red);
+          padding: 18px 0;
+        }
+        
+        .stats-ticker__inner {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 32px;
+          flex-wrap: wrap;
+        }
+        
+        .stats-ticker__item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        
+        .stats-ticker__value {
+          font-family: var(--font-en);
+          font-size: 28px;
+          font-weight: 700;
+          color: var(--white);
+          line-height: 1;
+        }
+        
+        .stats-ticker__label {
+          font-size: 11px;
+          color: rgba(255,255,255,0.8);
+          letter-spacing: 0.05em;
+        }
+        
+        .stats-ticker__divider {
+          color: rgba(255,255,255,0.3);
+          font-size: 20px;
+        }
+        
+        @media (max-width: 767px) {
+          .stats-ticker__inner {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            text-align: center;
+          }
+          .stats-ticker__divider { display: none; }
+          .stats-ticker__item {
+            flex-direction: column;
+            gap: 4px;
+          }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+          * {
+            transition: none !important;
+            animation: none !important;
+          }
+        }
+        
+        :focus-visible {
+          outline: 2px solid var(--red);
+          outline-offset: 3px;
+        }
+      
