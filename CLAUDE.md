@@ -36,3 +36,17 @@
 .keikyo-interview-header__cta--primary { background: #b11f2a !important; border: none !important; color: #fff !important; }
 .keikyo-interview-site-footer__grid { display: grid !important; grid-template-columns: 2fr 1fr 1fr 1fr !important; }
 ```
+
+## ヘッダー/フッターCSSの正しい適用手順
+新規ページCSSを作成したら、必ず以下を実行すること：
+
+python3 -c "
+theme = '/Users/unbalance/Local Sites/keikyo-local/app/public/wp-content/themes/keikyo-theme'
+with open(f'{theme}/assets/css/pages/about.css') as f:
+    lines = f.readlines()
+header_footer = ''.join(lines[209:234])
+with open(f'{theme}/assets/css/pages/[新ページ名].css', 'a') as f:
+    f.write('\n' + header_footer)
+"
+
+これによりabout.cssと同じヘッダー/フッタースタイルが適用される。
