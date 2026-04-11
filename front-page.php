@@ -34,23 +34,6 @@ get_header();
 <main>
 
 <!-- HEADER -->
-<header class="header">
-  <div class="shell header__inner">
-    <a href="<?php echo esc_url( home_url('/') ); ?>" class="header__logo">
-      <?php if ( has_custom_logo() ) : the_custom_logo(); else : ?><span>慶教ゼミナール</span><?php endif; ?>
-    </a>
-    <nav class="header__nav">
-      <a href="<?php echo esc_url($about_url); ?>">慶教ゼミナールとは？</a>
-      <a href="<?php echo esc_url($performance_url); ?>">合格実績</a>
-      <a href="<?php echo esc_url($stories_url); ?>">合格者対談</a>
-      <a href="<?php echo esc_url($nav_url); ?>">合格ナビ</a>
-    </nav>
-    <div class="header__cta">
-      <a href="<?php echo esc_url($diagnosis_url); ?>" class="btn btn--outline">総合型選抜適性診断</a>
-      <a href="<?php echo esc_url($consultation_url); ?>" class="btn btn--red" target="_blank" rel="noopener noreferrer">無料受験相談</a>
-    </div>
-  </div>
-</header>
 
 <!-- SECTION 01: HERO -->
 <section class="hero">
