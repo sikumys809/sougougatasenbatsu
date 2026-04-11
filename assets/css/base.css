@@ -2860,3 +2860,33 @@ body.keikyo-menu-open {
   .keikyo-interview-header__cta--secondary { display: none !important; }
   .keikyo-interview-header__nav { display: none !important; }
 }
+
+/* ===== ロゴ画像の表示崩れ修正（最終上書き） ===== */
+.keikyo-interview-header__brand-link {
+  width: auto !important;
+  max-width: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+.keikyo-interview-header__brand-logo {
+  width: auto !important;
+  max-width: none !important;
+  height: 36px !important;
+  max-height: 36px !important;
+  object-fit: contain !important;
+  object-position: left center !important;
+  display: block !important;
+}
+@media (max-width: 768px) {
+  .keikyo-interview-header__brand-logo {
+    height: 28px !important;
+    max-height: 28px !important;
+  }
+}
+
+/* フッターロゴ画像 */
+.keikyo-footer-logo {
+  height: 48px;
+  width: auto;
+  display: block;
+}
