@@ -30,7 +30,6 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <h3 class="keikyo-interview-site-footer__heading">SUPPORT</h3>
                 <a href="https://lp.keikyo-seminar.jp/main01/" target="_blank" rel="noopener noreferrer">無料受験相談</a>
                 <a href="<?php echo esc_url( home_url( '/diagnosis/' ) ); ?>">適性診断</a>
-                <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">お問い合わせ</a>
                 <a href="<?php echo esc_url( home_url( '/privacy/' ) ); ?>">プライバシーポリシー</a>
             </nav>
 
@@ -38,8 +37,6 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <h3 class="keikyo-interview-site-footer__heading">FOLLOW US</h3>
                 <div class="keikyo-interview-site-footer__socials">
                     <a href="https://lin.ee/keikyo" target="_blank" rel="noopener noreferrer">LINE公式アカウント</a>
-                    <a href="https://www.instagram.com/keikyo_seminar/" target="_blank" rel="noopener noreferrer">Instagram</a>
-                    <a href="https://x.com/keikyo_seminar" target="_blank" rel="noopener noreferrer">X（Twitter）</a>
                 </div>
             </div>
 
