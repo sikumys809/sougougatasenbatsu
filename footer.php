@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div class="keikyo-interview-site-footer__column keikyo-interview-site-footer__social-column">
                 <h3 class="keikyo-interview-site-footer__heading">FOLLOW US</h3>
                 <div class="keikyo-interview-site-footer__socials">
-                    <a href="https://lin.ee/keikyo" target="_blank" rel="noopener noreferrer">LINE公式アカウント</a>
+                    <a href="https://line.me/R/ti/p/@712gzjgo" target="_blank" rel="noopener noreferrer">LINE公式アカウント</a>
                 </div>
             </div>
 
