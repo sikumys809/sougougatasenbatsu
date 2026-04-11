@@ -132,3 +132,14 @@
   .interview-card, .article-item, .tag-pagination a.page-numbers { transition: none !important; }
 }
 :focus-visible { outline: 2px solid #c0392b; outline-offset: 2px; }
+
+/* ========================================
+   base.css のヘッダー・フッター余白を上書き
+   （category.css と同じ対処）
+   ======================================== */
+body.tag .keikyo-interview-header {
+  margin-bottom: 0 !important;
+}
+body.tag .keikyo-interview-site-footer {
+  margin-top: 0 !important;
+}
