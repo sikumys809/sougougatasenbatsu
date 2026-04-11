@@ -1,4 +1,5 @@
 <?php
+require_once get_template_directory() . '/inc-interview.php';
 /**
  * Keikyo Theme - functions.php
  * テーマの基盤となる全設定をこのファイルで管理する
