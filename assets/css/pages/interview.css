@@ -334,17 +334,3 @@
     font-size: 16px;
   }
 }
-/* ========================================
-   CTAとフッターの間の余白リセット
-   base.css の body.archive margin-top を上書き
-   ======================================== */
-body.post-type-archive-interview .keikyo-interview-site-footer {
-  margin-top: 0 !important;
-}
-
-/* ========================================
-   ヘッダー下余白リセット（base.cssのarchive設定を上書き）
-   ======================================== */
-body.post-type-archive-interview .keikyo-interview-header {
-  margin-bottom: 0 !important;
-}
