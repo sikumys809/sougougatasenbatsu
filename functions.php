@@ -63,6 +63,8 @@ add_action( 'wp_enqueue_scripts', function() {
         'page-lp'                => 'pages/page-lp.css',
         'page-navi'              => 'pages/navi.css',
         'template-diagnosis'     => 'pages/diagnosis.css',
+        'page-performance'       => 'pages/performance.css',
+        'page-gokakusha-jisseki-lp' => 'pages/performance.css',
         'single-interview'       => 'pages/single-interview.css',
         'archive-interview'      => 'pages/interview.css',
         'single'                 => 'pages/single.css',
