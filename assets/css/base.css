@@ -371,10 +371,6 @@ ul, ol {
   }
 
   .keikyo-interview-header__cta-group {
-    display: none;
-  }
-}
-
 .keikyo-interview-site-footer {
   padding: 64px 0 34px;
   background: #131f3a;
@@ -2678,22 +2674,3 @@ body .keikyo-interview-final-cta__center > .keikyo-interview-final-cta__body p {
 }
 .keikyo-interview-header__cta--primary:hover { background: #8e1822 !important; }
 .keikyo-interview-header__menu-toggle { display: none !important; }
-
-/* ===== フッター列リンク 確定修正 (2026-04-11) ===== */
-.keikyo-interview-site-footer__column {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 10px !important;
-  align-items: flex-start !important;
-}
-.keikyo-interview-site-footer__column a {
-  display: block !important;
-  font-size: 13px;
-  color: rgba(255,255,255,0.6);
-  text-decoration: none;
-  line-height: 1.6;
-  transition: color 0.2s;
-}
-.keikyo-interview-site-footer__column a:hover {
-  color: #fff;
-}
