@@ -371,6 +371,10 @@ ul, ol {
   }
 
   .keikyo-interview-header__cta-group {
+    display: none;
+  }
+}
+
 .keikyo-interview-site-footer {
   padding: 64px 0 34px;
   background: #131f3a;
@@ -2623,6 +2627,13 @@ body .keikyo-interview-final-cta__center > .keikyo-interview-final-cta__body p {
 .keikyo-interview-header {
   background: #ffffff !important;
   border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+  height: 64px !important;
+  display: flex !important;
+  align-items: center !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 12px 0 !important;
+  box-sizing: border-box !important;
 }
 .keikyo-interview-header__inner {
   display: flex !important;
@@ -2630,6 +2641,10 @@ body .keikyo-interview-final-cta__center > .keikyo-interview-final-cta__body p {
   align-items: center !important;
   justify-content: space-between !important;
   gap: 0 !important;
+  width: 100% !important;
+  max-width: min(1120px, calc(100vw - 40px));
+  margin: 0 auto;
+  padding: 0 20px;
 }
 .keikyo-interview-header__inner::before,
 .keikyo-interview-header__inner::after { display: none !important; content: none !important; }
@@ -2639,17 +2654,21 @@ body .keikyo-interview-final-cta__center > .keikyo-interview-final-cta__body p {
 .keikyo-interview-header__actions {
   display: flex !important;
   align-items: center !important;
+  flex-shrink: 0 !important;
 }
 .keikyo-interview-header__cta-group {
   display: flex !important;
+  flex-direction: row !important;
   align-items: center !important;
   gap: 10px;
+  flex-shrink: 0;
 }
 .keikyo-interview-header__cta {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   height: 38px !important;
+  min-height: 0 !important;
   padding: 0 18px !important;
   line-height: 1 !important;
   border-radius: 3px !important;
@@ -2657,6 +2676,8 @@ body .keikyo-interview-final-cta__center > .keikyo-interview-final-cta__body p {
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
+  width: auto !important;
+  flex-shrink: 0 !important;
 }
 .keikyo-interview-header__cta--secondary {
   background: transparent !important;
