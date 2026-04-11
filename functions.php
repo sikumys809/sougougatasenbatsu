@@ -63,6 +63,7 @@ add_action( 'wp_enqueue_scripts', function() {
         'single-interview'       => 'pages/single-interview.css',
         'archive-interview'      => 'pages/interview.css',
         'single'                 => 'pages/single.css',
+        'page'                   => 'pages/single.css',  // ← 固定ページ汎用
         'archive'                => 'pages/archive.css',
         'category'               => 'pages/category.css',
         'tag'                    => 'pages/tag.css',
@@ -75,6 +76,7 @@ add_action( 'wp_enqueue_scripts', function() {
             || ( 'single-interview' === $template && is_singular( 'interview' ) )
             || ( 'archive-interview' === $template && is_post_type_archive( 'interview' ) )
             || ( 'single' === $template && is_singular( 'post' ) )
+            || ( 'page' === $template && is_page() && ! is_page_template() )  // ← 追加
             || ( 'archive' === $template && is_post_type_archive() )
             || ( 'category' === $template && is_category() )
             || ( 'tag' === $template && is_tag() )
@@ -130,7 +132,6 @@ add_action( 'init', function() {
         'supports'           => [ 'title', 'editor', 'thumbnail', 'excerpt', 'custom-fields' ],
         'menu_position'      => 5,
         'menu_icon'          => 'dashicons-format-chat',
-        // ★ カテゴリーと通常タグの両方を共有
         'taxonomies'         => [ 'category', 'post_tag' ],
     ] );
 
@@ -187,10 +188,10 @@ add_action( 'pre_get_posts', function( WP_Query $query ) {
 // ============================================================
 // 7. ヘッダー・フッター切り替えヘルパー
 // ============================================================
-//   get_header();        → header.php
-//   get_header('lp');    → header-lp.php
-//   get_footer();        → footer.php
-//   get_footer('lp');    → footer-lp.php
+//   get_header();     → header.php
+//   get_header('lp'); → header-lp.php
+//   get_footer();     → footer.php
+//   get_footer('lp'); → footer-lp.php
 
 
 // ============================================================
