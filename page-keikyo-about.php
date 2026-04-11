@@ -371,7 +371,7 @@ get_header();
         <div class="about-line__card"><div class="about-line__num">05</div><div class="about-line__title">自己分析シート</div></div>
         <div class="about-line__card"><div class="about-line__num">06</div><div class="about-line__title">自分史作成<br>無料体験授業</div></div>
       </div>
-      <a href="https://lin.ee/XXXXXXX" class="btn btn--line" target="_blank" rel="noopener noreferrer">
+      <a href="https://line.me/R/ti/p/@712gzjgo" class="btn btn--line" target="_blank" rel="noopener noreferrer">
         LINEで無料受け取り →
       </a>
       <p class="about-line__note">登録無料・勧誘なし・いつでも解除可能</p>
