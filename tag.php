@@ -1,116 +1,168 @@
 <?php
 /**
- * tag.php
- * タグアーカイブページ
- *
- * @package keikyo-theme
+ * tag.php — タグアーカイブテンプレート
+ * 通常投稿 + interview CPT の両方を表示
+ * CSS: assets/css/pages/tag.css
  */
 
 get_header();
 
-$current_tag = get_queried_object();
-$tag_id      = $current_tag->term_id;
-$tag_name    = $current_tag->name;
-$tag_desc    = $current_tag->description;
+$tag_obj   = get_queried_object();
+$tag_name  = $tag_obj ? $tag_obj->name : '';
+$tag_slug  = $tag_obj ? $tag_obj->slug : '';
 
-$paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
-$posts_query = new WP_Query( [
-    'post_type'      => 'post',
-    'tag_id'         => $tag_id,
-    'posts_per_page' => 10,
-    'paged'          => $paged,
-    'orderby'        => 'date',
-    'order'          => 'DESC',
+// ── interview CPT クエリ ──────────────────────────────
+$interview_query = new WP_Query( [
+    'post_type'      => 'interview',
+    'posts_per_page' => -1,
+    'tag'            => $tag_slug,
+    'no_found_rows'  => false,
 ] );
+$interview_count = $interview_query->found_posts;
+
+// ── 通常投稿クエリ（ページネーション付き） ────────────
+$paged      = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
+$posts_per  = 6;
+$post_query = new WP_Query( [
+    'post_type'      => 'post',
+    'posts_per_page' => $posts_per,
+    'paged'          => $paged,
+    'tag'            => $tag_slug,
+] );
+$post_count  = $post_query->found_posts;
+$total_count = $interview_count + $post_count;
+$has_interviews = $interview_count > 0;
+$has_posts      = $post_count > 0;
 ?>
 
-<main class="site-main tag-page" id="main">
-<div class="category-page">
+<div class="tag-page">
 
-    <!-- タグヒーロー（sand背景） -->
-    <div class="cat-hero" style="background: var(--sand); border-bottom: 1px solid rgba(0,0,0,0.06);">
-        <div class="container">
+  <!-- ===== HERO ===== -->
+  <section class="tag-hero">
+    <div class="tag-shell">
 
-            <nav class="breadcrumb" aria-label="パンくずリスト">
-                <ol class="breadcrumb__list">
-                    <li class="breadcrumb__item">
-                        <a href="<?php echo esc_url( home_url( '/' ) ); ?>" style="color:rgba(26,26,46,0.5);">トップ</a>
-                    </li>
-                    <li class="breadcrumb__item is-current" style="color:rgba(26,26,46,0.5);">
-                        #<?php echo esc_html( $tag_name ); ?>
-                    </li>
-                </ol>
-            </nav>
+      <nav class="tag-hero__breadcrumb" aria-label="パンくず">
+        <a href="<?php echo esc_url( home_url( '/' ) ); ?>">トップ</a>
+        <span>/</span>
+        <span>#<?php echo esc_html( $tag_name ); ?></span>
+      </nav>
 
-            <div class="cat-hero__title">
-                <h1 class="cat-hero__h1" style="color: var(--navy);">
-                    <span style="color: var(--red);">#</span><?php echo esc_html( $tag_name ); ?>
-                </h1>
-                <span class="cat-hero__title-suffix" style="color:rgba(26,26,46,0.6);">の記事一覧</span>
-            </div>
-            <span class="cat-hero__badge" style="border-radius: 20px;">
-                <?php echo esc_html( $posts_query->found_posts ); ?>件
-            </span>
-
-        </div>
-    </div>
-
-    <div class="container">
-
-        <section class="cat-posts" aria-label="記事一覧">
-
-            <?php if ( $posts_query->have_posts() ) : ?>
-
-            <div class="tag-grid">
-                <?php while ( $posts_query->have_posts() ) : $posts_query->the_post(); ?>
-                <article class="tag-card">
-                    <a href="<?php the_permalink(); ?>" class="tag-card__link" style="text-decoration:none;display:block;">
-                        <div class="tag-card__thumb">
-                            <?php if ( has_post_thumbnail() ) :
-                                the_post_thumbnail( 'keikyo-card', [ 'alt' => get_the_title() ] );
-                            else : ?>
-                                <div class="tag-card__thumb-placeholder">THUMBNAIL</div>
-                            <?php endif; ?>
-                            <?php $first_cat = get_the_category(); if ( $first_cat ) : ?>
-                            <span class="tag-card__cat-badge"><?php echo esc_html( $first_cat[0]->name ); ?></span>
-                            <?php endif; ?>
-                        </div>
-                        <div class="tag-card__body">
-                            <p class="tag-card__date"><?php echo esc_html( get_the_date( 'Y.m.d' ) ); ?></p>
-                            <h2 class="tag-card__title"><?php the_title(); ?></h2>
-                            <p class="tag-card__excerpt"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 60, '…' ) ); ?></p>
-                            <span class="tag-card__link">続きを読む →</span>
-                        </div>
-                    </a>
-                </article>
-                <?php endwhile; wp_reset_postdata(); ?>
-            </div>
-
-            <nav class="tag-pagination" aria-label="ページナビゲーション">
-                <?php
-                echo paginate_links( [
-                    'base'      => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
-                    'format'    => '?paged=%#%',
-                    'current'   => max( 1, $paged ),
-                    'total'     => $posts_query->max_num_pages,
-                    'prev_text' => '← 前へ',
-                    'next_text' => '次へ →',
-                    'type'      => 'list',
-                ] );
-                ?>
-            </nav>
-
-            <?php else : ?>
-            <div class="cat-empty">
-                <p class="cat-empty__text">このタグの記事はまだありません。</p>
-            </div>
-            <?php endif; ?>
-
-        </section>
+      <div class="tag-hero__header">
+        <h1 class="tag-hero__title">
+          <span class="tag-hero__title-hash">#</span><?php echo esc_html( $tag_name ); ?><span class="tag-hero__sub">の記事一覧</span>
+        </h1>
+        <span class="tag-hero__count">全<?php echo esc_html( $total_count ); ?>件</span>
+      </div>
 
     </div>
+  </section><!-- /.tag-hero -->
 
-</div>
-</main>
+
+  <?php if ( $has_interviews ) : ?>
+  <!-- ===== 合格者の声セクション ===== -->
+  <section class="tag-section">
+    <div class="tag-shell">
+
+      <div class="tag-section__header">
+        <h2 class="tag-section__title">合格者の声</h2>
+        <span class="tag-section__count"><?php echo esc_html( $interview_count ); ?>件</span>
+      </div>
+
+      <div class="interview-grid">
+        <?php while ( $interview_query->have_posts() ) : $interview_query->the_post(); ?>
+          <a href="<?php the_permalink(); ?>" class="interview-card">
+            <div class="interview-card__photo">
+              <?php if ( has_post_thumbnail() ) : ?>
+                <?php the_post_thumbnail( 'medium_large', [ 'alt' => get_the_title(), 'class' => 'interview-card__img' ] ); ?>
+              <?php else : ?>
+                <div class="interview-card__photo-placeholder">PHOTO</div>
+              <?php endif; ?>
+              <span class="interview-card__badge">合格者対談</span>
+              <div class="interview-card__overlay">
+                <p class="interview-card__name"><?php the_title(); ?></p>
+                <p class="interview-card__univ"><?php echo esc_html( get_post_meta( get_the_ID(), 'university', true ) ); ?></p>
+              </div>
+            </div>
+          </a>
+        <?php endwhile; wp_reset_postdata(); ?>
+      </div>
+
+    </div>
+  </section>
+  <?php endif; ?>
+
+
+  <?php if ( $has_posts ) : ?>
+  <!-- ===== 対策・情報記事セクション ===== -->
+  <section class="tag-section">
+    <div class="tag-shell">
+
+      <div class="tag-section__header">
+        <h2 class="tag-section__title">対策・情報記事</h2>
+        <span class="tag-section__count"><?php echo esc_html( $post_count ); ?>件</span>
+      </div>
+
+      <div class="article-list">
+        <?php while ( $post_query->have_posts() ) : $post_query->the_post();
+          $cats       = get_the_category();
+          $cat_label  = $cats ? esc_html( $cats[0]->name ) : '';
+        ?>
+          <article class="article-item">
+            <a href="<?php the_permalink(); ?>" class="article-item__thumb" tabindex="-1" aria-hidden="true">
+              <?php if ( has_post_thumbnail() ) : ?>
+                <?php the_post_thumbnail( 'medium_large', [ 'alt' => '', 'class' => 'article-item__img' ] ); ?>
+              <?php else : ?>
+                <div class="article-item__thumb-placeholder">THUMBNAIL</div>
+              <?php endif; ?>
+              <?php if ( $cat_label ) : ?>
+                <span class="article-item__category"><?php echo $cat_label; ?></span>
+              <?php endif; ?>
+            </a>
+            <div class="article-item__body">
+              <p class="article-item__date"><?php echo esc_html( get_the_date( 'Y.m.d' ) ); ?></p>
+              <h3 class="article-item__title">
+                <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+              </h3>
+              <p class="article-item__excerpt"><?php echo wp_trim_words( get_the_excerpt(), 60, '…' ); ?></p>
+              <a href="<?php the_permalink(); ?>" class="article-item__link">続きを読む →</a>
+            </div>
+          </article>
+        <?php endwhile; wp_reset_postdata(); ?>
+      </div>
+
+      <!-- ページネーション -->
+      <?php if ( $post_query->max_num_pages > 1 ) : ?>
+      <nav class="tag-pagination" aria-label="ページネーション">
+        <?php
+        $big = 999999999;
+        echo paginate_links( [
+            'base'      => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+            'format'    => '?paged=%#%',
+            'current'   => max( 1, $paged ),
+            'total'     => $post_query->max_num_pages,
+            'prev_text' => '← 前へ',
+            'next_text' => '次へ →',
+            'type'      => 'list',
+            'before_page_number' => '',
+        ] );
+        ?>
+      </nav>
+      <?php endif; ?>
+
+    </div>
+  </section>
+  <?php endif; ?>
+
+
+  <?php if ( ! $has_interviews && ! $has_posts ) : ?>
+  <!-- ===== 記事なし ===== -->
+  <section class="tag-section">
+    <div class="tag-shell">
+      <p class="tag-empty">このタグに該当する記事はまだありません。</p>
+    </div>
+  </section>
+  <?php endif; ?>
+
+</div><!-- /.tag-page -->
 
 <?php get_footer(); ?>
