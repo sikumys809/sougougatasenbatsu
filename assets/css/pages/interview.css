@@ -334,3 +334,16 @@
     font-size: 16px;
   }
 }
+
+/* ========================================
+   フッター余白リセット・カード修正
+   ======================================== */
+body.post-type-archive-interview .keikyo-interview-site-footer,
+body.archive .keikyo-interview-site-footer {
+  margin-top: 0 !important;
+}
+
+/* 記事が少ない時もカードを適切なサイズに */
+.card-grid {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}

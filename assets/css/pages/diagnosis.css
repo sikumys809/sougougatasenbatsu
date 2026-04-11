@@ -2,7 +2,7 @@
    diagnosis.css — 総合型選抜適性診断ページ専用スタイル
    ============================================================ */
 
-.diagnosis-wrapper { min-height: 100vh; }
+.diagnosis-wrapper { min-height: 0; }
 
 .diagnosis-section { display: none; }
 .diagnosis-section.active { display: block; }
@@ -378,3 +378,8 @@
   .result-cta-buttons .diagnosis-btn { width: 100%; min-width: unset; }
 }
 
+
+/* フッター余白リセット */
+body.page .keikyo-interview-site-footer {
+  margin-top: 0 !important;
+}
