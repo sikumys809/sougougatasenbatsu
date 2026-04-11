@@ -10,13 +10,21 @@ get_header();
 $tag_obj   = get_queried_object();
 $tag_name  = $tag_obj ? $tag_obj->name : '';
 $tag_slug  = $tag_obj ? $tag_obj->slug : '';
+$tag_id    = $tag_obj ? $tag_obj->term_id : 0;
 
 // ── interview CPT クエリ ──────────────────────────────
+// ※ 'tag' 短縮形はCPTに効かないため tax_query で明示指定
 $interview_query = new WP_Query( [
     'post_type'      => 'interview',
     'posts_per_page' => -1,
-    'tag'            => $tag_slug,
     'no_found_rows'  => false,
+    'tax_query'      => [
+        [
+            'taxonomy' => 'post_tag',
+            'field'    => 'term_id',
+            'terms'    => $tag_id,
+        ],
+    ],
 ] );
 $interview_count = $interview_query->found_posts;
 
@@ -27,7 +35,13 @@ $post_query = new WP_Query( [
     'post_type'      => 'post',
     'posts_per_page' => $posts_per,
     'paged'          => $paged,
-    'tag'            => $tag_slug,
+    'tax_query'      => [
+        [
+            'taxonomy' => 'post_tag',
+            'field'    => 'term_id',
+            'terms'    => $tag_id,
+        ],
+    ],
 ] );
 $post_count  = $post_query->found_posts;
 $total_count = $interview_count + $post_count;
@@ -104,8 +118,8 @@ $has_posts      = $post_count > 0;
 
       <div class="article-list">
         <?php while ( $post_query->have_posts() ) : $post_query->the_post();
-          $cats       = get_the_category();
-          $cat_label  = $cats ? esc_html( $cats[0]->name ) : '';
+          $cats      = get_the_category();
+          $cat_label = $cats ? esc_html( $cats[0]->name ) : '';
         ?>
           <article class="article-item">
             <a href="<?php the_permalink(); ?>" class="article-item__thumb" tabindex="-1" aria-hidden="true">
@@ -143,7 +157,6 @@ $has_posts      = $post_count > 0;
             'prev_text' => '← 前へ',
             'next_text' => '次へ →',
             'type'      => 'list',
-            'before_page_number' => '',
         ] );
         ?>
       </nav>
@@ -156,7 +169,7 @@ $has_posts      = $post_count > 0;
 
   <?php if ( ! $has_interviews && ! $has_posts ) : ?>
   <!-- ===== 記事なし ===== -->
-  <section class="tag-section">
+  <section class="tag-section tag-section--empty">
     <div class="tag-shell">
       <p class="tag-empty">このタグに該当する記事はまだありません。</p>
     </div>
