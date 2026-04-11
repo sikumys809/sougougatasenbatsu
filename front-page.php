@@ -34,6 +34,23 @@ get_header();
 <main>
 
 <!-- HEADER -->
+<header class="header">
+  <div class="shell header__inner">
+    <a href="<?php echo esc_url( home_url('/') ); ?>" class="header__logo">
+      <?php if ( has_custom_logo() ) : the_custom_logo(); else : ?><span>慶教ゼミナール</span><?php endif; ?>
+    </a>
+    <nav class="header__nav">
+      <a href="<?php echo esc_url($about_url); ?>">慶教ゼミナールとは？</a>
+      <a href="<?php echo esc_url($performance_url); ?>">合格実績</a>
+      <a href="<?php echo esc_url($stories_url); ?>">合格者対談</a>
+      <a href="<?php echo esc_url($nav_url); ?>">合格ナビ</a>
+    </nav>
+    <div class="header__cta">
+      <a href="<?php echo esc_url($diagnosis_url); ?>" class="btn btn--outline">総合型選抜適性診断</a>
+      <a href="<?php echo esc_url($consultation_url); ?>" class="btn btn--red" target="_blank" rel="noopener noreferrer">無料受験相談</a>
+    </div>
+  </div>
+</header>
 
 <!-- SECTION 01: HERO -->
 <section class="hero">
@@ -454,45 +471,6 @@ get_header();
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="shell">
-    <div class="footer__grid">
-      <div>
-        <p class="footer__brand">慶教ゼミナール</p>
-        <p class="footer__desc">総合型選抜専門 × 完全オンライン塾。全国どこからでも、難関大学合格への最短ルートを設計します。</p>
-      </div>
-      <div>
-        <p class="footer__title">Navigation</p>
-        <ul class="footer__links">
-          <li><a href="<?php echo esc_url($about_url); ?>">慶教ゼミナールとは？</a></li>
-          <li><a href="<?php echo esc_url($performance_url); ?>">合格実績</a></li>
-          <li><a href="<?php echo esc_url($stories_url); ?>">合格者対談</a></li>
-          <li><a href="<?php echo esc_url($nav_url); ?>">合格ナビ</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="footer__title">Support</p>
-        <ul class="footer__links">
-          <li><a href="<?php echo esc_url($consultation_url); ?>" target="_blank" rel="noopener noreferrer">無料受験相談</a></li>
-          <li><a href="<?php echo esc_url($diagnosis_url); ?>">適性診断</a></li>
-          <li><a href="<?php echo esc_url( home_url('/contact/') ); ?>">お問い合わせ</a></li>
-          <li><a href="<?php echo esc_url( home_url('/privacy/') ); ?>">プライバシーポリシー</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="footer__title">Follow Us</p>
-        <ul class="footer__links">
-          <li><a href="<?php echo esc_url($line_url); ?>" target="_blank" rel="noopener noreferrer">LINE公式アカウント</a></li>
-          <li><a href="https://www.instagram.com/keikyo_seminar/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-          <li><a href="https://x.com/keikyo_seminar" target="_blank" rel="noopener noreferrer">X（Twitter）</a></li>
-        </ul>
-      </div>
-    </div>
-    <p class="footer__copy">© <?php echo date('Y'); ?> 慶教ゼミナール All Rights Reserved.</p>
-  </div>
-</footer>
-
 </main>
 
 <script>
@@ -511,6 +489,6 @@ get_header();
 })();
 </script>
 
-<?php wp_footer(); ?>
-</body>
+<?php get_footer(); ?>
+
 </html>

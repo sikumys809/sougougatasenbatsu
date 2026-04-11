@@ -2549,7 +2549,20 @@ body .keikyo-interview-final-cta__center > .keikyo-interview-final-cta__body p {
   transition: color 0.2s;
 }
 .keikyo-interview-site-footer__column a:hover { color: #fff; }
-.keikyo-interview-site-footer__socials { display: flex; flex-direction: column; }
+.keikyo-interview-site-footer__socials { display: flex; flex-direction: column; gap: 8px; }
+.keikyo-interview-site-footer__socials a {
+  display: block !important;
+  background: transparent !important;
+  min-width: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  line-height: 1.6;
+  transition: color 0.2s;
+}
+.keikyo-interview-site-footer__socials a:hover { color: #fff !important; }
 .keikyo-interview-site-footer__bottom {
   font-size: 12px;
   color: rgba(255,255,255,0.3);
