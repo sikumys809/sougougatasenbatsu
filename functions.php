@@ -62,6 +62,7 @@ add_action( 'wp_enqueue_scripts', function() {
         'page-keikyo-about'      => 'pages/about.css',
         'page-lp'                => 'pages/page-lp.css',
         'page-navi'              => 'pages/navi.css',
+        'template-diagnosis'     => 'pages/diagnosis.css',
         'single-interview'       => 'pages/single-interview.css',
         'archive-interview'      => 'pages/interview.css',
         'single'                 => 'pages/single.css',
