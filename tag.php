@@ -13,16 +13,22 @@ $tag_slug  = $tag_obj ? $tag_obj->slug : '';
 $tag_id    = $tag_obj ? $tag_obj->term_id : 0;
 
 // ── interview CPT クエリ ──────────────────────────────
-// ※ 'tag' 短縮形はCPTに効かないため tax_query で明示指定
+// post_tag OR interview_tag（同じslug）どちらでも拾う
 $interview_query = new WP_Query( [
     'post_type'      => 'interview',
     'posts_per_page' => -1,
     'no_found_rows'  => false,
     'tax_query'      => [
+        'relation' => 'OR',
         [
             'taxonomy' => 'post_tag',
             'field'    => 'term_id',
             'terms'    => $tag_id,
+        ],
+        [
+            'taxonomy' => 'interview_tag',
+            'field'    => 'slug',
+            'terms'    => $tag_slug,
         ],
     ],
 ] );
