@@ -690,3 +690,31 @@ body.page .keikyo-interview-site-footer {
   outline: 2px solid #c0392b;
   outline-offset: 2px;
 }
+
+/* ========================================
+   site-main / #main をフル幅にリセット
+   （category.css と同じ対処）
+   ======================================== */
+body.single .site-main,
+body.single #main,
+body.page .site-main,
+body.page #main {
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+}
+
+/* ========================================
+   base.css のヘッダー・フッター余白を上書き
+   ======================================== */
+body.single .keikyo-interview-header,
+body.page .keikyo-interview-header {
+  margin-bottom: 0 !important;
+}
+
+body.single .keikyo-interview-site-footer,
+body.page .keikyo-interview-site-footer {
+  margin-top: 0 !important;
+}
