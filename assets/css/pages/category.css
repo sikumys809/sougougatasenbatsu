@@ -1,620 +1,416 @@
-/* ==========================================================================
-   Category Page Styles
-   総合型選抜・AO入試専門予備校「慶教ゼミナール」
-   ========================================================================== */
+/* ============================================================
+   category.css — カテゴリーアーカイブページ専用スタイル
+   V0デザインより変換
+   ============================================================ */
 
-/* --------------------------------------------------------------------------
-   Category Hero
-   -------------------------------------------------------------------------- */
+/* ========================================
+   HERO
+   ======================================== */
 .cat-hero {
-  width: 100%;
-  padding: 32px 16px;
-  background-color: var(--color-bg-sub, #f5f5f7);
+  background: var(--navy) !important;
+  padding: 48px 0 56px;
 }
 
-.cat-hero__inner {
-  max-width: 1024px;
-  margin: 0 auto;
+.cat-hero .breadcrumb {
+  margin-bottom: 24px;
+}
+
+.cat-hero .breadcrumb__list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+}
+
+.cat-hero .breadcrumb__item a {
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.cat-hero .breadcrumb__item a:hover {
+  color: rgba(255,255,255,0.8);
+}
+
+.cat-hero .breadcrumb__item::after {
+  content: '›';
+  margin-left: 8px;
+  color: rgba(255,255,255,0.3);
+}
+
+.cat-hero .breadcrumb__item:last-child::after {
+  display: none;
+}
+
+.cat-hero .breadcrumb__item.is-current {
+  color: rgba(255,255,255,0.5);
 }
 
 .cat-hero__title {
-  font-family: var(--font-sans);
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 1.4;
-  color: var(--color-text, #1a1a2e);
-  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.cat-hero__title > h1,
+h1.cat-hero__title {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  color: var(--white) !important;
+  line-height: 1.3;
 }
 
 .cat-hero__title-suffix {
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--color-text-muted, #6b7280);
-  margin-left: 8px;
+  font-size: clamp(14px, 2vw, 18px);
+  color: rgba(255,255,255,0.6) !important;
 }
 
-.cat-hero__desc {
-  max-width: 720px;
-  margin-top: 12px;
-  font-size: 14px;
-  line-height: 1.8;
-  color: var(--color-text-muted, #6b7280);
-}
-
-@media (min-width: 768px) {
-  .cat-hero {
-    padding: 48px 24px;
-  }
-
-  .cat-hero__title {
-    font-size: 28px;
-  }
-
-  .cat-hero__desc {
-    font-size: 15px;
-  }
-}
-
-/* --------------------------------------------------------------------------
-   Breadcrumb
-   -------------------------------------------------------------------------- */
-.breadcrumb {
-  padding: 12px 16px;
-  background-color: var(--color-bg, #fff);
-}
-
-.breadcrumb__list {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  max-width: 1024px;
-  margin: 0 auto;
-}
-
-.breadcrumb__item {
-  display: flex;
-  align-items: center;
-  font-size: 13px;
-  color: var(--color-text-muted, #6b7280);
-}
-
-.breadcrumb__item:not(:last-child)::after {
-  content: "›";
-  margin: 0 8px;
-  color: var(--color-text-muted, #6b7280);
-  opacity: 0.6;
-}
-
-.breadcrumb__item a {
-  color: var(--color-text-muted, #6b7280);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.breadcrumb__item a:hover {
-  color: var(--color-primary, #1a1a2e);
-  text-decoration: underline;
-}
-
-.breadcrumb__item.is-current {
+.cat-hero__badge {
+  display: inline-block;
+  background: var(--red);
+  color: var(--white);
+  font-size: 12px;
   font-weight: 600;
-  color: var(--color-text, #1a1a2e);
+  padding: 6px 14px;
+  border-radius: 4px;
+  margin-top: 20px;
 }
 
-@media (min-width: 768px) {
-  .breadcrumb {
-    padding: 16px 24px;
-  }
-
-  .breadcrumb__item {
-    font-size: 14px;
-  }
-}
-
-/* --------------------------------------------------------------------------
-   Category Filter (Child Categories)
-   -------------------------------------------------------------------------- */
+/* ========================================
+   CATEGORY TABS
+   ======================================== */
 .cat-filter {
-  display: flex;
-  gap: 8px;
-  padding: 16px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  background: var(--cream);
+  padding: 32px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 
-.cat-filter::-webkit-scrollbar {
-  display: none;
+.cat-filter__inner {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .cat-filter__btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 16px;
-  font-family: var(--font-sans);
+  font-family: var(--font-jp);
   font-size: 13px;
   font-weight: 500;
-  color: var(--color-text, #1a1a2e);
-  background-color: transparent;
-  border: 1px solid var(--color-border, #e5e7eb);
-  border-radius: 9999px;
+  padding: 10px 18px;
+  border-radius: 4px;
+  border: 1px solid var(--navy);
+  background: var(--white);
+  color: var(--navy);
   cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s ease;
+  transition: all 0.2s;
 }
 
 .cat-filter__btn:hover {
-  border-color: var(--color-primary, #1a1a2e);
-  background-color: var(--color-bg-sub, #f5f5f7);
-}
-
-.cat-filter__btn:focus-visible {
-  outline: 2px solid var(--color-primary, #1a1a2e);
-  outline-offset: 2px;
+  background: var(--sand);
 }
 
 .cat-filter__btn.is-active {
-  color: #fff;
-  background-color: var(--color-primary, #1a1a2e);
-  border-color: var(--color-primary, #1a1a2e);
+  background: var(--navy);
+  color: var(--white);
+  border-color: var(--navy);
 }
 
 .cat-filter__btn-count {
   font-size: 11px;
-  font-weight: 400;
-  color: var(--color-text-muted, #6b7280);
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
-.cat-filter__btn.is-active .cat-filter__btn-count {
-  color: rgba(255, 255, 255, 0.8);
+/* ========================================
+   SECTION COMMON
+   ======================================== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
-@media (min-width: 768px) {
-  .cat-filter {
-    flex-wrap: wrap;
-    padding: 20px 24px;
-    overflow-x: visible;
-  }
-
-  .cat-filter__btn {
-    font-size: 14px;
-    padding: 10px 20px;
-  }
+.cat-interviews,
+.cat-posts {
+  background: var(--cream);
+  padding: 48px 0;
 }
 
-/* --------------------------------------------------------------------------
-   Section Header
-   -------------------------------------------------------------------------- */
 .cat-section-header {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 .cat-section-title {
-  font-family: var(--font-sans);
-  font-size: 18px;
-  font-weight: 500;
-  color: var(--color-text, #1a1a2e);
-  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--navy);
 }
 
 .cat-section-count {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px 10px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--color-text-muted, #6b7280);
-  background-color: var(--color-bg-sub, #f5f5f7);
-  border-radius: 9999px;
+  font-size: 13px;
+  color: rgba(26,26,46,0.5);
 }
 
-/* --------------------------------------------------------------------------
-   Interview Cards Section (合格者対談)
-   -------------------------------------------------------------------------- */
-.cat-interviews {
-  padding: 24px 16px;
-}
-
-.cat-interviews__inner {
-  max-width: 1024px;
-  margin: 0 auto;
-}
-
+/* ========================================
+   VOICE CARDS（合格者対談）
+   ======================================== */
 .interview-card-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 1023px) {
+  .interview-card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .interview-card-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .interview-card {
   position: relative;
-  display: block;
-  background-color: #fff;
-  border: 1px solid var(--color-border, #e5e7eb);
   border-radius: 8px;
   overflow: hidden;
+  background: var(--white);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: block;
   text-decoration: none;
-  color: inherit;
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .interview-card:hover {
-  border-color: var(--color-border-hover, #d1d5db);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.interview-card:focus-visible {
-  outline: 2px solid var(--color-primary, #1a1a2e);
-  outline-offset: 2px;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
 }
 
 .interview-card__thumb {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3/4;
   overflow: hidden;
-  background-color: var(--color-bg-sub, #f5f5f7);
+  background: var(--sand);
 }
 
 .interview-card__img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.interview-card:hover .interview-card__img {
-  transform: scale(1.03);
+  display: block;
 }
 
 .interview-card__img-placeholder {
   width: 100%;
   height: 100%;
-  background-color: var(--color-bg-sub, #f5f5f7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.interview-card__img-placeholder::after {
-  content: "";
-  width: 48px;
-  height: 48px;
-  background-color: var(--color-border, #e5e7eb);
-  border-radius: 8px;
+  background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
 }
 
 .interview-card__badge {
   position: absolute;
-  top: 8px;
-  left: 8px;
-  padding: 4px 10px;
-  font-size: 11px;
+  top: 12px;
+  left: 12px;
+  background: var(--red);
+  color: var(--white);
+  font-size: 10px;
   font-weight: 600;
-  color: #fff;
-  background-color: var(--color-primary, #1a1a2e);
-  border-radius: 4px;
-  z-index: 1;
+  padding: 4px 10px;
+  border-radius: 3px;
+  letter-spacing: 0.05em;
 }
 
 .interview-card__body {
-  padding: 12px;
+  padding: 16px;
 }
 
 .interview-card__title {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--navy);
   line-height: 1.5;
-  color: var(--color-text, #1a1a2e);
-  margin: 0 0 6px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  margin-bottom: 4px;
 }
 
 .interview-card__univ {
   font-size: 12px;
-  color: var(--color-text-muted, #6b7280);
-  margin: 0;
+  color: rgba(26,26,46,0.6);
 }
 
 .cat-interviews__more {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+  margin-top: 24px;
+  text-align: center;
 }
 
-@media (min-width: 768px) {
-  .cat-interviews {
-    padding: 32px 24px;
-  }
-
-  .interview-card-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .interview-card__body {
-    padding: 16px;
-  }
-
-  .interview-card__title {
-    font-size: 15px;
-  }
-
-  .interview-card__univ {
-    font-size: 13px;
-  }
+.btn-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+  text-decoration: none;
+  border: 1px solid var(--navy);
+  padding: 12px 24px;
+  border-radius: 4px;
+  transition: all 0.2s;
 }
 
-/* --------------------------------------------------------------------------
-   Post List (通常記事リスト)
-   -------------------------------------------------------------------------- */
-.cat-posts {
-  padding: 24px 16px;
+.btn-more:hover {
+  background: var(--navy);
+  color: var(--white);
 }
 
-.cat-posts__inner {
-  max-width: 1024px;
-  margin: 0 auto;
-}
-
+/* ========================================
+   ARTICLE LIST（対策・情報記事）
+   ======================================== */
 .post-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 20px;
 }
 
 .post-card--list {
-  display: flex;
-  gap: 12px;
-  padding: 12px;
-  background-color: #fff;
-  border: 1px solid var(--color-border, #e5e7eb);
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 0;
+  background: var(--white);
   border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
   text-decoration: none;
-  color: inherit;
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.post-card--list .post-card__link {
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100%;
+  text-decoration: none;
 }
 
 .post-card--list:hover {
-  border-color: var(--color-border-hover, #d1d5db);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-.post-card--list:focus-visible {
-  outline: 2px solid var(--color-primary, #1a1a2e);
-  outline-offset: 2px;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
 }
 
 .post-card__thumb {
-  flex-shrink: 0;
-  width: 96px;
-  height: 72px;
-  border-radius: 6px;
+  flex-shrink: 0 !important;
+  width: 240px !important;
+  aspect-ratio: 16/9;
   overflow: hidden;
-  background-color: var(--color-bg-sub, #f5f5f7);
+  background: var(--sand);
 }
 
 .post-card__img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 .post-card__img-placeholder {
   width: 100%;
   height: 100%;
-  background-color: var(--color-bg-sub, #f5f5f7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.post-card__img-placeholder::after {
-  content: "";
-  width: 24px;
-  height: 24px;
-  background-color: var(--color-border, #e5e7eb);
-  border-radius: 4px;
+  background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
 }
 
 .post-card__body {
   flex: 1;
+  padding: 20px 24px 20px 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  min-width: 0;
+  justify-content: center;
 }
 
 .post-card__meta {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  color: var(--color-text-muted, #6b7280);
+  gap: 12px;
+  margin-bottom: 8px;
 }
 
 .post-card__date {
-  white-space: nowrap;
+  font-size: 12px;
+  color: rgba(26,26,46,0.5);
 }
 
 .post-card__cat {
-  display: inline-block;
-  padding: 2px 6px;
   font-size: 11px;
-  background-color: var(--color-bg-sub, #f5f5f7);
-  border-radius: 4px;
-  white-space: nowrap;
+  font-weight: 600;
+  color: var(--red);
+  background: rgba(192,57,43,0.08);
+  padding: 3px 8px;
+  border-radius: 3px;
 }
 
 .post-card__title {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--navy);
   line-height: 1.5;
-  color: var(--color-text, #1a1a2e);
-  margin: 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  margin-bottom: 8px;
 }
 
 .post-card__excerpt {
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--color-text-muted, #6b7280);
-  margin: 0;
+  font-size: 13px;
+  color: rgba(26,26,46,0.6);
+  line-height: 1.7;
+}
+
+.line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-@media (min-width: 768px) {
-  .cat-posts {
-    padding: 32px 24px;
-  }
-
-  .post-list {
-    gap: 16px;
-  }
-
+@media (max-width: 767px) {
   .post-card--list {
-    gap: 16px;
-    padding: 16px;
+    flex-direction: column;
   }
-
+  .post-card--list .post-card__link {
+    flex-direction: column !important;
+  }
   .post-card__thumb {
-    width: 120px;
-    height: 80px;
+    width: 100% !important;
   }
-
-  .post-card__meta {
-    font-size: 13px;
-  }
-
-  .post-card__cat {
-    font-size: 12px;
-  }
-
-  .post-card__title {
-    font-size: 15px;
-  }
-
-  .post-card__excerpt {
-    font-size: 13px;
+  .post-card__body {
+    padding: 16px;
   }
 }
 
-/* --------------------------------------------------------------------------
-   More Button
-   -------------------------------------------------------------------------- */
-.btn-more {
-  display: inline-flex;
+/* ========================================
+   PAGINATION
+   ======================================== */
+.pagination {
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-width: 160px;
-  padding: 12px 24px;
-  font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--color-text, #1a1a2e);
-  background-color: transparent;
-  border: 1px solid var(--color-border, #e5e7eb);
-  border-radius: 8px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-.btn-more:hover {
-  border-color: var(--color-primary, #1a1a2e);
-  background-color: var(--color-bg-sub, #f5f5f7);
-}
-
-.btn-more:focus-visible {
-  outline: 2px solid var(--color-primary, #1a1a2e);
-  outline-offset: 2px;
-}
-
-.btn-more::after {
-  content: "→";
-  transition: transform 0.2s ease;
-}
-
-.btn-more:hover::after {
-  transform: translateX(4px);
-}
-
-/* --------------------------------------------------------------------------
-   Empty & No Result States
-   -------------------------------------------------------------------------- */
-.filter-no-result {
-  text-align: center;
-  padding: 32px 16px;
-  font-size: 14px;
-  color: var(--color-text-muted, #6b7280);
-}
-
-.cat-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 48px 16px;
-  text-align: center;
-}
-
-.cat-empty__icon {
-  width: 64px;
-  height: 64px;
-  margin-bottom: 16px;
-  color: var(--color-border, #e5e7eb);
-}
-
-.cat-empty__text {
-  font-size: 14px;
-  color: var(--color-text-muted, #6b7280);
-  margin: 0;
-}
-
-/* --------------------------------------------------------------------------
-   Pagination
-   -------------------------------------------------------------------------- */
-.pagination {
-  display: flex;
-  justify-content: center;
-  padding: 32px 16px;
-}
-
-.page-numbers {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin: 0;
-  padding: 0;
+  margin-top: 48px;
   list-style: none;
 }
 
-.page-numbers li {
+.pagination .page-numbers {
   display: flex;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.page-numbers a,
-.page-numbers span {
-  display: flex;
+.pagination .page-numbers a,
+.pagination .page-numbers span {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   min-width: 40px;
@@ -622,78 +418,144 @@
   padding: 0 12px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--color-text, #1a1a2e);
-  background-color: #fff;
-  border: 1px solid var(--color-border, #e5e7eb);
-  border-radius: 8px;
+  color: var(--navy);
+  background: var(--white);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 4px;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all 0.2s;
 }
 
-.page-numbers a:hover {
-  border-color: var(--color-primary, #1a1a2e);
-  background-color: var(--color-bg-sub, #f5f5f7);
+.pagination .page-numbers a:hover {
+  background: var(--sand);
+  border-color: var(--navy);
 }
 
-.page-numbers a:focus-visible {
-  outline: 2px solid var(--color-primary, #1a1a2e);
-  outline-offset: 2px;
+.pagination .page-numbers .current {
+  background: var(--navy);
+  color: var(--white);
+  border-color: var(--navy);
 }
 
-.page-numbers .current {
-  color: #fff;
-  background-color: var(--color-primary, #1a1a2e);
-  border-color: var(--color-primary, #1a1a2e);
+/* ========================================
+   EMPTY STATE
+   ======================================== */
+.cat-empty {
+  padding: 64px 0;
+  text-align: center;
 }
 
-.page-numbers .dots {
-  border: none;
-  background: transparent;
-  color: var(--color-text-muted, #6b7280);
-  min-width: 32px;
-  padding: 0;
+.cat-empty__text {
+  font-size: 15px;
+  color: rgba(26,26,46,0.5);
 }
 
-.page-numbers .prev,
-.page-numbers .next {
-  font-size: 16px;
-}
-
-@media (min-width: 768px) {
-  .pagination {
-    padding: 40px 24px;
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 767px) {
+  .cat-hero {
+    padding: 32px 0 40px;
   }
-
-  .page-numbers {
-    gap: 8px;
-  }
-
-  .page-numbers a,
-  .page-numbers span {
-    min-width: 44px;
-    height: 44px;
+  .cat-interviews,
+  .cat-posts {
+    padding: 32px 0;
   }
 }
 
-/* --------------------------------------------------------------------------
-   Reduced Motion
-   -------------------------------------------------------------------------- */
-@media (prefers-reduced-motion: reduce) {
-  .interview-card,
-  .interview-card__img,
-  .post-card--list,
-  .cat-filter__btn,
-  .btn-more,
-  .btn-more::after,
-  .page-numbers a {
-    transition: none;
-  }
+/* ========================================
+   全幅レイアウトリセット
+   ======================================== */
+.category-page {
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
 
-  .interview-card:hover .interview-card__img {
-    transform: none;
-  }
+.site-main,
+#main {
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+}
 
-  .btn-more:hover::after {
-    transform: none;
+/* containerをフル幅にしてセクションが全幅背景を持てるよう修正 */
+.category-page .container {
+  max-width: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+/* cat-heroのcontainerを他セクションと揃える */
+.category-page .cat-hero .container,
+.cat-hero .container {
+  max-width: 1200px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+}
+
+@media (max-width: 767px) {
+  .category-page .cat-hero .container,
+  .cat-hero .container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
+}
+
+/* 各セクション内のコンテンツを中央寄せ */
+.cat-filter__inner,
+.cat-section-header,
+.interview-card-grid,
+.post-list,
+.cat-interviews__more,
+.pagination,
+.cat-empty {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/* ヘッダー・フッター間の白余白リセット */
+body.category .keikyo-interview-header {
+  margin-bottom: 0 !important;
+}
+body.category .keikyo-interview-site-footer {
+  margin-top: 0 !important;
+}
+
+/* cat-heroの左パディング修正 */
+.cat-hero .container {
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+}
+
+/* cat-heroのh1も左パディング */
+.cat-hero__title,
+.cat-hero .breadcrumb,
+.cat-hero__badge {
+  padding-left: 0;
+}
+
+/* 対策・情報記事のテキストと画像の間隔 */
+.post-card--list .post-card__body {
+  padding: 20px 24px !important;
+}
+
+/* セクション内コンテンツの左右パディング統一 */
+.cat-filter,
+.cat-interviews,
+.cat-posts {
+  padding-left: clamp(16px, 4vw, 48px) !important;
+  padding-right: clamp(16px, 4vw, 48px) !important;
 }

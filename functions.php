@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 // 1. 定数定義
 // ============================================================
 
-define( 'KEIKYO_VERSION', '2.0.0' );
+define( 'KEIKYO_VERSION', '1.0.0' );
 define( 'KEIKYO_DIR',     get_template_directory() );
 define( 'KEIKYO_URI',     get_template_directory_uri() );
 
@@ -65,15 +65,13 @@ add_action( 'wp_enqueue_scripts', function() {
         'front-page'           => 'pages/front-page.css',
         'page-about'           => 'pages/about.css',
         'page-keikyo-about'    => 'pages/about.css',
-        'page-performance'     => 'pages/performance.css',
-        'template-diagnosis'   => 'pages/diagnosis.css',
         'page-lp'              => 'pages/page-lp.css',
         'single-interview'     => 'pages/single-interview.css',
         'archive-interview'    => 'pages/interview.css',
-        'page-navi'            => 'pages/navi.css',
         'single'               => 'pages/single.css',
         'archive'              => 'pages/archive.css',
         'category'             => 'pages/category.css',
+        'tag'                  => 'pages/tag.css',
         'taxonomy-interview-tag' => 'pages/taxonomy-interview-tag.css',
     ];
 
@@ -81,10 +79,11 @@ add_action( 'wp_enqueue_scripts', function() {
         if ( is_page_template( $template . '.php' )
             || ( 'front-page' === $template && is_front_page() )
             || ( 'single-interview' === $template && is_singular( 'interview' ) )
+            || ( 'archive-interview' === $template && is_post_type_archive( 'interview' ) )
             || ( 'single' === $template && is_singular( 'post' ) )
             || ( 'archive' === $template && is_post_type_archive() )
-            || ( 'archive-interview' === $template && is_post_type_archive( 'interview' ) )
             || ( 'category' === $template && is_category() )
+            || ( 'tag' === $template && is_tag() )
             || ( 'taxonomy-interview-tag' === $template && is_tax( 'interview_tag' ) )
             || ( 'page-lp' === $template && is_page_template( 'page-lp.php' ) )
         ) {
@@ -99,11 +98,6 @@ add_action( 'wp_enqueue_scripts', function() {
     // カテゴリーページのみ絞り込みJSを読み込む
     if ( is_category() || is_tax() ) {
         wp_enqueue_script( 'keikyo-filter', KEIKYO_URI . '/assets/js/category-filter.js', [ 'keikyo-main' ], $v, true );
-    }
-
-    // 診断ページのみ diagnosis.js を読み込む
-    if ( is_page_template( 'template-diagnosis.php' ) ) {
-        wp_enqueue_script( 'keikyo-diagnosis', KEIKYO_URI . '/assets/js/diagnosis.js', [ 'jquery' ], $v, true );
     }
 
     // JS に WordPress 情報を渡す
