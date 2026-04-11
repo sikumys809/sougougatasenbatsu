@@ -69,7 +69,7 @@ $has_posts      = $post_count > 0;
       </div>
 
     </div>
-  </section><!-- /.tag-hero -->
+  </section>
 
 
   <?php if ( $has_interviews ) : ?>
@@ -144,7 +144,6 @@ $has_posts      = $post_count > 0;
         <?php endwhile; wp_reset_postdata(); ?>
       </div>
 
-      <!-- ページネーション -->
       <?php if ( $post_query->max_num_pages > 1 ) : ?>
       <nav class="tag-pagination" aria-label="ページネーション">
         <?php
@@ -168,7 +167,6 @@ $has_posts      = $post_count > 0;
 
 
   <?php if ( ! $has_interviews && ! $has_posts ) : ?>
-  <!-- ===== 記事なし ===== -->
   <section class="tag-section tag-section--empty">
     <div class="tag-shell">
       <p class="tag-empty">このタグに該当する記事はまだありません。</p>
@@ -176,6 +174,6 @@ $has_posts      = $post_count > 0;
   </section>
   <?php endif; ?>
 
-</div><!-- /.tag-page -->
+</div>
 
 <?php get_footer(); ?>
