@@ -5,7 +5,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 $consultation_url = 'https://bit.ly/4us051J';
-$line_url         = 'https://lin.ee/XXXXXXX';
+$line_url         = 'https://line.me/R/ti/p/@712gzjgo';
 $diagnosis_url    = home_url( '/diagnosis/' );
 $performance_url  = home_url( '/performance/' );
 $about_url        = home_url( '/about/' );
@@ -470,5 +470,3 @@ get_header();
 </script>
 
 <?php get_footer(); ?>
-
-</html>
