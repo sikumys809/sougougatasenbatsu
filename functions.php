@@ -331,10 +331,8 @@ add_action( 'save_post', function( $post_id ) {
 // ============================================================
 // 管理画面でメディアアップローダーを有効化
 // ============================================================
-add_action( "admin_enqueue_scripts", function( $hook ) {
-    // ブロックエディタ以外でメディアアップローダーを有効化
-    $allowed = array( 'term.php', 'edit-tags.php', 'post.php', 'post-new.php' );
-    if ( in_array( $hook, $allowed ) && ! wp_should_load_block_editor_scripts_and_styles() ) {
+add_action( 'admin_enqueue_scripts', function( $hook ) {
+    if ( $hook === 'term.php' || $hook === 'edit-tags.php' ) {
         wp_enqueue_media();
     }
 });
