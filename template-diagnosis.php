@@ -105,7 +105,7 @@ get_header();
              target="_blank" rel="noopener noreferrer">
             LINE で相談する
           </a>
-          <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"
+          <a href="<?php echo esc_url( "https://bit.ly/4us051J" ); ?>"
              class="diagnosis-btn diagnosis-btn--red">
             無料受験相談を予約する →
           </a>

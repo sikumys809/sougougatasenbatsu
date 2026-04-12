@@ -137,7 +137,7 @@ $tags  = get_terms([ 'taxonomy' => 'interview_tag', 'hide_empty' => true, 'numbe
 <section class="interview-cta">
   <div class="shell">
     <p class="interview-cta__text">あなたも、先輩たちの戦略を参考に一歩踏み出してみませんか。</p>
-    <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="btn btn--red">無料受験相談を予約する →</a>
+    <a href="<?php echo esc_url( "https://bit.ly/4us051J" ); ?>" class="btn btn--red">無料受験相談を予約する →</a>
   </div>
 </section>
 

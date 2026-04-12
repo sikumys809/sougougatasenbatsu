@@ -112,7 +112,7 @@ $tags  = get_tags([ 'hide_empty' => true, 'number' => 20 ]);
   <div class="shell">
     <p class="navi-cta__text">記事を読んだ次は、あなただけの戦略を一緒に作りましょう。</p>
     <div class="navi-cta__buttons">
-      <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="btn btn--red">無料受験相談を予約する →</a>
+      <a href="<?php echo esc_url( "https://bit.ly/4us051J" ); ?>" class="btn btn--red">無料受験相談を予約する →</a>
       <a href="<?php echo esc_url( home_url( '/diagnosis/' ) ); ?>" class="btn btn--outline-light">適性診断をはじめる →</a>
     </div>
   </div>
