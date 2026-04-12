@@ -105,7 +105,8 @@ $has_posts      = $post_count > 0;
               $iv_cat = $iv_cats[0]->name;
           }
           ?>
-          <a href="<?php the_permalink(); ?>" class="interview-card">
+          <div class="interview-card">
+            <a href="<?php the_permalink(); ?>" class="interview-card__link-overlay" aria-label="<?php echo esc_attr(get_the_title()); ?>"></a>
             <div class="interview-card__photo">
               <?php if ( $iv_img ) : ?>
                 <img src="<?php echo esc_url($iv_img); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" class="interview-card__img" loading="lazy">
@@ -129,7 +130,7 @@ $has_posts      = $post_count > 0;
                 <?php endif; ?>
               </div>
             </div>
-          </a>
+          </div>
         <?php endwhile; wp_reset_postdata(); ?>
       </div>
 

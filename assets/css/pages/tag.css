@@ -175,3 +175,29 @@ a.story-card__origin {
   z-index: 3;
 }
 a.story-card__origin:hover { opacity: 0.8; }
+
+/* interview-card overlay link */
+.interview-card {
+  position: relative;
+}
+.interview-card__link-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.interview-card__overlay {
+  position: relative;
+  z-index: 2;
+}
+.interview-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 6px;
+  position: relative;
+  z-index: 3;
+}
+.interview-card__tag--light {
+  position: relative;
+  z-index: 3;
+}
