@@ -90,17 +90,37 @@ $has_posts      = $post_count > 0;
 
       <div class="interview-grid">
         <?php while ( $interview_query->have_posts() ) : $interview_query->the_post(); ?>
+          <?php
+          $iv_hd   = function_exists('keikyo_iv_get_group') ? keikyo_iv_get_group(get_the_ID(), 'hero_section') : [];
+          $iv_img  = '';
+          if (!empty($iv_hd['hero_image'])) {
+              $iv_img = function_exists('keikyo_iv_image_url') ? keikyo_iv_image_url($iv_hd['hero_image'], 'large') : '';
+          }
+          if (!$iv_img) $iv_img = get_the_post_thumbnail_url(get_the_ID(), 'large');
+          $iv_desc = !empty($iv_hd['hero_description']) ? $iv_hd['hero_description'] : get_the_excerpt();
+          $iv_cats = get_the_category();
+          $iv_cat  = '';
+          if ($iv_cats) {
+              usort($iv_cats, fn($a, $b) => $b->term_id - $a->term_id);
+              $iv_cat = $iv_cats[0]->name;
+          }
+          ?>
           <a href="<?php the_permalink(); ?>" class="interview-card">
             <div class="interview-card__photo">
-              <?php if ( has_post_thumbnail() ) : ?>
-                <?php the_post_thumbnail( 'medium_large', [ 'alt' => get_the_title(), 'class' => 'interview-card__img' ] ); ?>
+              <?php if ( $iv_img ) : ?>
+                <img src="<?php echo esc_url($iv_img); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" class="interview-card__img" loading="lazy">
               <?php else : ?>
                 <div class="interview-card__photo-placeholder">PHOTO</div>
               <?php endif; ?>
               <span class="interview-card__badge">合格者対談</span>
               <div class="interview-card__overlay">
                 <p class="interview-card__name"><?php the_title(); ?></p>
-                <p class="interview-card__univ"><?php echo esc_html( get_post_meta( get_the_ID(), 'university', true ) ); ?></p>
+                <?php if ($iv_cat) : ?>
+                <p class="interview-card__univ"><?php echo esc_html($iv_cat); ?></p>
+                <?php endif; ?>
+                <?php if ($iv_desc) : ?>
+                <p class="interview-card__excerpt"><?php echo esc_html(mb_substr($iv_desc, 0, 60)); ?></p>
+                <?php endif; ?>
               </div>
             </div>
           </a>
