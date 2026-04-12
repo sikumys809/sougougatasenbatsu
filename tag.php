@@ -12,11 +12,16 @@ $tag_name  = $tag_obj ? $tag_obj->name : '';
 $tag_slug  = $tag_obj ? $tag_obj->slug : '';
 $tag_id    = $tag_obj ? $tag_obj->term_id : 0;
 
-// ── interview CPT クエリ ──────────────────────────────
-// post_tag OR interview_tag（同じslug）どちらでも拾う
+// ── ページネーション ──────────────────────────────
+$paged          = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
+$iv_per_page    = 9;
+$post_per_page  = 6;
+
+// ── interview CPT クエリ（ページネーション付き） ──────────────────────────────
 $interview_query = new WP_Query( [
     'post_type'      => 'interview',
-    'posts_per_page' => -1,
+    'posts_per_page' => $iv_per_page,
+    'paged'          => $paged,
     'no_found_rows'  => false,
     'tax_query'      => [
         'relation' => 'OR',
@@ -35,11 +40,9 @@ $interview_query = new WP_Query( [
 $interview_count = $interview_query->found_posts;
 
 // ── 通常投稿クエリ（ページネーション付き） ────────────
-$paged      = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
-$posts_per  = 6;
 $post_query = new WP_Query( [
     'post_type'      => 'post',
-    'posts_per_page' => $posts_per,
+    'posts_per_page' => $post_per_page,
     'paged'          => $paged,
     'tax_query'      => [
         [
@@ -49,8 +52,8 @@ $post_query = new WP_Query( [
         ],
     ],
 ] );
-$post_count  = $post_query->found_posts;
-$total_count = $interview_count + $post_count;
+$post_count     = $post_query->found_posts;
+$total_count    = $interview_count + $post_count;
 $has_interviews = $interview_count > 0;
 $has_posts      = $post_count > 0;
 ?>
@@ -60,20 +63,17 @@ $has_posts      = $post_count > 0;
   <!-- ===== HERO ===== -->
   <section class="tag-hero">
     <div class="tag-shell">
-
       <nav class="tag-hero__breadcrumb" aria-label="パンくず">
         <a href="<?php echo esc_url( home_url( '/' ) ); ?>">トップ</a>
         <span>/</span>
         <span>#<?php echo esc_html( $tag_name ); ?></span>
       </nav>
-
       <div class="tag-hero__header">
         <h1 class="tag-hero__title">
           <span class="tag-hero__title-hash">#</span><?php echo esc_html( $tag_name ); ?><span class="tag-hero__sub">の記事一覧</span>
         </h1>
         <span class="tag-hero__count">全<?php echo esc_html( $total_count ); ?>件</span>
       </div>
-
     </div>
   </section>
 
@@ -82,7 +82,6 @@ $has_posts      = $post_count > 0;
   <!-- ===== 合格者の声セクション ===== -->
   <section class="tag-section">
     <div class="tag-shell">
-
       <div class="tag-section__header">
         <h2 class="tag-section__title">合格者の声</h2>
         <span class="tag-section__count"><?php echo esc_html( $interview_count ); ?>件</span>
@@ -97,16 +96,13 @@ $has_posts      = $post_count > 0;
               $iv_img = function_exists('keikyo_iv_image_url') ? keikyo_iv_image_url($iv_hd['hero_image'], 'large') : '';
           }
           if (!$iv_img) $iv_img = get_the_post_thumbnail_url(get_the_ID(), 'large');
-          $iv_desc = !empty($iv_hd['hero_description']) ? $iv_hd['hero_description'] : get_the_excerpt();
-          $iv_cats = get_the_category();
-          $iv_cat  = '';
-          if ($iv_cats) {
-              usort($iv_cats, fn($a, $b) => $b->term_id - $a->term_id);
-              $iv_cat = $iv_cats[0]->name;
-          }
+          $iv_desc  = !empty($iv_hd['hero_description']) ? $iv_hd['hero_description'] : get_the_excerpt();
+          $iv_itags = get_the_terms( get_the_ID(), 'interview_tag' );
+          if ( is_wp_error($iv_itags) ) $iv_itags = [];
           ?>
+          <!-- オーバーレイ方式（ネストaタグ回避） -->
           <div class="interview-card">
-            <a href="<?php the_permalink(); ?>" class="interview-card__link-overlay" aria-label="<?php echo esc_attr(get_the_title()); ?>"></a>
+            <a href="<?php the_permalink(); ?>" class="interview-card__link-overlay" aria-label="<?php echo esc_attr(get_the_title()); ?>のインタビューを読む"></a>
             <div class="interview-card__photo">
               <?php if ( $iv_img ) : ?>
                 <img src="<?php echo esc_url($iv_img); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" class="interview-card__img" loading="lazy">
@@ -116,12 +112,10 @@ $has_posts      = $post_count > 0;
               <span class="interview-card__badge">合格者対談</span>
               <div class="interview-card__overlay">
                 <p class="interview-card__name"><?php the_title(); ?></p>
-                <?php
-                $iv_itags2 = get_the_terms( get_the_ID(), 'interview_tag' );
-                if ( $iv_itags2 && ! is_wp_error( $iv_itags2 ) ) : ?>
+                <?php if ( $iv_itags ) : ?>
                 <div class="interview-card__tags">
-                  <?php foreach ( $iv_itags2 as $iv_itag2 ) : ?>
-                  <a href="<?php echo esc_url( home_url( '/tag/' . $iv_itag2->slug . '/' ) ); ?>" class="interview-card__tag interview-card__tag--light"><?php echo esc_html( $iv_itag2->name ); ?></a>
+                  <?php foreach ( $iv_itags as $iv_itag ) : ?>
+                  <a href="<?php echo esc_url( home_url( '/tag/' . $iv_itag->slug . '/' ) ); ?>" class="interview-card__tag interview-card__tag--light"><?php echo esc_html( $iv_itag->name ); ?></a>
                   <?php endforeach; ?>
                 </div>
                 <?php endif; ?>
@@ -134,6 +128,23 @@ $has_posts      = $post_count > 0;
         <?php endwhile; wp_reset_postdata(); ?>
       </div>
 
+      <?php if ( $interview_query->max_num_pages > 1 ) : ?>
+      <nav class="tag-pagination" aria-label="インタビューページネーション">
+        <?php
+        $big = 999999999;
+        echo paginate_links( [
+            'base'      => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+            'format'    => '?paged=%#%',
+            'current'   => max( 1, $paged ),
+            'total'     => $interview_query->max_num_pages,
+            'prev_text' => '← 前へ',
+            'next_text' => '次へ →',
+            'type'      => 'list',
+        ] );
+        ?>
+      </nav>
+      <?php endif; ?>
+
     </div>
   </section>
   <?php endif; ?>
@@ -143,7 +154,6 @@ $has_posts      = $post_count > 0;
   <!-- ===== 対策・情報記事セクション ===== -->
   <section class="tag-section">
     <div class="tag-shell">
-
       <div class="tag-section__header">
         <h2 class="tag-section__title">対策・情報記事</h2>
         <span class="tag-section__count"><?php echo esc_html( $post_count ); ?>件</span>
