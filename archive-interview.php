@@ -8,6 +8,17 @@ get_header();
 $paged   = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
 $tag_slug = isset( $_GET['iv_tag'] ) ? sanitize_text_field( wp_unslash( $_GET['iv_tag'] ) ) : '';
 
+// tag_slugからterm IDを取得（日本語スラッグ対応）
+$tag_term = null;
+if ( $tag_slug ) {
+    // まずslugで検索
+    $tag_term = get_term_by( 'slug', $tag_slug, 'interview_tag' );
+    // slugで見つからなければnameで検索
+    if ( ! $tag_term ) {
+        $tag_term = get_term_by( 'name', $tag_slug, 'interview_tag' );
+    }
+}
+
 $args = [
   'post_type'      => 'interview',
   'posts_per_page' => 9,
@@ -17,11 +28,11 @@ $args = [
   'order'          => 'DESC',
 ];
 
-if ( $tag_slug ) {
+if ( $tag_term ) {
   $args['tax_query'] = [[
     'taxonomy' => 'interview_tag',
-    'field'    => 'slug',
-    'terms'    => $tag_slug,
+    'field'    => 'term_id',
+    'terms'    => $tag_term->term_id,
   ]];
 }
 
