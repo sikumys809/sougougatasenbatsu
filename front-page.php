@@ -428,7 +428,8 @@ get_header();
         $cat_name = $cats ? $cats[0]->name : '総合型選抜';
         $cat_link = $cats ? get_category_link($cats[0]->term_id) : '';
     ?>
-      <a href="<?php the_permalink(); ?>" class="article-card" aria-label="<?php echo esc_attr(get_the_title()); ?>">
+      <div class="article-card">
+        <a href="<?php the_permalink(); ?>" class="article-card__link-overlay" aria-label="<?php echo esc_attr(get_the_title()); ?>"></a>
         <div class="article-card__image"><?php if ($thumb): ?><img src="<?php echo esc_url($thumb); ?>" alt="" loading="lazy"><?php else: ?>THUMBNAIL<?php endif; ?></div>
         <div class="article-card__body">
           <div class="article-card__meta">
@@ -438,7 +439,7 @@ get_header();
           <h3 class="article-card__title"><?php the_title(); ?></h3>
           <p class="article-card__excerpt"><?php echo wp_trim_words(get_the_excerpt(), 40, '…'); ?></p>
         </div>
-      </a>
+      </div>
     <?php endwhile; wp_reset_postdata();
     else: ?>
       <?php
