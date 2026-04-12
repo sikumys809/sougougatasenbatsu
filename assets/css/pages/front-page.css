@@ -826,10 +826,26 @@
           z-index: 1;
         }
         .story-card__origin--link {
-          position: relative;
-          z-index: 3;
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          max-width: calc(100% - 110px);
+          background: rgba(255, 255, 255, 0.92);
+          color: var(--navy, #1a1a2e);
+          font-size: 11px;
+          font-weight: 700;
+          padding: 4px 10px;
+          border-radius: 20px;
+          letter-spacing: 0.03em;
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+          box-shadow: 0 1px 4px rgba(0,0,0,0.15);
           text-decoration: none;
-          color: inherit;
+          z-index: 3;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          transition: background 0.2s, color 0.2s;
         }
         .story-card__origin--link:hover { opacity: 0.8; }
         

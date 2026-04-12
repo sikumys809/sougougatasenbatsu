@@ -255,11 +255,12 @@ get_header();
         if (!$img && has_post_thumbnail()) $img = get_the_post_thumbnail_url(get_the_ID(), 'large');
         $desc      = !empty($hd['hero_description']) ? $hd['hero_description'] : get_the_excerpt();
         $permalink   = get_permalink();
-        $fp_tag_link = '';
-        $fp_tags     = get_the_terms( get_the_ID(), 'interview_tag' );
+        $fp_tag_link  = '';
+        $fp_tag_label = '';
+        $fp_tags      = get_the_terms( get_the_ID(), 'interview_tag' );
         if ( $fp_tags && ! is_wp_error($fp_tags) ) {
-            $fp_tag_link = home_url( '/tag/' . $fp_tags[0]->slug . '/' );
-            if ( ! $result ) $result = $fp_tags[0]->name;
+            $fp_tag_link  = home_url( '/tag/' . $fp_tags[0]->slug . '/' );
+            $fp_tag_label = $fp_tags[0]->name;
         }
     ?>
       <div class="story-card">
@@ -267,12 +268,10 @@ get_header();
         <div class="story-card__image">
           <?php if ($img): ?><img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($title); ?>" loading="lazy"><?php else: ?><div class="story-card__image-placeholder">STORY PHOTO</div><?php endif; ?>
           <span class="story-card__badge">Story 0<?php echo $n; ?></span>
-          <?php if ($result) : ?>
-            <?php if ($fp_tag_link) : ?>
-              <a href="<?php echo esc_url($fp_tag_link); ?>" class="story-card__origin story-card__origin--link"><?php echo esc_html($result); ?></a>
-            <?php else : ?>
-              <span class="story-card__origin"><?php echo esc_html($result); ?></span>
-            <?php endif; ?>
+          <?php if ($fp_tag_label) : ?>
+            <a href="<?php echo esc_url($fp_tag_link); ?>" class="story-card__origin story-card__origin--link"><?php echo esc_html($fp_tag_label); ?></a>
+          <?php elseif ($result) : ?>
+            <span class="story-card__origin"><?php echo esc_html($result); ?></span>
           <?php endif; ?>
           <div class="story-card__profile">
             <p class="story-card__name"><?php echo esc_html($title); ?></p>
