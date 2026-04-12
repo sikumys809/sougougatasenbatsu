@@ -26,7 +26,6 @@ $nav_query = new WP_Query([
     'orderby'        => 'date',
     'order'          => 'DESC',
     'post_status'    => 'publish',
-    'category_name'  => 'navigation',
 ]);
 
 get_header();
