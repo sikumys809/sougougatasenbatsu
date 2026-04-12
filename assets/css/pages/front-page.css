@@ -795,7 +795,14 @@
           }
         }
         
-        .story-card {
+        a.story-card,
+        a.story-card:visited {
+          display: block;
+          text-decoration: none;
+          color: inherit;
+        }
+
+                .story-card {
           background: var(--white);
           border-radius: 6px;
           overflow: hidden;
