@@ -329,15 +329,6 @@ add_action( 'save_post', function( $post_id ) {
 });
 
 // ============================================================
-// 管理画面でメディアアップローダーを有効化
-// ============================================================
-add_action( 'admin_enqueue_scripts', function( $hook ) {
-    if ( $hook === 'term.php' || $hook === 'edit-tags.php' ) {
-        wp_enqueue_media();
-    }
-});
-
-// ============================================================
 // タクソノミー：アイキャッチ画像フィールド
 // 対象: category, post_tag, interview_category, interview_university, interview_admission_type
 // ============================================================
@@ -349,11 +340,9 @@ foreach ( $keikyo_tax_list as $tax ) {
         wp_nonce_field( 'keikyo_term_image_nonce', 'keikyo_term_image_nonce' );
         echo '<div class="form-field">';
         echo '<label>アイキャッチ画像</label>';
-        echo '<input type="text" id="keikyo_term_image_url" name="keikyo_term_image_url" value="" style="width:80%;" placeholder="画像URL" />';
-        echo '<button type="button" class="button" onclick="keikyo_open_media(\'keikyo_term_image_url\')">メディアを選択</button>';
+        echo '<input type="text" id="keikyo_term_image_url" name="keikyo_term_image_url" value="" style="width:100%;" placeholder="画像URL を直接入力" />';
         echo '<p class="description">一覧ページ等で使うサムネイル画像</p>';
         echo '</div>';
-        echo '<script>function keikyo_open_media(field_id){var frame=wp.media({title:"画像を選択",button:{text:"この画像を使用"},multiple:false});frame.on("select",function(){var att=frame.state().get("selection").first().toJSON();document.getElementById(field_id).value=att.url;});frame.open();}</script>';
     });
 
     // 編集フォーム
@@ -362,11 +351,9 @@ foreach ( $keikyo_tax_list as $tax ) {
         wp_nonce_field( 'keikyo_term_image_nonce', 'keikyo_term_image_nonce' );
         echo '<tr class="form-field"><th scope="row"><label>アイキャッチ画像</label></th><td>';
         if ( $img ) echo '<img src="' . esc_url($img) . '" style="max-width:200px;display:block;margin-bottom:8px;" />';
-        echo '<input type="text" id="keikyo_term_image_url" name="keikyo_term_image_url" value="' . esc_attr($img) . '" style="width:80%;" />';
-        echo '<button type="button" class="button" onclick="keikyo_open_media(\'keikyo_term_image_url\')">メディアを選択</button>';
+        echo '<input type="text" id="keikyo_term_image_url" name="keikyo_term_image_url" value="' . esc_attr($img) . '" style="width:100%;" />';
         echo '<p class="description">一覧ページ等で使うサムネイル画像</p>';
         echo '</td></tr>';
-        echo '<script>function keikyo_open_media(field_id){var frame=wp.media({title:"画像を選択",button:{text:"この画像を使用"},multiple:false});frame.on("select",function(){var att=frame.state().get("selection").first().toJSON();document.getElementById(field_id).value=att.url;});frame.open();}</script>';
     });
 
     // 保存
