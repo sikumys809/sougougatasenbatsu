@@ -56,11 +56,22 @@ get_header();
     </div>
     <div class="hero__visual">
       <div class="hero-slideshow" id="heroSlideshow">
-        <?php for ( $i = 1; $i <= 6; $i++ ) : $active = $i === 1 ? ' hero-slide--active' : ''; ?>
+        <?php
+        $hero_slides = [
+          'https://www.keikyo-seminar.jp/wp-content/uploads/2026/04/1-2.jpg',
+          'https://www.keikyo-seminar.jp/wp-content/uploads/2026/04/2-2.jpg',
+          'https://www.keikyo-seminar.jp/wp-content/uploads/2026/04/3-2.jpg',
+          'https://www.keikyo-seminar.jp/wp-content/uploads/2026/04/4-2.jpg',
+          'https://www.keikyo-seminar.jp/wp-content/uploads/2026/04/5-2.jpg',
+          'https://www.keikyo-seminar.jp/wp-content/uploads/2026/04/6-2.jpg',
+        ];
+        foreach ( $hero_slides as $i => $slide_url ) :
+          $active = $i === 0 ? ' hero-slide--active' : '';
+        ?>
         <div class="hero-slide<?php echo $active; ?>">
-          <div class="hero-slide__placeholder">PHOTO <?php echo $i; ?> / 6</div>
+          <img src="<?php echo esc_url($slide_url); ?>" alt="慶教ゼミナール <?php echo $i + 1; ?>" loading="<?php echo $i === 0 ? 'eager' : 'lazy'; ?>">
         </div>
-        <?php endfor; ?>
+        <?php endforeach; ?>
         <div class="hero-slide__dots">
           <?php for ( $i = 0; $i < 6; $i++ ) : ?>
           <span class="dot<?php echo $i === 0 ? ' dot--active' : ''; ?>"></span>
