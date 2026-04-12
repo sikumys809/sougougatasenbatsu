@@ -1279,7 +1279,14 @@
           }
         }
         
-        .article-card {
+        a.article-card,
+a.article-card:visited {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.article-card {
           border: 1px solid #e5e5e5;
           border-radius: 6px;
           overflow: hidden;
