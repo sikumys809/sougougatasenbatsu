@@ -87,7 +87,7 @@ $has_posts      = $post_count > 0;
         <span class="tag-section__count"><?php echo esc_html( $interview_count ); ?>件</span>
       </div>
 
-      <div class="interview-grid">
+      <div class="interview-card-grid">
         <?php while ( $interview_query->have_posts() ) : $interview_query->the_post(); ?>
           <?php
           $iv_hd   = function_exists('keikyo_iv_get_group') ? keikyo_iv_get_group(get_the_ID(), 'hero_section') : [];
@@ -100,31 +100,32 @@ $has_posts      = $post_count > 0;
           $iv_itags = get_the_terms( get_the_ID(), 'interview_tag' );
           if ( is_wp_error($iv_itags) ) $iv_itags = [];
           ?>
-          <!-- オーバーレイ方式（ネストaタグ回避） -->
-          <div class="interview-card">
-            <a href="<?php the_permalink(); ?>" class="interview-card__link-overlay" aria-label="<?php echo esc_attr(get_the_title()); ?>のインタビューを読む"></a>
-            <div class="interview-card__photo">
-              <?php if ( $iv_img ) : ?>
-                <img src="<?php echo esc_url($iv_img); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" class="interview-card__img" loading="lazy">
-              <?php else : ?>
-                <div class="interview-card__photo-placeholder">PHOTO</div>
-              <?php endif; ?>
-              <span class="interview-card__badge">合格者対談</span>
-              <div class="interview-card__overlay">
-                <p class="interview-card__name"><?php the_title(); ?></p>
-                <?php if ( $iv_itags ) : ?>
-                <div class="interview-card__tags">
-                  <?php foreach ( $iv_itags as $iv_itag ) : ?>
-                  <a href="<?php echo esc_url( home_url( '/tag/' . $iv_itag->slug . '/' ) ); ?>" class="interview-card__tag interview-card__tag--light"><?php echo esc_html( $iv_itag->name ); ?></a>
-                  <?php endforeach; ?>
+          <!-- category.phpと同じ構造で統一 -->
+          <article class="interview-card">
+            <a href="<?php the_permalink(); ?>" class="interview-card__link">
+              <div class="interview-card__thumb">
+                <?php if ( $iv_img ) : ?>
+                  <img src="<?php echo esc_url($iv_img); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" class="interview-card__img" loading="lazy">
+                <?php else : ?>
+                  <div class="interview-card__img-placeholder"></div>
+                <?php endif; ?>
+                <span class="interview-card__badge">合格者対談</span>
+                <div class="interview-card__profile">
+                  <p class="interview-card__name"><?php the_title(); ?></p>
+                  <?php if ( $iv_itags ) : ?>
+                  <div class="interview-card__tags">
+                    <?php foreach ( $iv_itags as $iv_itag ) : ?>
+                    <a href="<?php echo esc_url( home_url( '/tag/' . $iv_itag->slug . '/' ) ); ?>" class="interview-card__tag interview-card__tag--light"><?php echo esc_html( $iv_itag->name ); ?></a>
+                    <?php endforeach; ?>
+                  </div>
+                  <?php endif; ?>
+                  <?php if ($iv_desc) : ?>
+                  <p class="interview-card__desc"><?php echo esc_html( mb_substr( $iv_desc, 0, 60 ) ); ?></p>
+                  <?php endif; ?>
                 </div>
-                <?php endif; ?>
-                <?php if ($iv_desc) : ?>
-                <p class="interview-card__excerpt"><?php echo esc_html(mb_substr($iv_desc, 0, 60)); ?></p>
-                <?php endif; ?>
               </div>
-            </div>
-          </div>
+            </a>
+          </article>
         <?php endwhile; wp_reset_postdata(); ?>
       </div>
 
