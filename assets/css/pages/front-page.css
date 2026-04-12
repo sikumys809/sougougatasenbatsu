@@ -1883,3 +1883,35 @@ a.story-card__origin {
   z-index: 3;
 }
 a.story-card__origin:hover { opacity: 0.8; }
+
+/* story-card tag badges (multi) */
+.story-card__tags {
+  position: absolute;
+  top: 44px;
+  left: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  z-index: 3;
+  max-width: calc(100% - 24px);
+}
+.story-card__tag-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--navy, #1a1a2e);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+.story-card__tag-badge:hover {
+  background: rgba(255,255,255,1);
+  color: var(--red, #c0392b);
+}
