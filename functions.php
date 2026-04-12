@@ -299,3 +299,84 @@ add_filter( 'document_title_parts', function( array $title ): array {
 function keikyo_part( string $slug, array $args = [] ): void {
     get_template_part( 'template-parts/' . $slug, null, $args );
 }
+
+// ============================================================
+// 固定ページ・投稿：SEOディスクリプション メタボックス
+// ============================================================
+add_action( 'add_meta_boxes', function() {
+    add_meta_box(
+        'keikyo_seo_description',
+        'SEOディスクリプション（検索結果の説明文）',
+        function( $post ) {
+            $desc = get_post_meta( $post->ID, '_keikyo_seo_description', true );
+            wp_nonce_field( 'keikyo_seo_desc_nonce', 'keikyo_seo_desc_nonce' );
+            echo '<p style="margin-bottom:8px;color:#666;font-size:12px;">120〜160字目安。未入力の場合は抜粋が使われます。</p>';
+            echo '<textarea name="keikyo_seo_description" rows="4" style="width:100%;">' . esc_textarea( $desc ) . '</textarea>';
+        },
+        array( 'post', 'page' ),
+        'normal',
+        'high'
+    );
+});
+
+add_action( 'save_post', function( $post_id ) {
+    if ( ! isset( $_POST['keikyo_seo_desc_nonce'] ) ) return;
+    if ( ! wp_verify_nonce( $_POST['keikyo_seo_desc_nonce'], 'keikyo_seo_desc_nonce' ) ) return;
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+    if ( isset( $_POST['keikyo_seo_description'] ) ) {
+        update_post_meta( $post_id, '_keikyo_seo_description', sanitize_textarea_field( $_POST['keikyo_seo_description'] ) );
+    }
+});
+
+// ============================================================
+// タクソノミー：アイキャッチ画像フィールド
+// 対象: category, post_tag, interview_category, interview_university, interview_admission_type
+// ============================================================
+$keikyo_tax_list = array( 'category', 'post_tag', 'interview_category', 'interview_university', 'interview_admission_type' );
+
+foreach ( $keikyo_tax_list as $tax ) {
+    // 新規追加フォーム
+    add_action( "{$tax}_add_form_fields", function() {
+        wp_nonce_field( 'keikyo_term_image_nonce', 'keikyo_term_image_nonce' );
+        echo '<div class="form-field">';
+        echo '<label>アイキャッチ画像</label>';
+        echo '<input type="text" id="keikyo_term_image_url" name="keikyo_term_image_url" value="" style="width:80%;" placeholder="画像URL" />';
+        echo '<button type="button" class="button" onclick="keikyo_open_media(\'keikyo_term_image_url\')">メディアを選択</button>';
+        echo '<p class="description">一覧ページ等で使うサムネイル画像</p>';
+        echo '</div>';
+        echo '<script>function keikyo_open_media(field_id){var frame=wp.media({title:"画像を選択",button:{text:"この画像を使用"},multiple:false});frame.on("select",function(){var att=frame.state().get("selection").first().toJSON();document.getElementById(field_id).value=att.url;});frame.open();}</script>';
+    });
+
+    // 編集フォーム
+    add_action( "{$tax}_edit_form_fields", function( $term ) {
+        $img = get_term_meta( $term->term_id, 'keikyo_term_image', true );
+        wp_nonce_field( 'keikyo_term_image_nonce', 'keikyo_term_image_nonce' );
+        echo '<tr class="form-field"><th scope="row"><label>アイキャッチ画像</label></th><td>';
+        if ( $img ) echo '<img src="' . esc_url($img) . '" style="max-width:200px;display:block;margin-bottom:8px;" />';
+        echo '<input type="text" id="keikyo_term_image_url" name="keikyo_term_image_url" value="' . esc_attr($img) . '" style="width:80%;" />';
+        echo '<button type="button" class="button" onclick="keikyo_open_media(\'keikyo_term_image_url\')">メディアを選択</button>';
+        echo '<p class="description">一覧ページ等で使うサムネイル画像</p>';
+        echo '</td></tr>';
+        echo '<script>function keikyo_open_media(field_id){var frame=wp.media({title:"画像を選択",button:{text:"この画像を使用"},multiple:false});frame.on("select",function(){var att=frame.state().get("selection").first().toJSON();document.getElementById(field_id).value=att.url;});frame.open();}</script>';
+    });
+
+    // 保存
+    add_action( "created_{$tax}", 'keikyo_save_term_image' );
+    add_action( "edited_{$tax}", 'keikyo_save_term_image' );
+}
+
+function keikyo_save_term_image( $term_id ) {
+    if ( ! isset( $_POST['keikyo_term_image_nonce'] ) ) return;
+    if ( ! wp_verify_nonce( $_POST['keikyo_term_image_nonce'], 'keikyo_term_image_nonce' ) ) return;
+    if ( isset( $_POST['keikyo_term_image_url'] ) ) {
+        update_term_meta( $term_id, 'keikyo_term_image', esc_url_raw( $_POST['keikyo_term_image_url'] ) );
+    }
+}
+
+// ============================================================
+// タクソノミー画像の取得ヘルパー
+// 使い方: keikyo_get_term_image( $term_id )
+// ============================================================
+function keikyo_get_term_image( $term_id ) {
+    return get_term_meta( $term_id, 'keikyo_term_image', true );
+}
