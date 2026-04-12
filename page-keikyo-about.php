@@ -333,10 +333,7 @@ get_header();
               <?php endif; ?>
             </div>
           </div>
-          <div class="story-card__body">
-            <h3 class="story-card__title"><?php the_title(); ?></h3>
-            <p class="story-card__excerpt"><?php echo wp_trim_words( get_the_excerpt(), 30, '…' ); ?></p>
-          </div>
+
         </a>
       </article>
       <?php
