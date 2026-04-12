@@ -16,7 +16,7 @@ get_header();
       <p class="perf-hero__lead">総合型選抜で、難関大学合格を実現。</p>
       <p class="perf-hero__sub">ブルーアカデミーを含むグループ全体の合格実績を掲載しています。</p>
       <div class="perf-hero__cta">
-        <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="btn btn--red">無料で受験相談する</a>
+        <a href="<?php echo esc_url( "https://bit.ly/4us051J" ); ?>" class="btn btn--red">無料で受験相談する</a>
         <a href="<?php echo esc_url( home_url( '/diagnosis/' ) ); ?>" class="btn btn--outline-light">まずは適性診断を受ける</a>
       </div>
     </div>
@@ -320,7 +320,7 @@ get_header();
           <p class="perf-final-cta__sub">慶教ゼミナールで合格した受験生は、みんな「まず話してみた」ところから始まっています。</p>
         </div>
         <div class="perf-final-cta__buttons">
-          <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="btn btn--red">無料受験相談を予約する →</a>
+          <a href="<?php echo esc_url( "https://bit.ly/4us051J" ); ?>" class="btn btn--red">無料受験相談を予約する →</a>
           <a href="<?php echo esc_url( home_url( '/diagnosis/' ) ); ?>" class="btn btn--outline-light">総合型選抜適性診断を受ける →</a>
           <a href="https://line.me/R/ti/p/@712gzjgo" class="btn btn--line" target="_blank" rel="noopener noreferrer">LINEで合格バイブルを受け取る →</a>
         </div>

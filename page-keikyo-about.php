@@ -26,7 +26,7 @@ get_header();
         偏差値では測れないあなたの強みを、大学に伝わる言葉と戦略に変えます。
       </p>
       <div class="about-hero__cta">
-        <a href="/contact/" class="btn btn--red">無料受験相談</a>
+        <a href="https://bit.ly/4us051J" class="btn btn--red">無料受験相談</a>
         <a href="/diagnosis/" class="btn btn--outline-light">総合型選抜適性診断</a>
       </div>
       <a href="/interview/" class="text-link text-link--light">合格者体験談を見る →</a>
@@ -154,7 +154,7 @@ get_header();
     </div>
     <div class="about-why__cta">
       <a href="/results/" class="text-link text-link--light">合格実績を見る →</a>
-      <a href="/contact/" class="btn btn--red">無料受験相談を予約する →</a>
+      <a href="https://bit.ly/4us051J" class="btn btn--red">無料受験相談を予約する →</a>
     </div>
   </div>
 </section>
@@ -400,7 +400,7 @@ get_header();
           <div class="cta-card">
             <h3 class="cta-card__title">無料受験相談</h3>
             <p class="cta-card__text">今の成績・活動から合格可能性を診断。志望校別の戦略を提案します。</p>
-            <a href="/contact/" class="btn btn--red">無料受験相談を予約する →</a>
+            <a href="https://bit.ly/4us051J" class="btn btn--red">無料受験相談を予約する →</a>
           </div>
           <div class="cta-card">
             <h3 class="cta-card__title">総合型選抜適性診断</h3>
