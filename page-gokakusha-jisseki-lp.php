@@ -6,7 +6,7 @@
 
 defined('ABSPATH') || exit;
 
-$consultation_url = 'https://bit.ly/4kDgEU1';
+$consultation_url = 'https://bit.ly/4us051J';
 $diagnosis_url = 'https://www.keikyo-seminar.jp/diagnosis';
 $interview_archive_url = 'https://www.keikyo-seminar.jp/archives/tag/interview-with-successful-candidates';
 $logo_url = 'https://www.keikyo-seminar.jp/wp-content/uploads/2026/03/LOGO.png';
