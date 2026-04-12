@@ -176,7 +176,7 @@ get_header();
 
       <div class="instructor-card">
         <?php
-        $photo_1 = get_template_directory_uri() . '/assets/images/instructor-kamibayashiyama.jpg';
+        $photo_1 = 'https://www.keikyo-seminar.jp/wp-content/uploads/2026/03/%E4%B8%8A%E6%9E%97%E5%B1%B1%E5%A4%A7%E5%90%89.png';
         ?>
         <div class="instructor-card__photo">
           <img src="<?php echo esc_url( $photo_1 ); ?>" alt="上林山 大吉" loading="lazy">
@@ -194,7 +194,7 @@ get_header();
 
       <div class="instructor-card">
         <?php
-        $photo_2 = get_template_directory_uri() . '/assets/images/instructor-mizuno.jpg';
+        $photo_2 = 'https://www.keikyo-seminar.jp/wp-content/uploads/2026/03/%E6%B0%B4%E9%87%8E%E6%B0%B8%E5%90%89.png';
         ?>
         <div class="instructor-card__photo">
           <img src="<?php echo esc_url( $photo_2 ); ?>" alt="水野 永吉" loading="lazy">
@@ -212,7 +212,7 @@ get_header();
 
       <div class="instructor-card">
         <?php
-        $photo_3 = get_template_directory_uri() . '/assets/images/instructor-kanzaki.jpg';
+        $photo_3 = 'https://www.keikyo-seminar.jp/wp-content/uploads/2026/03/%E7%A5%9E%E5%B4%8E%E7%9C%9F%E6%A1%9C.png';
         ?>
         <div class="instructor-card__photo">
           <img src="<?php echo esc_url( $photo_3 ); ?>" alt="神崎 真桜" loading="lazy">
