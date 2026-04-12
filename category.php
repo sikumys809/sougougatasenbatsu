@@ -135,25 +135,17 @@ $interview_query = keikyo_get_interviews_by_category( $cat_id, 4 );
                                 <div class="interview-card__img-placeholder"></div>
                             <?php endif; ?>
                             <span class="interview-card__badge">合格者対談</span>
-                        </div>
-
-                        <!-- 本文 -->
-                        <div class="interview-card__body">
-                            <h3 class="interview-card__title">
-                                <?php the_title(); ?>
-                            </h3>
-                            <?php
-                            // カテゴリーから大学名（直近の親）を表示
-                            $cats = get_the_category();
-                            if ( $cats ) :
-                                // 最も深い階層のカテゴリーを取得
-                                usort( $cats, fn( $a, $b ) => $b->term_id - $a->term_id );
-                                $display_cat = $cats[0];
-                            ?>
-                            <p class="interview-card__univ">
-                                <?php echo esc_html( $display_cat->name ); ?>
-                            </p>
-                            <?php endif; ?>
+                            <div class="interview-card__profile">
+                                <p class="interview-card__name"><?php the_title(); ?></p>
+                                <?php
+                                $cats = get_the_category();
+                                if ( $cats ) :
+                                    usort( $cats, fn( $a, $b ) => $b->term_id - $a->term_id );
+                                    $display_cat = $cats[0];
+                                ?>
+                                <p class="interview-card__univ"><?php echo esc_html( $display_cat->name ); ?></p>
+                                <?php endif; ?>
+                            </div>
                         </div>
 
                     </a>
