@@ -1326,12 +1326,19 @@ a.article-card:visited {
           margin-bottom: 12px;
         }
         
-        .article-card__cat {
+        .article-card__cat,
+        a.article-card__cat {
+          display: inline-block;
           background: var(--navy);
           color: var(--white);
           font-size: 10px;
           padding: 3px 8px;
           border-radius: 2px;
+          text-decoration: none;
+          line-height: 1.4;
+        }
+        a.article-card__cat:hover {
+          opacity: 0.8;
         }
         
         .article-card__date {
@@ -1796,13 +1803,4 @@ a.article-card:visited {
   object-fit: cover;
   object-position: center top;
   display: block;
-}
-
-a.article-card__cat {
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
-}
-a.article-card__cat:hover {
-  opacity: 0.75;
 }
