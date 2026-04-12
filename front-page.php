@@ -449,9 +449,6 @@ get_header();
       <?php endforeach; ?>
     <?php endif; ?>
     </div>
-    <div class="navigation__banner">
-      <div style="height:120px;border-radius:6px;background:#f0ede8;display:flex;align-items:center;justify-content:center;color:rgba(0,0,0,0.3);font-size:13px;border:2px dashed #ddd;">BANNER IMAGE (W:1200×H:120)</div>
-    </div>
   </div>
 </section>
 
