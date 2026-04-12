@@ -247,6 +247,14 @@ h1.cat-hero__title {
 .interview-card__univ {
   font-size: 12px;
   opacity: 0.8;
+  margin-bottom: 4px;
+}
+
+.interview-card__desc {
+  font-size: 11px;
+  opacity: 0.75;
+  line-height: 1.6;
+  margin-top: 4px;
 }
 
 .cat-interviews__more {

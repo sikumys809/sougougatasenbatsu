@@ -150,6 +150,12 @@ $interview_query = keikyo_get_interviews_by_category( $cat_id, 4 );
                                 ?>
                                 <p class="interview-card__univ"><?php echo esc_html( $display_cat->name ); ?></p>
                                 <?php endif; ?>
+                                <?php
+                                $iv_desc = !empty($iv_hd['hero_description']) ? $iv_hd['hero_description'] : get_the_excerpt();
+                                if ( $iv_desc ) :
+                                ?>
+                                <p class="interview-card__desc"><?php echo esc_html( mb_substr( $iv_desc, 0, 60 ) ); ?></p>
+                                <?php endif; ?>
                             </div>
                         </div>
 
