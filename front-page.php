@@ -260,7 +260,15 @@ get_header();
         <div class="story-card__image">
           <?php if ($img): ?><img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($title); ?>" loading="lazy"><?php else: ?><div class="story-card__image-placeholder">STORY PHOTO</div><?php endif; ?>
           <span class="story-card__badge">Story 0<?php echo $n; ?></span>
-          <?php if ($result): ?><span class="story-card__origin"><?php echo esc_html($result); ?></span><?php endif; ?>
+          <?php
+          $fp_itags = get_the_terms( get_the_ID(), 'interview_tag' );
+          if ( $fp_itags && ! is_wp_error($fp_itags) ) :
+            $fp_itag = $fp_itags[0];
+          ?>
+          <a href="<?php echo esc_url( home_url( '/tag/' . $fp_itag->slug . '/' ) ); ?>" class="story-card__origin"><?php echo esc_html( $fp_itag->name ); ?></a>
+          <?php elseif ($result) : ?>
+          <span class="story-card__origin"><?php echo esc_html($result); ?></span>
+          <?php endif; ?>
           <div class="story-card__profile">
             <p class="story-card__name"><?php echo esc_html($title); ?></p>
             <?php if ($desc): ?><p class="story-card__school"><?php echo esc_html( mb_substr($desc, 0, 60) ); ?></p><?php endif; ?>

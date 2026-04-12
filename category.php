@@ -143,12 +143,13 @@ $interview_query = keikyo_get_interviews_by_category( $cat_id, 4 );
                             <div class="interview-card__profile">
                                 <p class="interview-card__name"><?php the_title(); ?></p>
                                 <?php
-                                $cats = get_the_category();
-                                if ( $cats ) :
-                                    usort( $cats, fn( $a, $b ) => $b->term_id - $a->term_id );
-                                    $display_cat = $cats[0];
-                                ?>
-                                <p class="interview-card__univ"><?php echo esc_html( $display_cat->name ); ?></p>
+                                $iv_itags = get_the_terms( get_the_ID(), 'interview_tag' );
+                                if ( $iv_itags && ! is_wp_error( $iv_itags ) ) : ?>
+                                <div class="interview-card__tags">
+                                  <?php foreach ( $iv_itags as $iv_itag ) : ?>
+                                  <a href="<?php echo esc_url( home_url( '/tag/' . $iv_itag->slug . '/' ) ); ?>" class="interview-card__tag"><?php echo esc_html( $iv_itag->name ); ?></a>
+                                  <?php endforeach; ?>
+                                </div>
                                 <?php endif; ?>
                                 <?php
                                 $iv_desc = !empty($iv_hd['hero_description']) ? $iv_hd['hero_description'] : get_the_excerpt();

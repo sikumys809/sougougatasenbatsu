@@ -99,7 +99,7 @@ $tags  = get_terms([ 'taxonomy' => 'interview_tag', 'hide_empty' => true, 'numbe
             <?php if ( ! is_wp_error( $itags ) && $itags ) : ?>
               <div class="story-card__tags">
                 <?php foreach ( $itags as $itag ) : ?>
-                  <span class="story-card__tag"><?php echo esc_html( $itag->name ); ?></span>
+                  <a href="<?php echo esc_url( home_url( '/tag/' . $itag->slug . '/' ) ); ?>" class="story-card__tag"><?php echo esc_html( $itag->name ); ?></a>
                 <?php endforeach; ?>
               </div>
             <?php endif; ?>

@@ -115,8 +115,14 @@ $has_posts      = $post_count > 0;
               <span class="interview-card__badge">合格者対談</span>
               <div class="interview-card__overlay">
                 <p class="interview-card__name"><?php the_title(); ?></p>
-                <?php if ($iv_cat) : ?>
-                <p class="interview-card__univ"><?php echo esc_html($iv_cat); ?></p>
+                <?php
+                $iv_itags2 = get_the_terms( get_the_ID(), 'interview_tag' );
+                if ( $iv_itags2 && ! is_wp_error( $iv_itags2 ) ) : ?>
+                <div class="interview-card__tags">
+                  <?php foreach ( $iv_itags2 as $iv_itag2 ) : ?>
+                  <a href="<?php echo esc_url( home_url( '/tag/' . $iv_itag2->slug . '/' ) ); ?>" class="interview-card__tag interview-card__tag--light"><?php echo esc_html( $iv_itag2->name ); ?></a>
+                  <?php endforeach; ?>
+                </div>
                 <?php endif; ?>
                 <?php if ($iv_desc) : ?>
                 <p class="interview-card__excerpt"><?php echo esc_html(mb_substr($iv_desc, 0, 60)); ?></p>

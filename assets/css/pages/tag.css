@@ -144,3 +144,34 @@ body.tag .keikyo-interview-header {
 body.tag .keikyo-interview-site-footer {
   margin-top: 0 !important;
 }
+
+/* interview_tag link badge */
+.interview-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+.interview-card__tag {
+  display: inline-block;
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 2px;
+  text-decoration: none;
+  background: rgba(26,26,46,0.7);
+  color: #fff;
+  position: relative;
+  z-index: 3;
+}
+.interview-card__tag:hover { opacity: 0.8; }
+.interview-card__tag--light {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+a.story-card__origin {
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  z-index: 3;
+}
+a.story-card__origin:hover { opacity: 0.8; }
