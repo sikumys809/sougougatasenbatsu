@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <div class="keikyo-interview-site-footer__grid">
 
             <div class="keikyo-interview-site-footer__brand">
-                <a href="https://www.keikyo-seminar.jp/" target="_blank" rel="noopener noreferrer"><img src="http://keikyo-local.local/wp-content/uploads/2026/04/SYMBOL.png" alt="慶教ゼミナール" class="keikyo-footer-logo" /></a>
+                <a href="https://www.keikyo-seminar.jp/" target="_blank" rel="noopener noreferrer"><img src="https://www.keikyo-seminar.jp/wp-content/uploads/2026/04/SYMBOL.png" alt="慶教ゼミナール" class="keikyo-footer-logo" /></a>
                 <p class="keikyo-interview-site-footer__brand-text">総合型選抜専門 × 完全オンライン塾。全国どこからでも、難関大学合格への最短ルートを設計します。</p>
             </div>
 
