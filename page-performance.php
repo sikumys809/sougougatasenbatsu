@@ -208,6 +208,7 @@ get_header();
           $thumb_url = '';
           if (!empty($hd['hero_image'])) { $thumb_url = function_exists('keikyo_iv_image_url') ? keikyo_iv_image_url($hd['hero_image'], 'large') : ''; }
           if (!$thumb_url) $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'large');
+          $desc = !empty($hd['hero_description']) ? $hd['hero_description'] : get_the_excerpt();
       ?>
       <article class="story-card">
         <a href="<?php the_permalink(); ?>" class="story-card__link">
@@ -223,7 +224,9 @@ get_header();
             <?php endif; ?>
             <div class="story-card__profile">
               <p class="story-card__name"><?php the_title(); ?></p>
-
+              <?php if ( $desc ) : ?>
+                <p class="story-card__school"><?php echo esc_html( mb_substr( $desc, 0, 60 ) ); ?></p>
+              <?php endif; ?>
             </div>
           </div>
         </a>
