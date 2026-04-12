@@ -236,7 +236,7 @@ get_header();
     if ( $stories_query->have_posts() ) :
       while ( $stories_query->have_posts() ) : $stories_query->the_post();
         $ctx    = function_exists('keikyo_interview_build_context') ? keikyo_interview_build_context(get_the_ID()) : [];
-        $hd     = $ctx['hero'] ?? [];
+        $hd     = $ctx['hero_section'] ?? [];
         $title  = !empty($hd['hero_display_title']) ? $hd['hero_display_title'] : get_the_title();
         $result = !empty($hd['hero_info_result']) ? $hd['hero_info_result'] : '';
         $img    = '';
