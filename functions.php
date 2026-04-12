@@ -98,6 +98,10 @@ add_action( 'wp_enqueue_scripts', function() {
         wp_enqueue_script( 'keikyo-filter', KEIKYO_URI . '/assets/js/category-filter.js', [ 'keikyo-main' ], $v, true );
     }
 
+    if ( is_page_template( 'template-diagnosis.php' ) ) {
+        wp_enqueue_script( 'keikyo-diagnosis', KEIKYO_URI . '/assets/js/diagnosis.js', [ 'jquery' ], $v, true );
+    }
+
     wp_localize_script( 'keikyo-main', 'keikyoVars', [
         'ajaxUrl' => admin_url( 'admin-ajax.php' ),
         'nonce'   => wp_create_nonce( 'keikyo_nonce' ),
