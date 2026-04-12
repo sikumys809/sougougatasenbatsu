@@ -86,11 +86,6 @@ $tags  = get_tags([ 'hide_empty' => true, 'number' => 20 ]);
         <?php endwhile; wp_reset_postdata(); ?>
       </div>
 
-      <!-- BANNER -->
-      <div class="banner-section">
-        <div class="banner-placeholder">BANNER IMAGE (W:1200×H:120)</div>
-      </div>
-
       <!-- PAGINATION -->
       <div class="pagination-wrap">
         <?php
