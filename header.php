@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
     <div class="keikyo-interview-header__brand">
       <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="keikyo-interview-header__brand-link" aria-label="慶教ゼミナール トップへ">
-        <img src="https://www.keikyo-seminar.jp/wp-content/uploads/2026/01/LOGO.png" alt="慶教ゼミナール" class="keikyo-interview-header__brand-logo">
+        <img src="https://www.keikyo-seminar.jp/wp-content/uploads/2025/10/LOGO.png" alt="慶教ゼミナール" class="keikyo-interview-header__brand-logo">
       </a>
     </div>
 
