@@ -203,9 +203,11 @@ get_header();
         $n = 1;
         while ( $story_query->have_posts() ) :
           $story_query->the_post();
-          $origin    = get_post_meta( get_the_ID(), 'origin_prefecture', true );
-          $school    = get_post_meta( get_the_ID(), 'accepted_university', true );
-          $thumb_url = get_the_post_thumbnail_url( get_the_ID(), 'large' );
+          $hd        = function_exists('keikyo_iv_get_group') ? keikyo_iv_get_group(get_the_ID(), 'hero_section') : [];
+          $school    = !empty($hd['hero_info_result']) ? $hd['hero_info_result'] : '';
+          $thumb_url = '';
+          if (!empty($hd['hero_image'])) { $thumb_url = function_exists('keikyo_iv_image_url') ? keikyo_iv_image_url($hd['hero_image'], 'large') : ''; }
+          if (!$thumb_url) $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'large');
       ?>
       <article class="story-card">
         <a href="<?php the_permalink(); ?>" class="story-card__link">
@@ -216,14 +218,12 @@ get_header();
               <div class="story-card__image-placeholder">STORY PHOTO</div>
             <?php endif; ?>
             <span class="story-card__badge">Story <?php printf( '%02d', $n ); ?></span>
-            <?php if ( $origin ) : ?>
-              <span class="story-card__origin">出身：<?php echo esc_html( $origin ); ?></span>
+            <?php if ( $school ) : ?>
+              <span class="story-card__origin"><?php echo esc_html( $school ); ?></span>
             <?php endif; ?>
             <div class="story-card__profile">
               <p class="story-card__name"><?php the_title(); ?></p>
-              <?php if ( $school ) : ?>
-                <p class="story-card__school"><?php echo esc_html( $school ); ?></p>
-              <?php endif; ?>
+
             </div>
           </div>
         </a>
