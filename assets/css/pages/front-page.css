@@ -814,11 +814,24 @@
         }
 
                 .story-card {
+          position: relative;
           background: var(--white);
           border-radius: 6px;
           overflow: hidden;
           transition: transform 0.3s;
         }
+        .story-card__link-overlay {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+        }
+        .story-card__origin--link {
+          position: relative;
+          z-index: 3;
+          text-decoration: none;
+          color: inherit;
+        }
+        .story-card__origin--link:hover { opacity: 0.8; }
         
         .story-card:hover {
           transform: translateY(-4px);

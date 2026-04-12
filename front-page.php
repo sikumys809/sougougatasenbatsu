@@ -262,17 +262,24 @@ get_header();
             if ( ! $result ) $result = $fp_tags[0]->name;
         }
     ?>
-      <a href="<?php echo esc_url($permalink); ?>" class="story-card">
+      <div class="story-card">
+        <a href="<?php echo esc_url($permalink); ?>" class="story-card__link-overlay" aria-label="<?php echo esc_attr($title); ?>のインタビューを読む"></a>
         <div class="story-card__image">
           <?php if ($img): ?><img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($title); ?>" loading="lazy"><?php else: ?><div class="story-card__image-placeholder">STORY PHOTO</div><?php endif; ?>
           <span class="story-card__badge">Story 0<?php echo $n; ?></span>
-          <?php if ($result) : ?><?php if ($fp_tag_link) : ?><a href="<?php echo esc_url($fp_tag_link); ?>" class="story-card__origin"><?php echo esc_html($result); ?></a><?php else : ?><span class="story-card__origin"><?php echo esc_html($result); ?></span><?php endif; ?><?php endif; ?>
+          <?php if ($result) : ?>
+            <?php if ($fp_tag_link) : ?>
+              <a href="<?php echo esc_url($fp_tag_link); ?>" class="story-card__origin story-card__origin--link"><?php echo esc_html($result); ?></a>
+            <?php else : ?>
+              <span class="story-card__origin"><?php echo esc_html($result); ?></span>
+            <?php endif; ?>
+          <?php endif; ?>
           <div class="story-card__profile">
             <p class="story-card__name"><?php echo esc_html($title); ?></p>
             <?php if ($desc): ?><p class="story-card__school"><?php echo esc_html( mb_substr($desc, 0, 60) ); ?></p><?php endif; ?>
           </div>
         </div>
-      </a>
+      </div>
     <?php $n++; endwhile; wp_reset_postdata();
     else: ?>
       <div class="story-card"><div class="story-card__image"><div class="story-card__image-placeholder">STORY PHOTO</div><span class="story-card__badge">Story 01</span><span class="story-card__origin">出身：沖縄県</span><div class="story-card__profile"><p class="story-card__name">合格者ストーリー準備中</p></div></div></div>
