@@ -243,16 +243,16 @@ get_header();
             $img = function_exists('keikyo_iv_image_url') ? keikyo_iv_image_url($hd['hero_image'], 'large') : '';
         }
         if (!$img && has_post_thumbnail()) $img = get_the_post_thumbnail_url(get_the_ID(), 'large');
-        $origin = $origins[$n-1] ?? '';
+        $desc   = !empty($hd['hero_description']) ? $hd['hero_description'] : get_the_excerpt();
     ?>
       <div class="story-card">
         <div class="story-card__image">
           <?php if ($img): ?><img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($title); ?>" loading="lazy"><?php else: ?><div class="story-card__image-placeholder">STORY PHOTO</div><?php endif; ?>
           <span class="story-card__badge">Story 0<?php echo $n; ?></span>
-          <?php if ($origin): ?><span class="story-card__origin">出身：<?php echo esc_html($origin); ?></span><?php endif; ?>
+          <?php if ($result): ?><span class="story-card__origin"><?php echo esc_html($result); ?></span><?php endif; ?>
           <div class="story-card__profile">
             <p class="story-card__name"><?php echo esc_html($title); ?></p>
-            <?php if ($result): ?><p class="story-card__school"><?php echo esc_html($result); ?></p><?php endif; ?>
+            <?php if ($desc): ?><p class="story-card__school"><?php echo esc_html( mb_substr($desc, 0, 60) ); ?></p><?php endif; ?>
           </div>
         </div>
       </div>
