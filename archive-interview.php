@@ -6,7 +6,7 @@
 get_header();
 
 $paged   = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
-$tag_slug = isset( $_GET['iv_tag'] ) ? sanitize_key( $_GET['iv_tag'] ) : '';
+$tag_slug = isset( $_GET['iv_tag'] ) ? sanitize_text_field( wp_unslash( $_GET['iv_tag'] ) ) : '';
 
 $args = [
   'post_type'      => 'interview',
