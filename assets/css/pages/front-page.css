@@ -1797,3 +1797,12 @@ a.article-card:visited {
   object-position: center top;
   display: block;
 }
+
+a.article-card__cat {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+a.article-card__cat:hover {
+  opacity: 0.75;
+}

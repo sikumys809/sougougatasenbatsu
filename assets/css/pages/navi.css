@@ -50,3 +50,12 @@
 .navi-cta__text { font-size: 18px; color: rgba(255,255,255,0.8); margin-bottom: 32px; }
 .navi-cta__buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
+
+a.article-card__category {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+a.article-card__category:hover {
+  opacity: 0.75;
+}

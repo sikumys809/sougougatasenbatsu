@@ -56,7 +56,8 @@ $tags  = get_tags([ 'hide_empty' => true, 'number' => 20 ]);
     <?php if ( $query->have_posts() ) : ?>
       <div class="article-grid">
         <?php while ( $query->have_posts() ) : $query->the_post();
-          $cats  = get_the_category();
+          $cats     = get_the_category();
+          $cat_link = $cats ? get_category_link($cats[0]->term_id) : '';
           $thumb = get_the_post_thumbnail_url( get_the_ID(), 'medium_large' );
         ?>
         <article class="article-card">
@@ -72,7 +73,7 @@ $tags  = get_tags([ 'hide_empty' => true, 'number' => 20 ]);
           <div class="article-card__body">
             <div class="article-card__meta">
               <?php if ( $cats ) : ?>
-                <span class="article-card__category"><?php echo esc_html( $cats[0]->name ); ?></span>
+                <?php if ($cat_link) : ?><a href="<?php echo esc_url($cat_link); ?>" class="article-card__category"><?php echo esc_html($cats[0]->name); ?></a><?php else : ?><span class="article-card__category"><?php echo esc_html($cats[0]->name); ?></span><?php endif; ?>
               <?php endif; ?>
               <span class="article-card__date"><?php echo get_the_date( 'Y.m.d' ); ?></span>
             </div>
