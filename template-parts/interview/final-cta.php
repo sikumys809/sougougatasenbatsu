@@ -19,7 +19,7 @@ if ( empty( $context['sections_visibility']['final_cta'] ) ) {
 }
 
 $section      = isset( $context['final_cta_section'] ) ? $context['final_cta_section'] : array();
-$primary_url  = ! empty( $section['final_cta_primary_url'] ) ? $section['final_cta_primary_url'] : 'https://lp.keikyo-seminar.jp/main01/';
+$primary_url  = ! empty( $section['final_cta_primary_url'] ) ? $section['final_cta_primary_url'] : 'https://bit.ly/4us051J';
 $benefits     = array(
 	'あなたの「強み」を一緒に見つけ、難関大学合格への最短ルートをご提案',
 	'経験・成績・志望校をヒアリングし、合格可能性を無料診断',

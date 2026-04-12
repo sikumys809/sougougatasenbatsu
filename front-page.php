@@ -4,7 +4,7 @@
  */
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$consultation_url = 'https://lp.keikyo-seminar.jp/main01/';
+$consultation_url = 'https://bit.ly/4us051J';
 $line_url         = 'https://lin.ee/XXXXXXX';
 $diagnosis_url    = home_url( '/diagnosis/' );
 $performance_url  = home_url( '/performance/' );

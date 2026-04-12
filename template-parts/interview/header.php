@@ -73,7 +73,7 @@ $nav_items = array_values(
 				</button>
 				<div class="keikyo-interview-header__cta-group">
 					<a href="<?php echo esc_url( home_url( '/diagnosis/' ) ); ?>" class="keikyo-interview-header__cta keikyo-interview-header__cta--secondary">総合型選抜適性診断</a>
-					<a href="https://lp.keikyo-seminar.jp/main01/" class="keikyo-interview-header__cta keikyo-interview-header__cta--primary" target="_blank" rel="noopener noreferrer">無料受験相談</a>
+					<a href="https://bit.ly/4us051J" class="keikyo-interview-header__cta keikyo-interview-header__cta--primary" target="_blank" rel="noopener noreferrer">無料受験相談</a>
 				</div>
 			</div>
 	</div>
@@ -117,7 +117,7 @@ $nav_items = array_values(
 				</nav>
 					<div class="keikyo-interview-header__mobile-cta-wrap">
 						<a href="<?php echo esc_url( home_url( '/diagnosis/' ) ); ?>" class="keikyo-interview-header__mobile-cta keikyo-interview-header__mobile-cta--secondary">総合型選抜適性診断</a>
-						<a href="https://lp.keikyo-seminar.jp/main01/" class="keikyo-interview-header__mobile-cta keikyo-interview-header__mobile-cta--primary" target="_blank" rel="noopener noreferrer">無料受験相談</a>
+						<a href="https://bit.ly/4us051J" class="keikyo-interview-header__mobile-cta keikyo-interview-header__mobile-cta--primary" target="_blank" rel="noopener noreferrer">無料受験相談</a>
 					</div>
 			</div>
 		</div>

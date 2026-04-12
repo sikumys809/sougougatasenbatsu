@@ -19,7 +19,7 @@ while ( have_posts() ) :
     $categories   = get_the_category();
     $tags         = get_the_tags();
     $content      = get_the_content();
-    $consultation = 'https://lp.keikyo-seminar.jp/main01/';
+    $consultation = 'https://bit.ly/4us051J';
 
     // 読了時間（日本語：400文字/分）
     $text       = wp_strip_all_tags( $content );

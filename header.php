@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
     <div class="keikyo-interview-header__brand">
       <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="keikyo-interview-header__brand-link" aria-label="慶教ゼミナール トップへ">
-        <span class="keikyo-interview-header__brand-text">慶教ゼミナール</span>
+        <img src="https://www.keikyo-seminar.jp/wp-content/uploads/2026/01/LOGO.png" alt="慶教ゼミナール" class="keikyo-interview-header__brand-logo">
       </a>
     </div>
 
@@ -42,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
       </button>
       <div class="keikyo-interview-header__cta-group">
         <a href="<?php echo esc_url( home_url( '/diagnosis/' ) ); ?>" class="keikyo-interview-header__cta keikyo-interview-header__cta--secondary">総合型選抜適性診断</a>
-        <a href="https://lp.keikyo-seminar.jp/main01/" class="keikyo-interview-header__cta keikyo-interview-header__cta--primary" target="_blank" rel="noopener noreferrer">無料受験相談</a>
+        <a href="https://bit.ly/4us051J" class="keikyo-interview-header__cta keikyo-interview-header__cta--primary" target="_blank" rel="noopener noreferrer">無料受験相談</a>
       </div>
     </div>
 
@@ -64,7 +64,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
       </nav>
       <div class="keikyo-interview-header__mobile-cta-wrap">
         <a href="<?php echo esc_url( home_url( '/diagnosis/' ) ); ?>" class="keikyo-interview-header__mobile-cta keikyo-interview-header__mobile-cta--secondary">総合型選抜適性診断</a>
-        <a href="https://lp.keikyo-seminar.jp/main01/" class="keikyo-interview-header__mobile-cta keikyo-interview-header__mobile-cta--primary" target="_blank" rel="noopener noreferrer">無料受験相談</a>
+        <a href="https://bit.ly/4us051J" class="keikyo-interview-header__mobile-cta keikyo-interview-header__mobile-cta--primary" target="_blank" rel="noopener noreferrer">無料受験相談</a>
       </div>
     </div>
   </div>

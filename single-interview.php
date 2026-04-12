@@ -22,7 +22,7 @@ $timeline = keikyo_iv_get_group( $post_id, 'timeline_section' );
 $message  = keikyo_iv_get_group( $post_id, 'message_section' );
 $cta_sec  = keikyo_iv_get_group( $post_id, 'final_cta_section' );
 
-$consultation_url = keikyo_iv_val( $cta_sec, 'final_cta_primary_url', 'https://lp.keikyo-seminar.jp/main01/' );
+$consultation_url = keikyo_iv_val( $cta_sec, 'final_cta_primary_url', 'https://bit.ly/4us051J' );
 $line_url         = 'https://line.me/R/ti/p/@712gzjgo'; // LINE公式アカウントURL
 
 // Hero

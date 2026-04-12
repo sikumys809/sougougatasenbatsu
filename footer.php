@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
             <nav class="keikyo-interview-site-footer__column" aria-label="フッターサポート">
                 <h3 class="keikyo-interview-site-footer__heading">SUPPORT</h3>
-                <a href="https://lp.keikyo-seminar.jp/main01/" target="_blank" rel="noopener noreferrer">無料受験相談</a>
+                <a href="https://bit.ly/4us051J" target="_blank" rel="noopener noreferrer">無料受験相談</a>
                 <a href="<?php echo esc_url( home_url( '/diagnosis/' ) ); ?>">適性診断</a>
                 <a href="<?php echo esc_url( home_url( '/privacy/' ) ); ?>">プライバシーポリシー</a>
             </nav>

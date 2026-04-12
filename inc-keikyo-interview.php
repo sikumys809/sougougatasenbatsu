@@ -379,7 +379,7 @@ if ( ! function_exists( 'keikyo_register_interview_meta_boxes' ) ) {
 					'final_cta_section',
 					'7. 下段CTA',
 					array(
-						keikyo_interview_url_field( 'final_cta_primary_url', 'ボタンURL', false, 'https://lp.keikyo-seminar.jp/main01/' )
+						keikyo_interview_url_field( 'final_cta_primary_url', 'ボタンURL', false, 'https://bit.ly/4us051J' )
 					)
 				),
 			)
@@ -794,7 +794,7 @@ if ( ! function_exists( 'keikyo_interview_get_nav_items' ) ) {
 
 if ( ! function_exists( 'keikyo_get_consultation_url' ) ) {
 	function keikyo_get_consultation_url() {
-		return 'https://lp.keikyo-seminar.jp/main01/';
+		return 'https://bit.ly/4us051J';
 	}
 }
 
