@@ -125,12 +125,17 @@ $interview_query = keikyo_get_interviews_by_category( $cat_id, 4 );
                     <a href="<?php the_permalink(); ?>" class="interview-card__link">
 
                         <!-- サムネイル -->
+                        <?php
+                        $iv_hd  = function_exists('keikyo_iv_get_group') ? keikyo_iv_get_group(get_the_ID(), 'hero_section') : [];
+                        $iv_img = '';
+                        if (!empty($iv_hd['hero_image'])) {
+                            $iv_img = function_exists('keikyo_iv_image_url') ? keikyo_iv_image_url($iv_hd['hero_image'], 'large') : '';
+                        }
+                        if (!$iv_img) $iv_img = get_the_post_thumbnail_url(get_the_ID(), 'large');
+                        ?>
                         <div class="interview-card__thumb">
-                            <?php if ( has_post_thumbnail() ) : ?>
-                                <?php the_post_thumbnail( 'keikyo-interview', [
-                                    'class' => 'interview-card__img object-cover',
-                                    'alt'   => get_the_title(),
-                                ] ); ?>
+                            <?php if ( $iv_img ) : ?>
+                                <img src="<?php echo esc_url($iv_img); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" class="interview-card__img" loading="lazy">
                             <?php else : ?>
                                 <div class="interview-card__img-placeholder"></div>
                             <?php endif; ?>
