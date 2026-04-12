@@ -235,13 +235,14 @@ get_header();
     $n = 1;
     if ( $stories_query->have_posts() ) :
       while ( $stories_query->have_posts() ) : $stories_query->the_post();
-        $ctx    = function_exists('keikyo_interview_build_context') ? keikyo_interview_build_context(get_the_ID()) : [];
-        $hd     = $ctx['hero_section'] ?? [];
+        $hd     = function_exists('keikyo_iv_get_group') ? keikyo_iv_get_group(get_the_ID(), 'hero_section') : [];
         $title  = !empty($hd['hero_display_title']) ? $hd['hero_display_title'] : get_the_title();
         $result = !empty($hd['hero_info_result']) ? $hd['hero_info_result'] : '';
         $img    = '';
-        if (!empty($hd['hero_image'])) { $i=$hd['hero_image']; $img=is_array($i)?($i['full_url']??$i['url']??''):(is_numeric($i)?(string)wp_get_attachment_image_url((int)$i,'large'):''); }
-        if (!$img && has_post_thumbnail()) $img = get_the_post_thumbnail_url(get_the_ID(),'large');
+        if (!empty($hd['hero_image'])) {
+            $img = function_exists('keikyo_iv_image_url') ? keikyo_iv_image_url($hd['hero_image'], 'large') : '';
+        }
+        if (!$img && has_post_thumbnail()) $img = get_the_post_thumbnail_url(get_the_ID(), 'large');
         $origin = $origins[$n-1] ?? '';
     ?>
       <div class="story-card">
