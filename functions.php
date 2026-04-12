@@ -30,6 +30,9 @@ add_action( 'after_setup_theme', function() {
         'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'script', 'style',
     ] );
     add_theme_support( 'customize-selective-refresh-widgets' );
+    add_theme_support( 'align-wide' );
+    add_theme_support( 'editor-styles' );
+    add_theme_support( 'responsive-embeds' );
 
     add_image_size( 'keikyo-card',      640, 400, true );
     add_image_size( 'keikyo-interview', 800, 800, true );
@@ -301,32 +304,21 @@ function keikyo_part( string $slug, array $args = [] ): void {
 }
 
 // ============================================================
-// 固定ページ・投稿：SEOディスクリプション メタボックス
+// SEOディスクリプション（ブロックエディタ対応）
 // ============================================================
-add_action( 'add_meta_boxes', function() {
-    add_meta_box(
-        'keikyo_seo_description',
-        'SEOディスクリプション（検索結果の説明文）',
-        function( $post ) {
-            $desc = get_post_meta( $post->ID, '_keikyo_seo_description', true );
-            wp_nonce_field( 'keikyo_seo_desc_nonce', 'keikyo_seo_desc_nonce' );
-            echo '<p style="margin-bottom:8px;color:#666;font-size:12px;">120〜160字目安。未入力の場合は抜粋が使われます。</p>';
-            echo '<textarea name="keikyo_seo_description" rows="4" style="width:100%;">' . esc_textarea( $desc ) . '</textarea>';
-        },
-        array( 'post', 'page' ),
-        'normal',
-        'high'
-    );
-});
-
-add_action( 'save_post', function( $post_id ) {
-    if ( ! isset( $_POST['keikyo_seo_desc_nonce'] ) ) return;
-    if ( ! wp_verify_nonce( $_POST['keikyo_seo_desc_nonce'], 'keikyo_seo_desc_nonce' ) ) return;
-    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
-    if ( isset( $_POST['keikyo_seo_description'] ) ) {
-        update_post_meta( $post_id, '_keikyo_seo_description', sanitize_textarea_field( $_POST['keikyo_seo_description'] ) );
+// REST API経由で読み書きできるよう register_post_meta で登録
+// ブロックエディタ: 投稿設定 > カスタムフィールド で入力可能
+// ============================================================
+add_action( 'init', function() {
+    foreach ( array( 'post', 'page' ) as $post_type ) {
+        register_post_meta( $post_type, '_keikyo_seo_description', array(
+            'show_in_rest'  => true,
+            'single'        => true,
+            'type'          => 'string',
+            'auth_callback' => function() { return current_user_can( 'edit_posts' ); },
+        ) );
     }
-});
+} );
 
 // ============================================================
 // タクソノミー：アイキャッチ画像フィールド
