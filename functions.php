@@ -279,6 +279,64 @@ add_action( 'admin_head', function() {
 
 
 // ============================================================
+
+// ── OGP メタタグ ──────────────────────────────
+function keikyo_ogp_meta_tags() {
+    $default_image = 'https://www.keikyo-seminar.jp/wp-content/uploads/2025/10/LOGO.png';
+    $site_name     = get_bloginfo( 'name' );
+
+    if ( is_singular() ) {
+        $post       = get_queried_object();
+        $title      = get_the_title( $post );
+        $url        = get_permalink( $post );
+        $desc       = get_post_meta( $post->ID, '_keikyo_seo_description', true );
+        if ( ! $desc ) $desc = wp_strip_all_tags( get_the_excerpt( $post ) );
+        if ( ! $desc ) $desc = wp_strip_all_tags( get_bloginfo( 'description' ) );
+
+        // OGP画像: MetaBox hero_image → アイキャッチ → デフォルト
+        $image = '';
+        if ( function_exists( 'keikyo_iv_get_group' ) ) {
+            $hd = keikyo_iv_get_group( $post->ID, 'hero_section' );
+            if ( ! empty( $hd['hero_image'] ) && function_exists( 'keikyo_iv_image_url' ) ) {
+                $image = keikyo_iv_image_url( $hd['hero_image'], 'large' );
+            }
+        }
+        if ( ! $image && has_post_thumbnail( $post->ID ) ) {
+            $image = get_the_post_thumbnail_url( $post->ID, 'large' );
+        }
+        if ( ! $image ) $image = $default_image;
+
+        $type = 'article';
+    } else {
+        $title = get_bloginfo( 'name' ) . ' | ' . get_bloginfo( 'description' );
+        $url   = home_url( '/' );
+        $desc  = wp_strip_all_tags( get_bloginfo( 'description' ) );
+        $image = $default_image;
+        $type  = 'website';
+    }
+
+    $desc  = mb_substr( $desc, 0, 120 );
+    $title = esc_attr( $title );
+    $desc  = esc_attr( $desc );
+    $url   = esc_url( $url );
+    $image = esc_url( $image );
+
+    echo "\n<!-- OGP -->\n";
+    echo "<meta property=\"og:type\"        content=\"{$type}\" />\n";
+    echo "<meta property=\"og:title\"       content=\"{$title}\" />\n";
+    echo "<meta property=\"og:description\" content=\"{$desc}\" />\n";
+    echo "<meta property=\"og:url\"         content=\"{$url}\" />\n";
+    echo "<meta property=\"og:image\"       content=\"{$image}\" />\n";
+    echo "<meta property=\"og:site_name\"   content=\"" . esc_attr( $site_name ) . "\" />\n";
+    echo "<meta property=\"og:locale\"      content=\"ja_JP\" />\n";
+    echo "<meta name=\"twitter:card\"       content=\"summary_large_image\" />\n";
+    echo "<meta name=\"twitter:title\"      content=\"{$title}\" />\n";
+    echo "<meta name=\"twitter:description\" content=\"{$desc}\" />\n";
+    echo "<meta name=\"twitter:image\"      content=\"{$image}\" />\n";
+    echo "<!-- /OGP -->\n";
+}
+add_action( 'wp_head', 'keikyo_ogp_meta_tags', 1 );
+
 // 12. SEO：title タグカスタマイズ
 // ============================================================
 
