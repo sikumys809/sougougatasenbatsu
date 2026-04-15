@@ -147,7 +147,7 @@ while ( have_posts() ) :
                 <!-- アイキャッチ -->
                 <?php if ( has_post_thumbnail() ) : ?>
                 <div class="single-thumb">
-                    <?php the_post_thumbnail( 'keikyo-card', [
+                    <?php the_post_thumbnail( 'large', [
                         'class' => 'single-thumb__img',
                         'alt'   => get_the_title(),
                     ] ); ?>
@@ -233,7 +233,7 @@ while ( have_posts() ) :
                         <a href="<?php the_permalink(); ?>" class="s-card">
                             <div class="s-card__thumb">
                                 <?php if ( has_post_thumbnail() ) :
-                                    the_post_thumbnail( 'keikyo-card', [ 'class' => 's-card__img' ] );
+                                    the_post_thumbnail( 'large', [ 'class' => 's-card__img' ] );
                                 else : ?>
                                     <div class="s-card__img-placeholder"></div>
                                 <?php endif; ?>
