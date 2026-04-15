@@ -158,10 +158,13 @@
 /* アイキャッチ */
 .single-thumb {
   margin-bottom: 28px;
+  overflow: hidden;
+  border-radius: 6px;
 }
 
 .single-thumb__img {
   width: 100%;
+  max-width: 100%;
   height: auto;
   display: block;
   border-radius: 6px;
