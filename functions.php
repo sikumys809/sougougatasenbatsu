@@ -280,6 +280,42 @@ add_action( 'admin_head', function() {
 
 // ============================================================
 
+// ── 著者カスタムフィールド（役職・経歴タグ）──────────────────────────
+add_action( 'show_user_profile', 'keikyo_extra_user_fields' );
+add_action( 'edit_user_profile', 'keikyo_extra_user_fields' );
+function keikyo_extra_user_fields( WP_User $user ): void {
+    ?>
+    <h3>慶教ゼミナール 著者情報</h3>
+    <table class="form-table">
+        <tr>
+            <th><label for="keikyo_author_role">役職・肩書き</label></th>
+            <td>
+                <input type="text" name="keikyo_author_role" id="keikyo_author_role"
+                       value="<?php echo esc_attr( get_user_meta( $user->ID, 'keikyo_author_role', true ) ); ?>"
+                       class="regular-text" />
+                <p class="description">例: 慶教ゼミナール 代表</p>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="keikyo_author_tags">経歴タグ（カンマ区切り）</label></th>
+            <td>
+                <input type="text" name="keikyo_author_tags" id="keikyo_author_tags"
+                       value="<?php echo esc_attr( get_user_meta( $user->ID, 'keikyo_author_tags', true ) ); ?>"
+                       class="regular-text" />
+                <p class="description">例: 慶應義塾大学卒, 総合型選抜専門, 経営17年</p>
+            </td>
+        </tr>
+    </table>
+    <?php
+}
+add_action( 'personal_options_update',  'keikyo_save_extra_user_fields' );
+add_action( 'edit_user_profile_update', 'keikyo_save_extra_user_fields' );
+function keikyo_save_extra_user_fields( int $user_id ): void {
+    if ( ! current_user_can( 'edit_user', $user_id ) ) return;
+    update_user_meta( $user_id, 'keikyo_author_role', sanitize_text_field( wp_unslash( $_POST['keikyo_author_role'] ?? '' ) ) );
+    update_user_meta( $user_id, 'keikyo_author_tags', sanitize_text_field( wp_unslash( $_POST['keikyo_author_tags'] ?? '' ) ) );
+}
+
 // ── OGP メタタグ ──────────────────────────────
 function keikyo_ogp_meta_tags() {
     $default_image = 'https://www.keikyo-seminar.jp/wp-content/uploads/2025/10/LOGO.png';

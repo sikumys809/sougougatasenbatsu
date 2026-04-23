@@ -204,21 +204,45 @@ while ( have_posts() ) :
 
                 <!-- 著者情報 -->
                 <?php
-                $author_id   = get_the_author_meta( 'ID' );
-                $author_name = get_the_author_meta( 'display_name' );
-                $author_bio  = get_the_author_meta( 'description' );
+                $author_id       = (int) get_the_author_meta( 'ID' );
+                $author_name     = get_the_author_meta( 'display_name' );
+                $author_bio      = get_the_author_meta( 'description' );
+                $author_role     = get_user_meta( $author_id, 'keikyo_author_role', true );
+                $author_tags_raw = get_user_meta( $author_id, 'keikyo_author_tags', true );
+                $author_tags     = $author_tags_raw
+                    ? array_filter( array_map( 'trim', explode( ',', $author_tags_raw ) ) )
+                    : [];
+                $author_url      = get_author_posts_url( $author_id );
                 ?>
                 <?php if ( $author_name ) : ?>
                 <div class="single-author">
-                    <div class="single-author__avatar">
-                        <?php echo get_avatar( $author_id, 80, '', esc_attr( $author_name ), [ 'class' => 'single-author__avatar-img' ] ); ?>
+                    <div class="single-author__header">
+                        <span class="single-author__header-label">AUTHOR</span>
                     </div>
                     <div class="single-author__body">
-                        <p class="single-author__label">この記事を書いた人</p>
-                        <p class="single-author__name"><?php echo esc_html( $author_name ); ?></p>
-                        <?php if ( $author_bio ) : ?>
-                        <p class="single-author__bio"><?php echo nl2br( esc_html( $author_bio ) ); ?></p>
+                        <div class="single-author__avatar">
+                            <?php echo get_avatar( $author_id, 80, '', esc_attr( $author_name ), [ 'class' => 'single-author__avatar-img' ] ); ?>
+                        </div>
+                        <div class="single-author__info">
+                            <p class="single-author__label">この記事を書いた人</p>
+                            <p class="single-author__name"><?php echo esc_html( $author_name ); ?></p>
+                            <?php if ( $author_tags ) : ?>
+                            <div class="single-author__tags">
+                                <?php foreach ( $author_tags as $tag ) : ?>
+                                <span class="single-author__tag"><?php echo esc_html( $tag ); ?></span>
+                                <?php endforeach; ?>
+                            </div>
+                            <?php endif; ?>
+                            <?php if ( $author_bio ) : ?>
+                            <p class="single-author__bio"><?php echo nl2br( esc_html( $author_bio ) ); ?></p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="single-author__footer">
+                        <?php if ( $author_role ) : ?>
+                        <span class="single-author__role"><?php echo esc_html( $author_role ); ?></span>
                         <?php endif; ?>
+                        <a href="<?php echo esc_url( $author_url ); ?>" class="single-author__link">この著者の記事一覧 →</a>
                     </div>
                 </div>
                 <?php endif; ?>
