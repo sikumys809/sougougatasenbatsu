@@ -90,6 +90,7 @@ add_action( 'wp_enqueue_scripts', function() {
             || ( 'category' === $template && is_category() )
             || ( 'tag' === $template && is_tag() )
             || ( 'taxonomy-interview-tag' === $template && is_tax( 'interview_tag' ) )
+            || ( 'author' === $template && is_author() )
             || ( 'page-lp' === $template && is_page_template( 'page-lp.php' ) )
         ) {
             wp_enqueue_style( 'keikyo-' . $template, KEIKYO_URI . '/assets/css/' . $path, [ 'keikyo-components' ], $v );
