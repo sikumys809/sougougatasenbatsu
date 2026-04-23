@@ -76,6 +76,7 @@ add_action( 'wp_enqueue_scripts', function() {
         'category'               => 'pages/category.css',
         'tag'                    => 'pages/tag.css',
         'taxonomy-interview-tag' => 'pages/taxonomy-interview-tag.css',
+        'author'                 => 'pages/author.css',
     ];
 
     foreach ( $page_styles as $template => $path ) {
