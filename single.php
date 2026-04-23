@@ -202,6 +202,27 @@ while ( have_posts() ) :
                 </div>
                 <?php endif; ?>
 
+                <!-- 著者情報 -->
+                <?php
+                $author_id   = get_the_author_meta( 'ID' );
+                $author_name = get_the_author_meta( 'display_name' );
+                $author_bio  = get_the_author_meta( 'description' );
+                ?>
+                <?php if ( $author_name ) : ?>
+                <div class="single-author">
+                    <div class="single-author__avatar">
+                        <?php echo get_avatar( $author_id, 80, '', esc_attr( $author_name ), [ 'class' => 'single-author__avatar-img' ] ); ?>
+                    </div>
+                    <div class="single-author__body">
+                        <p class="single-author__label">この記事を書いた人</p>
+                        <p class="single-author__name"><?php echo esc_html( $author_name ); ?></p>
+                        <?php if ( $author_bio ) : ?>
+                        <p class="single-author__bio"><?php echo nl2br( esc_html( $author_bio ) ); ?></p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+
                 <!-- 記事下CTA -->
                 <div class="single-cta-main">
                     <p class="single-cta-main__eyebrow">あなたの強みも、言葉と戦略へ。</p>

@@ -720,3 +720,54 @@ body.single .keikyo-interview-site-footer,
 body.page .keikyo-interview-site-footer {
   margin-top: 0 !important;
 }
+
+/* ========================================
+   著者情報ボックス
+   ======================================== */
+.single-author {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 28px;
+  margin: 48px 0;
+  background: #f9f7f4;
+  border-left: 4px solid #1a1a2e;
+  border-radius: 0 8px 8px 0;
+}
+.single-author__avatar {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.single-author__avatar-img {
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 50% !important;
+  object-fit: cover;
+  display: block;
+}
+.single-author__body { flex: 1; min-width: 0; }
+.single-author__label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #c0392b;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+.single-author__name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 8px;
+}
+.single-author__bio {
+  font-size: 13px;
+  color: rgba(26,26,46,0.7);
+  line-height: 1.7;
+  margin: 0;
+}
+@media (max-width: 600px) {
+  .single-author { flex-direction: column; gap: 12px; padding: 20px; }
+}
