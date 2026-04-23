@@ -293,16 +293,16 @@ function keikyo_ogp_meta_tags() {
         if ( ! $desc ) $desc = wp_strip_all_tags( get_the_excerpt( $post ) );
         if ( ! $desc ) $desc = wp_strip_all_tags( get_bloginfo( 'description' ) );
 
-        // OGP画像: MetaBox hero_image → アイキャッチ → デフォルト
+        // OGP画像: アイキャッチ → MetaBox hero_image → デフォルト
         $image = '';
-        if ( function_exists( 'keikyo_iv_get_group' ) ) {
+        if ( has_post_thumbnail( $post->ID ) ) {
+            $image = get_the_post_thumbnail_url( $post->ID, 'large' );
+        }
+        if ( ! $image && function_exists( 'keikyo_iv_get_group' ) ) {
             $hd = keikyo_iv_get_group( $post->ID, 'hero_section' );
             if ( ! empty( $hd['hero_image'] ) && function_exists( 'keikyo_iv_image_url' ) ) {
                 $image = keikyo_iv_image_url( $hd['hero_image'], 'large' );
             }
-        }
-        if ( ! $image && has_post_thumbnail( $post->ID ) ) {
-            $image = get_the_post_thumbnail_url( $post->ID, 'large' );
         }
         if ( ! $image ) $image = $default_image;
 

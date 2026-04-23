@@ -5,17 +5,18 @@
  */
 get_header();
 
-$paged   = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
-$tag_slug = isset( $_GET['iv_tag'] ) ? sanitize_text_field( wp_unslash( $_GET['iv_tag'] ) ) : '';
+$paged    = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
+// $_GETから取得（デコード済みの日本語テキストとして扱う）
+$tag_name_raw = isset( $_GET['iv_tag'] ) ? sanitize_text_field( wp_unslash( $_GET['iv_tag'] ) ) : '';
 
-// tag_slugからterm IDを取得（日本語スラッグ対応）
+// term名でID取得（日本語スラッグ対応の確実な方法）
 $tag_term = null;
-if ( $tag_slug ) {
-    // まずslugで検索
-    $tag_term = get_term_by( 'slug', $tag_slug, 'interview_tag' );
-    // slugで見つからなければnameで検索
+if ( $tag_name_raw ) {
+    // まずname（日本語）で検索
+    $tag_term = get_term_by( 'name', $tag_name_raw, 'interview_tag' );
+    // 見つからなければslugで検索
     if ( ! $tag_term ) {
-        $tag_term = get_term_by( 'name', $tag_slug, 'interview_tag' );
+        $tag_term = get_term_by( 'slug', $tag_name_raw, 'interview_tag' );
     }
 }
 
@@ -58,11 +59,12 @@ $tags  = get_terms([ 'taxonomy' => 'interview_tag', 'hide_empty' => true, 'numbe
 <div class="filter-bar">
   <div class="shell filter-bar__tabs">
     <a href="<?php echo esc_url( get_post_type_archive_link( 'interview' ) ); ?>"
-       class="filter-tab <?php echo ! $tag_slug ? 'filter-tab--active' : ''; ?>">すべて</a>
+       class="filter-tab <?php echo ! $tag_term ? 'filter-tab--active' : ''; ?>">すべて</a>
     <?php if ( ! is_wp_error( $tags ) && $tags ) :
       foreach ( $tags as $tag ) : ?>
-        <a href="<?php echo esc_url( add_query_arg( 'tag', $tag->slug, get_post_type_archive_link( 'interview' ) ) ); ?>"
-           class="filter-tab <?php echo $tag_slug === $tag->slug ? 'filter-tab--active' : ''; ?>">
+        <!-- nameをクエリパラメーターに使用（urlencode不要・ブラウザが自動エンコード） -->
+        <a href="<?php echo esc_url( add_query_arg( 'iv_tag', $tag->name, get_post_type_archive_link( 'interview' ) ) ); ?>"
+           class="filter-tab <?php echo ( $tag_term && $tag_term->term_id === $tag->term_id ) ? 'filter-tab--active' : ''; ?>">
           <?php echo esc_html( $tag->name ); ?>
         </a>
       <?php endforeach;
@@ -110,12 +112,9 @@ $tags  = get_terms([ 'taxonomy' => 'interview_tag', 'hide_empty' => true, 'numbe
             <?php if ( ! is_wp_error( $itags ) && $itags ) : ?>
               <div class="story-card__tags">
                 <?php foreach ( $itags as $itag ) : ?>
-                  <a href="<?php echo esc_url( home_url( '/tag/' . $itag->slug . '/' ) ); ?>" class="story-card__tag"><?php echo esc_html( $itag->name ); ?></a>
+                  <a href="<?php echo esc_url( add_query_arg( 'iv_tag', $itag->name, get_post_type_archive_link( 'interview' ) ) ); ?>" class="story-card__tag"><?php echo esc_html( $itag->name ); ?></a>
                 <?php endforeach; ?>
               </div>
-            <?php endif; ?>
-            <?php if ( $comment ) : ?>
-              <p class="story-card__comment"><?php echo esc_html( $comment ); ?></p>
             <?php endif; ?>
             <a href="<?php the_permalink(); ?>" class="story-card__link">対談を読む →</a>
           </div>
