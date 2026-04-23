@@ -307,6 +307,15 @@ function keikyo_extra_user_fields( WP_User $user ): void {
                 <p class="description">例: 慶應義塾大学卒, 総合型選抜専門, 経営17年</p>
             </td>
         </tr>
+        <tr>
+            <th><label for="keikyo_author_order">表示順</label></th>
+            <td>
+                <input type="number" name="keikyo_author_order" id="keikyo_author_order"
+                       value="<?php echo esc_attr( get_user_meta( $user->ID, 'keikyo_author_order', true ) ); ?>"
+                       class="regular-text" />
+                <p class="description">数字が小さいほど著者一覧ページで上に表示されます。未入力の場合は999として扱います。</p>
+            </td>
+        </tr>
     </table>
     <?php
 }
@@ -316,6 +325,7 @@ function keikyo_save_extra_user_fields( int $user_id ): void {
     if ( ! current_user_can( 'edit_user', $user_id ) ) return;
     update_user_meta( $user_id, 'keikyo_author_role', sanitize_text_field( wp_unslash( $_POST['keikyo_author_role'] ?? '' ) ) );
     update_user_meta( $user_id, 'keikyo_author_tags', sanitize_text_field( wp_unslash( $_POST['keikyo_author_tags'] ?? '' ) ) );
+    update_user_meta( $user_id, 'keikyo_author_order', absint( $_POST['keikyo_author_order'] ?? 0 ) );
 }
 
 // ── OGP メタタグ ──────────────────────────────
