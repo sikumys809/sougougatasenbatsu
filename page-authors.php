@@ -126,7 +126,7 @@ usort( $all_users, function ( $a, $b ) {
 
                             <?php if ( ! empty( $tags ) ) : ?>
                                 <div class="author-profile-card__tags">
-                                    <?php foreach ( array_slice( $tags, 0, 3 ) as $tag ) : ?>
+                                    <?php foreach ( array_slice( $tags, 0, 4 ) as $tag ) : ?>
                                         <span class="author-profile-card__tag"><?php echo esc_html( $tag ); ?></span>
                                     <?php endforeach; ?>
                                 </div>

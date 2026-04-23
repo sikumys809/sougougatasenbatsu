@@ -44,7 +44,7 @@ $author_query = new WP_Query( [
             <nav class="author-breadcrumb" aria-label="パンくずリスト">
                 <ol class="author-breadcrumb__list">
                     <li><a href="<?php echo esc_url( home_url('/') ); ?>">トップ</a></li>
-                    <li>著者</li>
+                    <li><a href="<?php echo esc_url( home_url('/authors/') ); ?>">著者</a></li>
                     <li class="is-current"><?php echo esc_html( $author_name ); ?></li>
                 </ol>
             </nav>
