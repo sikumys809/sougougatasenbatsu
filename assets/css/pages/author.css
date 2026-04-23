@@ -100,10 +100,23 @@ body.author #main {
   transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,26,46,0.08);
 }
 
-.author-post-card__thumb { aspect-ratio: 16 / 10; overflow: hidden; background: #e8e4dc; }
+.author-post-card__thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #e8e4dc;
+}
 .author-post-card__img {
-  width: 100% !important; height: 100% !important;
-  object-fit: cover; display: block; transition: transform 0.4s;
+    position: absolute;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.4s;
 }
 .author-post-card:hover .author-post-card__img { transform: scale(1.05); }
 .author-post-card__img-placeholder {
