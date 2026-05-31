@@ -4,8 +4,8 @@
  */
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$consultation_url = 'https://bit.ly/4us051J';
-$line_url         = 'https://line.me/R/ti/p/@712gzjgo';
+$consultation_url = 'https://utage-system.com/p/02V953EOfqJm';
+$line_url         = 'https://utage-system.com/line/open/jtjYajI0XOEm?mtid=DN561e5ZtUTf';
 $diagnosis_url    = home_url( '/diagnosis/' );
 $performance_url  = home_url( '/performance/' );
 $about_url        = home_url( '/about/' );

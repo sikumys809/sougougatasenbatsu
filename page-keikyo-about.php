@@ -26,7 +26,7 @@ get_header();
         偏差値では測れないあなたの強みを、大学に伝わる言葉と戦略に変えます。
       </p>
       <div class="about-hero__cta">
-        <a href="https://bit.ly/4us051J" class="btn btn--red">無料受験相談</a>
+        <a href="https://utage-system.com/p/02V953EOfqJm" class="btn btn--red">無料受験相談</a>
         <a href="/diagnosis/" class="btn btn--outline-light">総合型選抜適性診断</a>
       </div>
       <a href="/interview/" class="text-link text-link--light">合格者体験談を見る →</a>
@@ -154,7 +154,7 @@ get_header();
     </div>
     <div class="about-why__cta">
       <a href="/results/" class="text-link text-link--light">合格実績を見る →</a>
-      <a href="https://bit.ly/4us051J" class="btn btn--red">無料受験相談を予約する →</a>
+      <a href="https://utage-system.com/p/02V953EOfqJm" class="btn btn--red">無料受験相談を予約する →</a>
     </div>
   </div>
 </section>
@@ -371,7 +371,7 @@ get_header();
         <div class="about-line__card"><div class="about-line__num">05</div><div class="about-line__title">自己分析シート</div></div>
         <div class="about-line__card"><div class="about-line__num">06</div><div class="about-line__title">自分史作成<br>無料体験授業</div></div>
       </div>
-      <a href="https://line.me/R/ti/p/@712gzjgo" class="btn btn--line" target="_blank" rel="noopener noreferrer">
+      <a href="https://utage-system.com/line/open/jtjYajI0XOEm?mtid=DN561e5ZtUTf" class="btn btn--line" target="_blank" rel="noopener noreferrer">
         LINEで無料受け取り →
       </a>
       <p class="about-line__note">登録無料・勧誘なし・いつでも解除可能</p>
@@ -397,7 +397,7 @@ get_header();
           <div class="cta-card">
             <h3 class="cta-card__title">無料受験相談</h3>
             <p class="cta-card__text">今の成績・活動から合格可能性を診断。志望校別の戦略を提案します。</p>
-            <a href="https://bit.ly/4us051J" class="btn btn--red">無料受験相談を予約する →</a>
+            <a href="https://utage-system.com/p/02V953EOfqJm" class="btn btn--red">無料受験相談を予約する →</a>
           </div>
           <div class="cta-card">
             <h3 class="cta-card__title">総合型選抜適性診断</h3>

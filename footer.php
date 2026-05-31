@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
             <nav class="keikyo-interview-site-footer__column" aria-label="フッターサポート">
                 <h3 class="keikyo-interview-site-footer__heading">SUPPORT</h3>
-                <a href="https://bit.ly/4us051J" target="_blank" rel="noopener noreferrer">無料受験相談</a>
+                <a href="https://utage-system.com/p/02V953EOfqJm" target="_blank" rel="noopener noreferrer">無料受験相談</a>
                 <a href="<?php echo esc_url( home_url( '/diagnosis/' ) ); ?>">適性診断</a>
                 <a href="<?php echo esc_url( home_url( '/privacy/' ) ); ?>">プライバシーポリシー</a>
             </nav>
@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div class="keikyo-interview-site-footer__column keikyo-interview-site-footer__social-column">
                 <h3 class="keikyo-interview-site-footer__heading">FOLLOW US</h3>
                 <div class="keikyo-interview-site-footer__socials">
-                    <a href="https://line.me/R/ti/p/@712gzjgo" target="_blank" rel="noopener noreferrer">LINE公式アカウント</a>
+                    <a href="https://utage-system.com/line/open/jtjYajI0XOEm?mtid=DN561e5ZtUTf" target="_blank" rel="noopener noreferrer">LINE公式アカウント</a>
                 </div>
             </div>
 

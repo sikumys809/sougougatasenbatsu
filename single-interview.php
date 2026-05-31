@@ -22,8 +22,8 @@ $timeline = keikyo_iv_get_group( $post_id, 'timeline_section' );
 $message  = keikyo_iv_get_group( $post_id, 'message_section' );
 $cta_sec  = keikyo_iv_get_group( $post_id, 'final_cta_section' );
 
-$consultation_url = 'https://bit.ly/4us051J';
-$line_url         = 'https://line.me/R/ti/p/@712gzjgo'; // LINE公式アカウントURL
+$consultation_url = 'https://utage-system.com/p/02V953EOfqJm';
+$line_url         = 'https://utage-system.com/line/open/jtjYajI0XOEm?mtid=DN561e5ZtUTf'; // LINE公式アカウントURL
 
 // Hero
 $hero_title    = keikyo_iv_val( $hero, 'hero_display_title' );
