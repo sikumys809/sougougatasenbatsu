@@ -194,6 +194,11 @@ add_action( 'pre_get_posts', function( WP_Query $query ) {
         $query->set( 'post_type', 'interview' );
     }
 
+    // 合格者対談アーカイブ：メインクエリも1ページ9件に揃える（ページ送り404対策）
+    if ( $query->is_post_type_archive( 'interview' ) ) {
+        $query->set( 'posts_per_page', 9 );
+    }
+
 } );
 
 
