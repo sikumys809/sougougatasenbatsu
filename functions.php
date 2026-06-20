@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 // 1. 定数定義
 // ============================================================
 
-define( 'KEIKYO_VERSION', '1.0.1' );
+define( 'KEIKYO_VERSION', '1.0.2' );
 define( 'KEIKYO_DIR',     get_template_directory() );
 define( 'KEIKYO_URI',     get_template_directory_uri() );
 
@@ -76,6 +76,8 @@ add_action( 'wp_enqueue_scripts', function() {
         'category'               => 'pages/category.css',
         'tag'                    => 'pages/tag.css',
         'taxonomy-interview-tag' => 'pages/taxonomy-interview-tag.css',
+        'author'                 => 'pages/author.css',
+        'page-authors'           => 'pages/authors.css',
     ];
 
     foreach ( $page_styles as $template => $path ) {
@@ -89,6 +91,8 @@ add_action( 'wp_enqueue_scripts', function() {
             || ( 'category' === $template && is_category() )
             || ( 'tag' === $template && is_tag() )
             || ( 'taxonomy-interview-tag' === $template && is_tax( 'interview_tag' ) )
+            || ( 'author' === $template && is_author() )
+            || ( 'page-authors' === $template && is_page_template( 'page-authors.php' ) )
             || ( 'page-lp' === $template && is_page_template( 'page-lp.php' ) )
         ) {
             wp_enqueue_style( 'keikyo-' . $template, KEIKYO_URI . '/assets/css/' . $path, [ 'keikyo-components' ], $v );
@@ -285,6 +289,52 @@ add_action( 'admin_head', function() {
 
 // ============================================================
 
+// ── 著者カスタムフィールド（役職・経歴タグ）──────────────────────────
+add_action( 'show_user_profile', 'keikyo_extra_user_fields' );
+add_action( 'edit_user_profile', 'keikyo_extra_user_fields' );
+function keikyo_extra_user_fields( WP_User $user ): void {
+    ?>
+    <h3>慶教ゼミナール 著者情報</h3>
+    <table class="form-table">
+        <tr>
+            <th><label for="keikyo_author_role">役職・肩書き</label></th>
+            <td>
+                <input type="text" name="keikyo_author_role" id="keikyo_author_role"
+                       value="<?php echo esc_attr( get_user_meta( $user->ID, 'keikyo_author_role', true ) ); ?>"
+                       class="regular-text" />
+                <p class="description">例: 慶教ゼミナール 代表</p>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="keikyo_author_tags">経歴タグ（カンマ区切り）</label></th>
+            <td>
+                <input type="text" name="keikyo_author_tags" id="keikyo_author_tags"
+                       value="<?php echo esc_attr( get_user_meta( $user->ID, 'keikyo_author_tags', true ) ); ?>"
+                       class="regular-text" />
+                <p class="description">例: 慶應義塾大学卒, 総合型選抜専門, 経営17年</p>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="keikyo_author_order">表示順</label></th>
+            <td>
+                <input type="number" name="keikyo_author_order" id="keikyo_author_order"
+                       value="<?php echo esc_attr( get_user_meta( $user->ID, 'keikyo_author_order', true ) ); ?>"
+                       class="regular-text" />
+                <p class="description">数字が小さいほど著者一覧ページで上に表示されます。未入力の場合は999として扱います。</p>
+            </td>
+        </tr>
+    </table>
+    <?php
+}
+add_action( 'personal_options_update',  'keikyo_save_extra_user_fields' );
+add_action( 'edit_user_profile_update', 'keikyo_save_extra_user_fields' );
+function keikyo_save_extra_user_fields( int $user_id ): void {
+    if ( ! current_user_can( 'edit_user', $user_id ) ) return;
+    update_user_meta( $user_id, 'keikyo_author_role', sanitize_text_field( wp_unslash( $_POST['keikyo_author_role'] ?? '' ) ) );
+    update_user_meta( $user_id, 'keikyo_author_tags', sanitize_text_field( wp_unslash( $_POST['keikyo_author_tags'] ?? '' ) ) );
+    update_user_meta( $user_id, 'keikyo_author_order', absint( $_POST['keikyo_author_order'] ?? 0 ) );
+}
+
 // ── OGP メタタグ ──────────────────────────────
 function keikyo_ogp_meta_tags() {
     $default_image = 'https://www.keikyo-seminar.jp/wp-content/uploads/2025/10/LOGO.png';
@@ -298,16 +348,16 @@ function keikyo_ogp_meta_tags() {
         if ( ! $desc ) $desc = wp_strip_all_tags( get_the_excerpt( $post ) );
         if ( ! $desc ) $desc = wp_strip_all_tags( get_bloginfo( 'description' ) );
 
-        // OGP画像: MetaBox hero_image → アイキャッチ → デフォルト
+        // OGP画像: アイキャッチ → MetaBox hero_image → デフォルト
         $image = '';
-        if ( function_exists( 'keikyo_iv_get_group' ) ) {
+        if ( has_post_thumbnail( $post->ID ) ) {
+            $image = get_the_post_thumbnail_url( $post->ID, 'large' );
+        }
+        if ( ! $image && function_exists( 'keikyo_iv_get_group' ) ) {
             $hd = keikyo_iv_get_group( $post->ID, 'hero_section' );
             if ( ! empty( $hd['hero_image'] ) && function_exists( 'keikyo_iv_image_url' ) ) {
                 $image = keikyo_iv_image_url( $hd['hero_image'], 'large' );
             }
-        }
-        if ( ! $image && has_post_thumbnail( $post->ID ) ) {
-            $image = get_the_post_thumbnail_url( $post->ID, 'large' );
         }
         if ( ! $image ) $image = $default_image;
 
