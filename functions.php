@@ -205,6 +205,14 @@ add_action( 'pre_get_posts', function( WP_Query $query ) {
 
 } );
 
+// 合格者対談CPTのリライトルールが消えたら自動再生成（/interview/ 404の再発防止）
+add_action( 'init', function() {
+    $rules = get_option( 'rewrite_rules' );
+    if ( ! is_array( $rules ) || ! isset( $rules['interview/?$'] ) ) {
+        flush_rewrite_rules( false );
+    }
+}, 99 );
+
 
 // ============================================================
 // 7. ヘッダー・フッター切り替えヘルパー
