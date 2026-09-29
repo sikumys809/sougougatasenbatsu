@@ -207,7 +207,7 @@ if ( $p_name )                { $iv_tabs[] = [ 'id' => 'iv-profile', 'label' => 
 
       <?php if ( $hero_img_url ) : ?>
       <figure class="iv-hero__fig<?php echo $hero_img_portrait ? ' iv-hero__fig--portrait' : ''; ?>"
-              <?php if ( $hero_img_w ) : ?>style="--iv-hero-w:<?php echo (int) $hero_img_w; ?>px"<?php endif; ?>>
+              style="<?php if ( $hero_img_w ) : ?>--iv-hero-w:<?php echo (int) $hero_img_w; ?>px;<?php endif; ?>--iv-hero-bg:url('<?php echo esc_url( $hero_img_url ); ?>')">
         <img src="<?php echo esc_url( $hero_img_url ); ?>"
              alt="<?php echo esc_attr( $hero_title ?: get_the_title() ); ?>"
              <?php if ( $hero_img_w ) : ?>width="<?php echo (int) $hero_img_w; ?>" height="<?php echo (int) $hero_img_h; ?>"<?php endif; ?>

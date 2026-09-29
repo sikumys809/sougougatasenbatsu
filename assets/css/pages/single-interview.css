@@ -113,12 +113,24 @@ body.single-interview #main {
 .iv-hero__subtitle { font-size:13.5px; line-height:1.75; color:var(--iv-ink2); margin:0 0 18px; }
 .iv-hero__fig { margin:0; background:var(--iv-surface2); }
 .iv-hero__fig img { display:block; width:100%; height:auto; aspect-ratio:16/11; object-fit:cover; }
-/* 元画像が小さい／縦長のときは引き伸ばさず、実寸までで中央に置く */
-.iv-hero__fig.iv-hero__fig--portrait { display:flex; justify-content:center; background:var(--iv-surface2); }
+/* 元画像が小さい／縦長のとき。
+   スマホは幅いっぱいに敷いて余白の帯を作らない。
+   PCは横に余るぶんを同じ写真のぼかしで埋め、額縁に見せない。 */
+.iv-hero__fig.iv-hero__fig--portrait {
+  position:relative; overflow:hidden;
+  display:flex; justify-content:center; align-items:center;
+  background:var(--iv-surface2);
+}
+.iv-hero__fig.iv-hero__fig--portrait::before {
+  content:""; position:absolute; inset:0; z-index:0;
+  background-image:var(--iv-hero-bg);
+  background-size:cover; background-position:center;
+  filter:blur(30px) saturate(1.1) brightness(.9);
+  transform:scale(1.15);
+}
 .iv-hero__fig.iv-hero__fig--portrait img {
-  width:auto; height:auto; aspect-ratio:auto; object-fit:contain;
-  max-width:min(100%, var(--iv-hero-w, 100%));
-  max-height:46vh;
+  position:relative; z-index:1;
+  width:100%; height:auto; aspect-ratio:4/5; object-fit:cover; max-height:none;
 }
 .iv-hero__meta { display:flex; flex-wrap:wrap; gap:6px; padding-block:16px 0; }
 .iv-chip {
@@ -597,7 +609,11 @@ body.single-interview #main {
   /* ヒーロー画像は本文カラムと同じ幅に揃える（はみ出すと写真だけが主役になる） */
   .iv-hero__fig { max-width:720px; margin-inline:auto; }
   .iv-hero__fig img { aspect-ratio:16/9; }
-  .iv-hero__fig.iv-hero__fig--portrait img { max-height:480px; }
+  .iv-hero__fig.iv-hero__fig--portrait { aspect-ratio:16/9; }
+  .iv-hero__fig.iv-hero__fig--portrait img {
+    width:auto; height:100%; aspect-ratio:auto; object-fit:contain;
+    max-width:min(100%, var(--iv-hero-w, 100%));
+  }
   .iv-chip { font-size:12.5px; padding:8px 12px; }
   .iv-byline { font-size:12.5px; }
 
