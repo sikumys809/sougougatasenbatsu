@@ -42,6 +42,11 @@ $hero_title    = keikyo_iv_val( $hero, 'hero_display_title' );
 $hero_subtitle = keikyo_iv_val( $hero, 'hero_display_subtitle' );
 $hero_lead     = keikyo_iv_val( $hero, 'hero_lead_text' );
 $hero_img_url  = keikyo_iv_image_url( keikyo_iv_val( $hero, 'hero_image', [] ), 'full' );
+// 元画像が小さい／縦長のときは、横長に切って引き伸ばすと粗くなるので出し方を変える
+list( $hero_img_w, $hero_img_h ) = function_exists( 'keikyo_iv_image_size' )
+    ? keikyo_iv_image_size( keikyo_iv_val( $hero, 'hero_image', [] ) )
+    : [ 0, 0 ];
+$hero_img_portrait = ( $hero_img_w > 0 && ( $hero_img_w < 1000 || $hero_img_h > $hero_img_w ) );
 $hero_school   = keikyo_iv_val( $hero, 'hero_info_school' );
 $hero_result   = keikyo_iv_val( $hero, 'hero_info_result' );
 $hero_type     = keikyo_iv_val( $hero, 'hero_info_admission_type' );
@@ -201,8 +206,12 @@ if ( $p_name )                { $iv_tabs[] = [ 'id' => 'iv-profile', 'label' => 
       </div>
 
       <?php if ( $hero_img_url ) : ?>
-      <figure class="iv-hero__fig">
-        <img src="<?php echo esc_url( $hero_img_url ); ?>" alt="<?php echo esc_attr( $hero_title ?: get_the_title() ); ?>" loading="eager" />
+      <figure class="iv-hero__fig<?php echo $hero_img_portrait ? ' iv-hero__fig--portrait' : ''; ?>"
+              <?php if ( $hero_img_w ) : ?>style="--iv-hero-w:<?php echo (int) $hero_img_w; ?>px"<?php endif; ?>>
+        <img src="<?php echo esc_url( $hero_img_url ); ?>"
+             alt="<?php echo esc_attr( $hero_title ?: get_the_title() ); ?>"
+             <?php if ( $hero_img_w ) : ?>width="<?php echo (int) $hero_img_w; ?>" height="<?php echo (int) $hero_img_h; ?>"<?php endif; ?>
+             loading="eager" />
       </figure>
       <?php endif; ?>
 

@@ -211,6 +211,30 @@ function keikyo_iv_image_url( $image, $size = 'large' ) {
     return is_string( $image ) ? $image : '';
 }
 
+/**
+ * 画像の実寸（元画像のピクセル数）を [幅, 高さ] で返す。
+ * 小さい画像を引き伸ばして粗く見せないための判定に使う。
+ */
+function keikyo_iv_image_size( $image ) {
+    if ( is_array( $image ) ) {
+        if ( ! empty( $image['width'] ) && ! empty( $image['height'] ) ) {
+            return [ (int) $image['width'], (int) $image['height'] ];
+        }
+        $id = (int) ( $image['ID'] ?? $image['id'] ?? 0 );
+    } elseif ( is_numeric( $image ) ) {
+        $id = (int) $image;
+    } else {
+        $id = 0;
+    }
+    if ( $id ) {
+        $src = wp_get_attachment_image_src( $id, 'full' );
+        if ( $src && ! empty( $src[1] ) ) {
+            return [ (int) $src[1], (int) $src[2] ];
+        }
+    }
+    return [ 0, 0 ];
+}
+
 function keikyo_iv_normalize_repeater( $rows, $required_keys = [] ) {
     if ( ! is_array( $rows ) ) return [];
     $out = [];
