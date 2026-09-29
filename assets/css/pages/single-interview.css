@@ -53,8 +53,9 @@ body.single-interview #main {
   position:sticky;
   top:var(--iv-top);
   z-index:30;
-  background:rgba(247,244,238,.94);
-  backdrop-filter:saturate(1.4) blur(10px);
+  /* 半透明にすると本文がバーの下に透けるので、地の色で塗り切る */
+  background:var(--iv-ground);
+  box-shadow:0 6px 12px -9px rgba(0,0,0,.22);
 }
 .iv-navbar__tabs {
   display:flex;
