@@ -17,6 +17,8 @@
       dock     = document.getElementById('iv-dock'),
       gift     = document.getElementById('iv-gift'),
       tabs     = Array.prototype.slice.call(document.querySelectorAll('[data-iv-tab]')),
+      pipFrame = null,
+      pipOff   = false,
       targets  = tabs.map(function (t) { return document.getElementById(t.getAttribute('data-iv-tab')); });
 
   function syncHeaderOffset() {
@@ -30,6 +32,40 @@
     page.style.setProperty('--iv-top', h + 'px');
   }
 
+  // サムネイルをタップして初めて YouTube を読み込む（lite-embed）
+  Array.prototype.slice.call(document.querySelectorAll('[data-iv-yt]')).forEach(function (frame) {
+    var btn = frame.querySelector('.iv-movie__thumb');
+    if (!btn) { return; }
+    btn.addEventListener('click', function () {
+      var id = frame.getAttribute('data-iv-yt'),
+          f  = document.createElement('iframe');
+      f.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1';
+      f.title = '動画';
+      f.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+      f.setAttribute('allowfullscreen', '');
+      frame.innerHTML = '';
+      frame.appendChild(f);
+
+      if (frame.getAttribute('data-iv-pip')) {
+        pipFrame = frame;
+        pipOff   = false;
+        var close = document.createElement('button');
+        close.type = 'button';
+        close.className = 'iv-movie__pipclose';
+        close.setAttribute('aria-label', 'ミニプレーヤーを閉じる');
+        close.textContent = '\u2715';
+        close.addEventListener('click', function (e) {
+          e.stopPropagation();
+          pipOff = true;
+          frame.classList.remove('is-pip');
+          tick();
+        });
+        frame.appendChild(close);
+      }
+      tick();
+    });
+  });
+
   function stickyBottom() {
     return navbar ? Math.max(0, navbar.getBoundingClientRect().bottom) : 0;
   }
@@ -42,8 +78,15 @@
 
     if (progress) { progress.style.width = p.toFixed(1) + '%'; }
 
+    var pipOn = false;
+    if (pipFrame && !pipOff) {
+      pipOn = pipFrame.parentNode.getBoundingClientRect().bottom < 0;
+      pipFrame.classList.toggle('is-pip', pipOn);
+    }
+
     if (dock && gift) {
-      dock.classList.toggle('is-on', p > 6 && gift.getBoundingClientRect().top > window.innerHeight * 0.75);
+      // ミニプレーヤーが出ている間は画面下を譲る
+      dock.classList.toggle('is-on', !pipOn && p > 6 && gift.getBoundingClientRect().top > window.innerHeight * 0.75);
     }
 
     if (tabs.length) {

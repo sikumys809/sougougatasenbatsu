@@ -229,6 +229,33 @@ if ( $p_name )                { $iv_tabs[] = [ 'id' => 'iv-profile', 'label' => 
     </div>
     <?php endif; ?>
 
+    <!-- ===== 対談動画（本編）===== -->
+    <?php if ( $youtube_id ) :
+        $yt_len = function_exists( 'keikyo_youtube_duration' ) ? keikyo_youtube_duration( $youtube_id ) : '';
+        $yt_min = ( $yt_len && preg_match( '/^(\d+):/', $yt_len, $mm ) ) ? $mm[1] . '分' : '';
+    ?>
+    <div class="iv-wrap">
+      <div class="iv-movie" id="iv-movie">
+        <div class="iv-movie__slot">
+          <div class="iv-movie__frame" data-iv-yt="<?php echo esc_attr( $youtube_id ); ?>" data-iv-pip="1">
+            <button class="iv-movie__thumb" type="button" aria-label="対談動画を再生する">
+              <img src="https://i.ytimg.com/vi/<?php echo esc_attr( $youtube_id ); ?>/maxresdefault.jpg"
+                   onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/<?php echo esc_attr( $youtube_id ); ?>/hqdefault.jpg';"
+                   alt="" loading="lazy" width="1280" height="720" />
+              <span class="iv-movie__play" aria-hidden="true"></span>
+              <?php if ( $yt_len ) : ?><span class="iv-movie__len"><?php echo esc_html( $yt_len ); ?></span><?php endif; ?>
+            </button>
+          </div>
+        </div>
+        <div class="iv-movie__meta">
+          <p class="iv-movie__label">MOVIE ／ 対談本編</p>
+          <p class="iv-movie__title">この対談を、動画で見る</p>
+          <p class="iv-movie__note">この記事は<?php echo $yt_min ? esc_html( '、' . $yt_min ) : 'この'; ?>の対談を読み物として再構成したものです。本人の話し方や間も含めて見たい方はこちらから。</p>
+        </div>
+      </div>
+    </div>
+    <?php endif; ?>
+
     <!-- ===== 目次 ===== -->
     <?php if ( count( $toc ) >= 3 ) : ?>
     <div class="iv-wrap">
@@ -310,7 +337,7 @@ if ( $p_name )                { $iv_tabs[] = [ 'id' => 'iv-profile', 'label' => 
     <?php endif; ?>
 
     <!-- この記事でわかること -->
-    <?php if ( $c_story || $c_inquiry || $c_reason || $c_strategy || $youtube_id ) : ?>
+    <?php if ( $c_story || $c_inquiry || $c_reason || $c_strategy ) : ?>
     <section class="iv-sect">
       <div class="iv-wrap">
         <p class="iv-sect__label">CONTENTS</p>
@@ -333,11 +360,6 @@ if ( $p_name )                { $iv_tabs[] = [ 'id' => 'iv-profile', 'label' => 
           </li>
           <?php endforeach; ?>
         </ul>
-        <?php endif; ?>
-        <?php if ( $youtube_id ) : ?>
-        <div class="iv-video">
-          <iframe src="https://www.youtube.com/embed/<?php echo esc_attr( $youtube_id ); ?>" title="合格者対談動画" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
         <?php endif; ?>
       </div>
     </section>
@@ -434,8 +456,17 @@ if ( $p_name )                { $iv_tabs[] = [ 'id' => 'iv-profile', 'label' => 
         <p class="iv-sect__label">MESSAGE</p>
         <h2 class="iv-sect__title">塾長からのメッセージ</h2>
         <?php if ( $msg_yt_id ) : ?>
-        <div class="iv-video">
-          <iframe src="https://www.youtube.com/embed/<?php echo esc_attr( $msg_yt_id ); ?>" title="塾長からのメッセージ" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="iv-movie iv-movie--plain">
+          <div class="iv-movie__slot">
+            <div class="iv-movie__frame" data-iv-yt="<?php echo esc_attr( $msg_yt_id ); ?>">
+              <button class="iv-movie__thumb" type="button" aria-label="塾長からのメッセージを再生する">
+                <img src="https://i.ytimg.com/vi/<?php echo esc_attr( $msg_yt_id ); ?>/maxresdefault.jpg"
+                     onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/<?php echo esc_attr( $msg_yt_id ); ?>/hqdefault.jpg';"
+                     alt="" loading="lazy" width="1280" height="720" />
+                <span class="iv-movie__play" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
         </div>
         <?php endif; ?>
         <div class="iv-msg__profile">

@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 // 1. 定数定義
 // ============================================================
 
-define( 'KEIKYO_VERSION', '1.0.3' );
+define( 'KEIKYO_VERSION', '1.0.4' );
 define( 'KEIKYO_DIR',     get_template_directory() );
 define( 'KEIKYO_URI',     get_template_directory_uri() );
 
@@ -499,4 +499,35 @@ function keikyo_save_term_image( $term_id ) {
 // ============================================================
 function keikyo_get_term_image( $term_id ) {
     return get_term_meta( $term_id, 'keikyo_term_image', true );
+}
+
+// ============================================================
+// YouTube動画の尺を取得（サムネイルのバッジ用）
+// APIキー不要。取得できたら1週間、失敗したら1時間キャッシュする。
+// ============================================================
+function keikyo_youtube_duration( $video_id ) {
+    $video_id = preg_replace( '/[^A-Za-z0-9_-]/', '', (string) $video_id );
+    if ( '' === $video_id ) {
+        return '';
+    }
+    $key    = 'keikyo_ytlen_' . $video_id;
+    $cached = get_transient( $key );
+    if ( false !== $cached ) {
+        return $cached;
+    }
+    $len = '';
+    $res = wp_remote_get(
+        'https://www.youtube.com/watch?v=' . $video_id,
+        [ 'timeout' => 3, 'user-agent' => 'Mozilla/5.0' ]
+    );
+    if ( ! is_wp_error( $res ) && 200 === (int) wp_remote_retrieve_response_code( $res ) ) {
+        if ( preg_match( '/"lengthSeconds":"(\d+)"/', wp_remote_retrieve_body( $res ), $m ) ) {
+            $sec = (int) $m[1];
+            if ( $sec > 0 ) {
+                $len = sprintf( '%d:%02d', intdiv( $sec, 60 ), $sec % 60 );
+            }
+        }
+    }
+    set_transient( $key, $len, $len ? WEEK_IN_SECONDS : HOUR_IN_SECONDS );
+    return $len;
 }

@@ -312,9 +312,61 @@ body.single-interview #main {
 .iv-learn__title span { color:var(--iv-accent); font-size:11px; flex:none; }
 .iv-learn__text { font-size:12px; line-height:1.7; color:var(--iv-ink2); margin:0; }
 
-/* 動画 */
-.iv-video { margin-top:18px; aspect-ratio:16/9; background:#000; border-radius:3px; overflow:hidden; }
-.iv-video iframe { display:block; width:100%; height:100%; border:0; }
+/* ========================================
+   4.5 対談動画（サムネイル先出し＋ミニプレーヤー）
+   ======================================== */
+.iv-movie {
+  margin-block:4px 26px;
+  background:var(--iv-surface);
+  border:1px solid var(--iv-rule);
+  border-radius:4px;
+  overflow:hidden;
+}
+.iv-movie--plain { margin-block:16px 0; }
+.iv-movie__slot { position:relative; aspect-ratio:16/9; background:#000; }
+.iv-movie__frame { position:absolute; inset:0; }
+.iv-movie__frame iframe { display:block; width:100%; height:100%; border:0; }
+.iv-movie__thumb {
+  display:block; width:100%; height:100%; padding:0; border:0;
+  background:#000; cursor:pointer; position:relative; line-height:0;
+}
+.iv-movie__thumb img { width:100%; height:100%; object-fit:cover; display:block; opacity:.92; transition:opacity .2s ease; }
+.iv-movie__thumb:hover img { opacity:1; }
+.iv-movie__play {
+  position:absolute; inset:0; margin:auto; width:58px; height:58px; border-radius:50%;
+  background:rgba(177,31,42,.94); box-shadow:0 6px 20px rgba(0,0,0,.34);
+  display:grid; place-items:center;
+}
+.iv-movie__play::after {
+  content:""; width:0; height:0; margin-inline-start:4px;
+  border-inline-start:17px solid #fff; border-block:11px solid transparent;
+}
+.iv-movie__len {
+  position:absolute; right:8px; bottom:8px;
+  background:rgba(0,0,0,.78); color:#fff; font-size:11px; font-weight:700;
+  padding:3px 6px; border-radius:2px; line-height:1; font-variant-numeric:tabular-nums;
+}
+.iv-movie__meta { padding:13px 14px; }
+.iv-movie__label { font-size:10px; letter-spacing:.2em; color:var(--iv-accent); font-weight:700; margin:0 0 6px; }
+.iv-movie__title { font-size:14.5px; font-weight:700; line-height:1.5; margin:0 0 5px; color:var(--iv-ink); }
+.iv-movie__note { font-size:11.5px; line-height:1.6; color:var(--iv-ink3); margin:0; }
+
+/* 再生したまま読み進めたときのミニプレーヤー */
+.iv-movie__frame.is-pip {
+  position:fixed; inset:auto; z-index:60;
+  left:50%; transform:translateX(-50%);
+  bottom:calc(12px + env(safe-area-inset-bottom,0px));
+  width:min(398px, calc(100% - 32px));
+  aspect-ratio:16/9; height:auto;
+  border-radius:6px; overflow:hidden;
+  box-shadow:0 14px 34px rgba(0,0,0,.4);
+}
+.iv-movie__pipclose { display:none; }
+.iv-movie__frame.is-pip .iv-movie__pipclose {
+  display:grid; place-items:center; position:absolute; top:6px; right:6px;
+  width:28px; height:28px; border-radius:50%; border:0; z-index:2;
+  background:rgba(0,0,0,.62); color:#fff; font-size:12px; cursor:pointer; line-height:1;
+}
 
 /* こんな人におすすめ */
 .iv-forwho { background:var(--iv-surface); border:1px solid var(--iv-rule); border-radius:3px; padding:14px 15px; }
@@ -476,6 +528,12 @@ body.single-interview #main {
   .iv-kp__num { font-size:26px; }
   .iv-kp__title { font-size:16px; }
   .iv-kp__text { font-size:13.5px; }
+  .iv-movie { max-width:720px; margin-inline:auto; }
+  .iv-movie__title { font-size:17px; }
+  .iv-movie__note { font-size:12.5px; }
+  .iv-movie__play { width:76px; height:76px; }
+  .iv-movie__play::after { border-inline-start-width:23px; border-block-width:15px; }
+  .iv-movie__frame.is-pip { left:auto; right:24px; transform:none; width:360px; bottom:24px; }
   .iv-learn { grid-template-columns:1fr 1fr; gap:12px; }
   .iv-forwho ul { grid-template-columns:1fr 1fr; gap:10px 22px; }
   .iv-forwho li { font-size:13.5px; }
