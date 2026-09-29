@@ -85,9 +85,15 @@
     }
 
     if (dock && gift) {
-      // ミニプレーヤーが出ている間は画面下を譲る
-      dock.classList.toggle('is-on', !pipOn && p > 6 && gift.getBoundingClientRect().top > window.innerHeight * 0.75);
+      dock.classList.toggle('is-on', p > 6 && gift.getBoundingClientRect().top > window.innerHeight * 0.75);
     }
+
+    // ミニプレーヤーとCTAバーを積む。互いの高さを変数で渡して重なりを避ける。
+    page.style.setProperty('--iv-piph', pipOn ? Math.round(pipFrame.getBoundingClientRect().height) + 'px' : '0px');
+    page.style.setProperty(
+      '--iv-dockh',
+      (dock && dock.classList.contains('is-on')) ? Math.round(dock.getBoundingClientRect().height) + 'px' : '0px'
+    );
 
     if (tabs.length) {
       var active = 0,

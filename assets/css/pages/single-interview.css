@@ -352,11 +352,12 @@ body.single-interview #main {
 .iv-movie__note { font-size:11.5px; line-height:1.6; color:var(--iv-ink3); margin:0; }
 
 /* 再生したまま読み進めたときのミニプレーヤー */
+/* スマホ: 画面下のCTAバーの上に重ならないよう、その分だけ持ち上げる */
 .iv-movie__frame.is-pip {
   position:fixed; inset:auto; z-index:60;
-  left:50%; transform:translateX(-50%);
-  bottom:calc(12px + env(safe-area-inset-bottom,0px));
-  width:min(398px, calc(100% - 32px));
+  left:auto; right:12px; transform:none;
+  bottom:calc(var(--iv-dockh, 0px) + 12px + env(safe-area-inset-bottom,0px));
+  width:220px;
   aspect-ratio:16/9; height:auto;
   border-radius:6px; overflow:hidden;
   box-shadow:0 14px 34px rgba(0,0,0,.4);
@@ -466,6 +467,7 @@ body.single-interview #main {
   transition:opacity .22s ease, translate .22s ease, visibility .22s;
 }
 .iv-dock.is-on { opacity:1; visibility:visible; translate:0 0; }
+.iv-dock { transition:opacity .22s ease, translate .22s ease, visibility .22s, bottom .22s ease; }
 .iv-dock__shot { position:relative; display:block; background:#eef1f7; }
 .iv-dock__shot img { display:block; width:100%; height:auto; }
 .iv-dock__tag {
@@ -534,6 +536,7 @@ body.single-interview #main {
   .iv-movie__note { font-size:12.5px; }
   .iv-movie__play { width:76px; height:76px; }
   .iv-movie__play::after { border-inline-start-width:23px; border-block-width:15px; }
+  /* PC: 動画は右下に固定したまま、CTAカードをその上に積む */
   .iv-movie__frame.is-pip { left:auto; right:24px; transform:none; width:360px; bottom:24px; }
   .iv-learn { grid-template-columns:1fr 1fr; gap:12px; }
   .iv-forwho ul { grid-template-columns:1fr 1fr; gap:10px 22px; }
@@ -552,7 +555,7 @@ body.single-interview #main {
 
   /* 下部全幅バーはPCでは邪魔なので、右下のカードに変える */
   .iv-dock {
-    left:auto; right:24px; bottom:24px; transform:none;
+    left:auto; right:24px; bottom:calc(24px + var(--iv-piph, 0px)); transform:none;
     width:330px; border-radius:8px; overflow:hidden;
     border:1px solid rgba(0,0,0,.2);
     padding-bottom:0;
