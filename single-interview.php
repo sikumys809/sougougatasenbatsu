@@ -251,6 +251,13 @@ if ( $p_name )                { $iv_tabs[] = [ 'id' => 'iv-profile', 'label' => 
           <p class="iv-movie__label">MOVIE ／ 対談本編</p>
           <p class="iv-movie__title">この対談を、動画で見る</p>
           <p class="iv-movie__note">この記事は<?php echo $yt_min ? esc_html( '、' . $yt_min ) : 'この'; ?>の対談を読み物として再構成したものです。本人の話し方や間も含めて見たい方はこちらから。</p>
+          <p class="iv-movie__hint">
+            <svg viewBox="0 0 20 14" aria-hidden="true" focusable="false">
+              <rect x="0.9" y="0.9" width="18.2" height="12.2" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+              <rect x="10" y="6" width="8.2" height="6.2" rx="1.4" fill="currentColor"/>
+            </svg>
+            <span><b>再生したまま、記事を読み進められます。</b>スクロールすると画面の隅で再生が続くので、聴きながら読めます。</span>
+          </p>
         </div>
       </div>
     </div>

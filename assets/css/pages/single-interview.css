@@ -350,6 +350,14 @@ body.single-interview #main {
 .iv-movie__label { font-size:10px; letter-spacing:.2em; color:var(--iv-accent); font-weight:700; margin:0 0 6px; }
 .iv-movie__title { font-size:14.5px; font-weight:700; line-height:1.5; margin:0 0 5px; color:var(--iv-ink); }
 .iv-movie__note { font-size:11.5px; line-height:1.6; color:var(--iv-ink3); margin:0; }
+.iv-movie__hint {
+  display:flex; gap:8px; align-items:flex-start;
+  margin:11px 0 0; padding-top:11px;
+  border-top:1px solid var(--iv-rule2);
+  font-size:11.5px; line-height:1.6; color:var(--iv-ink2);
+}
+.iv-movie__hint svg { flex:none; width:19px; height:14px; margin-top:2px; color:var(--iv-accent); }
+.iv-movie__hint b { font-weight:700; color:var(--iv-ink); }
 
 /* 再生したまま読み進めたときのミニプレーヤー */
 /* スマホ: 画面下のCTAバーの上に重ならないよう、その分だけ持ち上げる */
@@ -534,6 +542,7 @@ body.single-interview #main {
   .iv-movie { max-width:720px; margin-inline:auto; }
   .iv-movie__title { font-size:17px; }
   .iv-movie__note { font-size:12.5px; }
+  .iv-movie__hint { font-size:12.5px; }
   .iv-movie__play { width:76px; height:76px; }
   .iv-movie__play::after { border-inline-start-width:23px; border-block-width:15px; }
   /* PC: 動画は右下に固定したまま、CTAカードをその上に積む。
