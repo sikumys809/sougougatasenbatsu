@@ -17,6 +17,9 @@
       dock     = document.getElementById('iv-dock'),
       gift     = document.getElementById('iv-gift'),
       tabs     = Array.prototype.slice.call(document.querySelectorAll('[data-iv-tab]')),
+      chapEl   = document.getElementById('iv-chap'),
+      track    = navbar ? navbar.querySelector('.iv-navbar__progress') : null,
+      chapters = Array.prototype.slice.call(document.querySelectorAll('.iv-body__content h2[id^="iv-h"]')),
       pipFrame = null,
       pipOff   = false,
       targets  = tabs.map(function (t) { return document.getElementById(t.getAttribute('data-iv-tab')); });
@@ -66,6 +69,24 @@
     });
   });
 
+  // 章の切れ目を読了バーに刻む
+  function layoutTicks() {
+    if (!track || !chapters.length) { return; }
+    Array.prototype.slice.call(track.querySelectorAll('.iv-navbar__tick')).forEach(function (n) {
+      n.parentNode.removeChild(n);
+    });
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    if (max <= 0) { return; }
+    chapters.forEach(function (h) {
+      var top = h.getBoundingClientRect().top + (window.scrollY || window.pageYOffset),
+          pct = Math.min(100, Math.max(0, (top / max) * 100)),
+          el  = document.createElement('span');
+      el.className = 'iv-navbar__tick';
+      el.style.left = pct.toFixed(2) + '%';
+      track.appendChild(el);
+    });
+  }
+
   function stickyBottom() {
     return navbar ? Math.max(0, navbar.getBoundingClientRect().bottom) : 0;
   }
@@ -105,6 +126,15 @@
       for (var j = 0; j < tabs.length; j++) {
         tabs[j].classList.toggle('is-on', j === active);
       }
+
+      // 本文にいる間だけ「3/7」のように現在の章を出す
+      if (chapEl) {
+        var ci = -1;
+        for (var k = 0; k < chapters.length; k++) {
+          if (chapters[k].getBoundingClientRect().top <= line) { ci = k; }
+        }
+        chapEl.textContent = (active === 0 && ci >= 0) ? ' ' + (ci + 1) + '/' + chapters.length : '';
+      }
     }
   }
 
@@ -125,9 +155,10 @@
   });
 
   window.addEventListener('scroll', tick, { passive: true });
-  window.addEventListener('resize', function () { syncHeaderOffset(); tick(); });
-  window.addEventListener('load', function () { syncHeaderOffset(); tick(); });
+  window.addEventListener('resize', function () { syncHeaderOffset(); layoutTicks(); tick(); });
+  window.addEventListener('load', function () { syncHeaderOffset(); layoutTicks(); tick(); });
 
   syncHeaderOffset();
+  layoutTicks();
   tick();
 })();

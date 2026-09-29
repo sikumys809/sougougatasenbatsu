@@ -76,8 +76,18 @@ body.single-interview #main {
 }
 .iv-navbar__tab:hover { color:var(--iv-ink); }
 .iv-navbar__tab.is-on { color:var(--iv-ink); border-bottom-color:var(--iv-accent); }
-.iv-navbar__progress { height:2px; background:var(--iv-rule2); }
+.iv-navbar__chap {
+  font-size:10.5px; font-weight:700; color:var(--iv-ink3);
+  margin-inline-start:5px; font-variant-numeric:tabular-nums;
+}
+.iv-navbar__tab.is-on .iv-navbar__chap { color:var(--iv-accent); }
+.iv-navbar__progress { position:relative; height:3px; background:var(--iv-rule2); }
 .iv-navbar__bar { height:100%; width:0; background:var(--iv-accent); transition:width .12s linear; }
+/* 章の切れ目。読了バーの上に刻んで、全体のどこにいるかを示す */
+.iv-navbar__tick {
+  position:absolute; top:0; z-index:1;
+  width:1px; height:100%; background:rgba(0,0,0,.3);
+}
 
 /* ========================================
    2. ヒーロー

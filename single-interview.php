@@ -180,7 +180,8 @@ if ( $p_name )                { $iv_tabs[] = [ 'id' => 'iv-profile', 'label' => 
       <?php foreach ( $iv_tabs as $i => $tab ) : ?>
         <a class="iv-navbar__tab<?php echo 0 === $i ? ' is-on' : ''; ?>"
            href="#<?php echo esc_attr( $tab['id'] ); ?>"
-           data-iv-tab="<?php echo esc_attr( $tab['id'] ); ?>"><?php echo esc_html( $tab['label'] ); ?></a>
+           data-iv-tab="<?php echo esc_attr( $tab['id'] ); ?>"><?php echo esc_html( $tab['label'] );
+           if ( 'iv-read' === $tab['id'] ) : ?><span class="iv-navbar__chap" id="iv-chap"></span><?php endif; ?></a>
       <?php endforeach; ?>
     </div>
     <div class="iv-navbar__progress"><div class="iv-navbar__bar" id="iv-progress"></div></div>
