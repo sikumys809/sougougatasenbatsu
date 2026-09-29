@@ -89,7 +89,8 @@
     }
 
     // ミニプレーヤーとCTAバーを積む。互いの高さを変数で渡して重なりを避ける。
-    page.style.setProperty('--iv-piph', pipOn ? Math.round(pipFrame.getBoundingClientRect().height) + 'px' : '0px');
+    // 高さ＋隙間を渡す。CTAバーはこの分だけ持ち上がる。
+    page.style.setProperty('--iv-piph', pipOn ? (Math.round(pipFrame.getBoundingClientRect().height) + 10) + 'px' : '0px');
     page.style.setProperty(
       '--iv-dockh',
       (dock && dock.classList.contains('is-on')) ? Math.round(dock.getBoundingClientRect().height) + 'px' : '0px'

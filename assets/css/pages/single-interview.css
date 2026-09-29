@@ -536,8 +536,15 @@ body.single-interview #main {
   .iv-movie__note { font-size:12.5px; }
   .iv-movie__play { width:76px; height:76px; }
   .iv-movie__play::after { border-inline-start-width:23px; border-block-width:15px; }
-  /* PC: 動画は右下に固定したまま、CTAカードをその上に積む */
-  .iv-movie__frame.is-pip { left:auto; right:24px; transform:none; width:360px; bottom:24px; }
+  /* PC: 動画は右下に固定したまま、CTAカードをその上に積む。
+     2枚で1つの塊に見えるよう、幅・右端・角丸・影を揃える。 */
+  .iv-page { --iv-corner-w:340px; }
+  .iv-movie__frame.is-pip {
+    left:auto; right:24px; transform:none; bottom:24px;
+    width:var(--iv-corner-w);
+    border-radius:8px;
+    box-shadow:0 14px 40px rgba(0,0,0,.28);
+  }
   .iv-learn { grid-template-columns:1fr 1fr; gap:12px; }
   .iv-forwho ul { grid-template-columns:1fr 1fr; gap:10px 22px; }
   .iv-forwho li { font-size:13.5px; }
@@ -556,10 +563,10 @@ body.single-interview #main {
   /* 下部全幅バーはPCでは邪魔なので、右下のカードに変える */
   .iv-dock {
     left:auto; right:24px; bottom:calc(24px + var(--iv-piph, 0px)); transform:none;
-    width:330px; border-radius:8px; overflow:hidden;
-    border:1px solid rgba(0,0,0,.2);
+    width:var(--iv-corner-w); border-radius:8px; overflow:hidden;
+    border:0;
     padding-bottom:0;
-    box-shadow:0 14px 40px rgba(0,0,0,.26);
+    box-shadow:0 14px 40px rgba(0,0,0,.28);
   }
   .iv-dock__row { padding:11px 14px 13px; }
 }
