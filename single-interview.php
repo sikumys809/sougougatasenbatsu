@@ -23,7 +23,19 @@ $message  = keikyo_iv_get_group( $post_id, 'message_section' );
 $cta_sec  = keikyo_iv_get_group( $post_id, 'final_cta_section' );
 
 $consultation_url = 'https://utage-system.com/p/02V953EOfqJm';
-$line_url         = 'https://utage-system.com/line/open/jtjYajI0XOEm?mtid=DN561e5ZtUTf'; // LINE公式アカウントURL
+
+// LINE公式アカウント。導線ごとに mtid を分けて、どこ経由の登録かを Utage 側で見分ける。
+// ※ 現状は全導線が同じIDなので、Utageで発行し直したら下の3つを差し替えること。
+$line_base = 'https://utage-system.com/line/open/jtjYajI0XOEm';
+$line_mtid = [
+    'inline' => 'DN561e5ZtUTf', // 本文中バナー
+    'gift'   => 'DN561e5ZtUTf', // 読了直後の特典CTA
+    'dock'   => 'DN561e5ZtUTf', // 追従バー
+];
+$line_url  = static function ( $key ) use ( $line_base, $line_mtid ) {
+    $id = $line_mtid[ $key ] ?? reset( $line_mtid );
+    return $line_base . '?mtid=' . rawurlencode( $id );
+};
 
 // Hero
 $hero_title    = keikyo_iv_val( $hero, 'hero_display_title' );
@@ -98,289 +110,391 @@ if ( $msg_youtube && preg_match( '#(?:youtu\.be/|v=|embed/|shorts/)([A-Za-z0-9_-
 // 本文
 $content = get_post_field( 'post_content', $post_id );
 $has_content = '' !== trim( wp_strip_all_tags( (string)$content ) );
+
+// ── 本文の前処理（目次・章番号・本文中バナー）────────────────
+$toc       = [];
+$body_html = '';
+if ( $has_content ) {
+    $body_html = (string) apply_filters( 'the_content', $content );
+
+    // h2 に ID と章番号を付けながら目次を作る
+    $body_html = preg_replace_callback(
+        '#<h2\b([^>]*)>(.*?)</h2>#is',
+        static function ( $m ) use ( &$toc ) {
+            $n     = count( $toc ) + 1;
+            $id    = 'iv-h' . $n;
+            $attrs = preg_replace( '#\s*id\s*=\s*("[^"]*"|\'[^\']*\')#i', '', $m[1] );
+            $toc[] = [ 'id' => $id, 'text' => trim( wp_strip_all_tags( $m[2] ) ) ];
+            return '<h2 id="' . $id . '"' . $attrs . '><span class="iv-h2num">CHAPTER '
+                 . sprintf( '%02d', $n ) . '</span>' . $m[2] . '</h2>';
+        },
+        $body_html
+    );
+
+    // 「▶」で始まる引用は本人の言葉ではなく案内文なので、別スタイルに振り分ける
+    $body_html = preg_replace_callback(
+        '#<blockquote\b([^>]*)>(.*?)</blockquote>#is',
+        static function ( $m ) {
+            if ( false === strpos( $m[2], '▶' ) ) {
+                return $m[0];
+            }
+            $attrs = $m[1];
+            if ( preg_match( '#class\s*=\s*"#i', $attrs ) ) {
+                $attrs = preg_replace( '#class\s*=\s*"([^"]*)"#i', 'class="$1 iv-note"', $attrs, 1 );
+            } else {
+                $attrs .= ' class="iv-note"';
+            }
+            return '<blockquote' . $attrs . '>' . $m[2] . '</blockquote>';
+        },
+        $body_html
+    );
+
+    // 本文中のLINE導線は1箇所だけ。章数の中ほどの見出し直前に差し込む。
+    $h2_count = count( $toc );
+    if ( $h2_count >= 3 ) {
+        $banner = '<a class="iv-linebar" href="' . esc_url( $line_url( 'inline' ) ) . '" target="_blank" rel="noopener noreferrer">'
+                . '<span><span class="iv-linebar__t">同じ壁で止まっている人へ</span>'
+                . '<span class="iv-linebar__s">『必勝 小論文基礎問題集』ほか、電子書籍PDF全8冊をLINEで無料配布中</span></span>'
+                . '<span class="iv-linebar__arw">→</span></a>';
+        $parts = preg_split( '#(?=<h2\b)#i', $body_html );
+        $at    = (int) ceil( $h2_count / 2 ) + 1; // $parts[0] は最初のh2より前
+        if ( isset( $parts[ $at ] ) ) {
+            $parts[ $at ] = $banner . $parts[ $at ];
+            $body_html    = implode( '', $parts );
+        }
+    }
+}
+
+// 記事ナビのタブ（対象セクションが無いものは出さない）
+$iv_tabs = [];
+if ( $has_content )          { $iv_tabs[] = [ 'id' => 'iv-read',    'label' => '本文' ]; }
+if ( ! empty( $key_points ) ) { $iv_tabs[] = [ 'id' => 'iv-summary', 'label' => 'まとめ' ]; }
+if ( $p_name )                { $iv_tabs[] = [ 'id' => 'iv-profile', 'label' => 'プロフィール' ]; }
 ?>
 
 <div class="iv-page">
 
-  <!-- ===== HERO ===== -->
-  <section class="iv-hero">
-    <div class="iv-shell iv-hero__inner">
-      <div class="iv-hero__content">
-        <p class="iv-hero__label">Interview Feature / 合格者インタビュー</p>
-        <?php if ( $hero_title ) : ?>
-          <h1 class="iv-hero__title"><?php echo esc_html( $hero_title ); ?></h1>
-        <?php else : ?>
-          <h1 class="iv-hero__title"><?php the_title(); ?></h1>
-        <?php endif; ?>
+  <?php if ( count( $iv_tabs ) > 1 ) : ?>
+  <nav class="iv-navbar" id="iv-navbar" aria-label="記事内ナビゲーション">
+    <div class="iv-navbar__tabs">
+      <?php foreach ( $iv_tabs as $i => $tab ) : ?>
+        <a class="iv-navbar__tab<?php echo 0 === $i ? ' is-on' : ''; ?>"
+           href="#<?php echo esc_attr( $tab['id'] ); ?>"
+           data-iv-tab="<?php echo esc_attr( $tab['id'] ); ?>"><?php echo esc_html( $tab['label'] ); ?></a>
+      <?php endforeach; ?>
+    </div>
+    <div class="iv-navbar__progress"><div class="iv-navbar__bar" id="iv-progress"></div></div>
+  </nav>
+  <?php endif; ?>
+
+  <article>
+
+    <!-- ===== HERO ===== -->
+    <div class="iv-hero">
+      <div class="iv-wrap">
+        <p class="iv-eyebrow">INTERVIEW ／ 合格者インタビュー</p>
+        <h1 class="iv-hero__title"><?php echo esc_html( $hero_title ?: get_the_title() ); ?></h1>
         <?php if ( $hero_subtitle ) : ?>
           <p class="iv-hero__subtitle"><?php echo esc_html( $hero_subtitle ); ?></p>
         <?php endif; ?>
-        <?php if ( $hero_lead ) : ?>
-          <p class="iv-hero__lead"><?php echo nl2br( esc_html( $hero_lead ) ); ?></p>
-        <?php endif; ?>
-        <div class="iv-hero__cta">
-          <a href="#iv-contents" class="iv-btn iv-btn--navy">記事を読む ↓</a>
-          <a href="<?php echo esc_url( $consultation_url ); ?>" class="iv-btn iv-btn--red" target="_blank" rel="noopener noreferrer">無料相談を見る →</a>
-        </div>
-        <p class="iv-hero__scroll">↓ SCROLL</p>
       </div>
-      <div class="iv-hero__visual">
-        <?php if ( $hero_img_url ) : ?>
-          <div class="iv-hero__photo">
-            <img src="<?php echo esc_url( $hero_img_url ); ?>" alt="<?php echo esc_attr( $hero_title ?: get_the_title() ); ?>" loading="eager" />
-          </div>
-        <?php else : ?>
-          <div class="iv-hero__photo iv-hero__photo--placeholder">PHOTO</div>
-        <?php endif; ?>
-        <?php if ( $hero_school || $hero_result || $hero_type || $hero_period ) : ?>
-        <div class="iv-hero__info-card">
-          <dl>
-            <?php if ( $hero_school )  : ?><dt>出身高校</dt><dd><?php echo esc_html( $hero_school ); ?></dd><?php endif; ?>
-            <?php if ( $hero_result )  : ?><dt>合格先</dt><dd><?php echo esc_html( $hero_result ); ?></dd><?php endif; ?>
-            <?php if ( $hero_type )    : ?><dt>入試方式</dt><dd><?php echo esc_html( $hero_type ); ?></dd><?php endif; ?>
-            <?php if ( $hero_period )  : ?><dt>準備期間</dt><dd><?php echo esc_html( $hero_period ); ?></dd><?php endif; ?>
-          </dl>
+
+      <?php if ( $hero_img_url ) : ?>
+      <figure class="iv-hero__fig">
+        <img src="<?php echo esc_url( $hero_img_url ); ?>" alt="<?php echo esc_attr( $hero_title ?: get_the_title() ); ?>" loading="eager" />
+      </figure>
+      <?php endif; ?>
+
+      <div class="iv-wrap">
+        <?php if ( $hero_result || $hero_type || $hero_period ) : ?>
+        <div class="iv-hero__meta">
+          <?php if ( $hero_result ) : ?><span class="iv-chip iv-chip--accent"><?php echo esc_html( $hero_result ); ?></span><?php endif; ?>
+          <?php if ( $hero_type )   : ?><span class="iv-chip"><?php echo esc_html( $hero_type ); ?></span><?php endif; ?>
+          <?php if ( $hero_period ) : ?><span class="iv-chip"><?php echo esc_html( $hero_period ); ?></span><?php endif; ?>
         </div>
         <?php endif; ?>
+        <div class="iv-byline">
+          <?php if ( $p_name ) : ?><span><?php echo esc_html( $p_name ); ?>さん</span><span class="iv-byline__dot"></span><?php endif; ?>
+          <span><?php echo esc_html( get_the_date( 'Y.m' ) ); ?> 取材</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== リード ===== -->
+    <?php if ( $hero_lead ) : ?>
+    <div class="iv-wrap iv-lede">
+      <?php foreach ( array_filter( array_map( 'trim', preg_split( '/\R/u', (string) $hero_lead ) ) ) as $para ) : ?>
+        <p><?php echo esc_html( $para ); ?></p>
+      <?php endforeach; ?>
+    </div>
+    <?php endif; ?>
+
+    <!-- ===== 目次 ===== -->
+    <?php if ( count( $toc ) >= 3 ) : ?>
+    <div class="iv-wrap">
+      <details class="iv-toc" open>
+        <summary>この記事の流れ（<?php echo count( $toc ); ?>章）</summary>
+        <ul class="iv-toc__list">
+          <?php foreach ( $toc as $item ) : ?>
+            <li><a href="#<?php echo esc_attr( $item['id'] ); ?>"><?php echo esc_html( $item['text'] ); ?></a></li>
+          <?php endforeach; ?>
+        </ul>
+      </details>
+    </div>
+    <?php endif; ?>
+
+    <!-- ===== 本文 ===== -->
+    <?php if ( $has_content ) : ?>
+    <div class="iv-body" id="iv-read">
+      <div class="iv-wrap">
+        <div class="iv-body__content entry-content"><?php echo $body_html; // phpcs:ignore WordPress.Security.EscapeOutput ?></div>
+      </div>
+    </div>
+    <?php endif; ?>
+
+  </article>
+
+  <!-- ===== 特典CTA（読了直後）===== -->
+  <section class="iv-gift" id="iv-gift">
+    <div class="iv-gift__shotwrap">
+      <img class="iv-gift__shot"
+           src="<?php echo esc_url( KEIKYO_URI . '/assets/img/line-gift-books.jpg' ); ?>"
+           alt="特典の電子書籍8冊：自己分析完全攻略、必勝小論文基礎問題集、逆転合格の思考法、面接質問集50選、志望理由書大公開ほか"
+           loading="lazy" width="880" height="340" />
+    </div>
+    <div class="iv-gift__body">
+      <div class="iv-wrap">
+        <div class="iv-gift__badges">
+          <span class="iv-badge iv-badge--red">有料級・非売品</span>
+          <span class="iv-badge iv-badge--out">全8冊・電子書籍PDF</span>
+        </div>
+        <h2 class="iv-gift__title">総合型選抜の「8大特典」を、<br />LINE登録だけで無料プレゼント。</h2>
+        <p class="iv-gift__lead">合格者が実際に使った小論文の「型」も、面接の想定問答も、この8冊に入っています。登録したその場で、すべてPDFでお届けします。</p>
+        <ul class="iv-gift__list">
+          <li><b>01</b><span>武器が見つかる 自己分析完全攻略<em>／書き込み式ワークブック</em></span></li>
+          <li><b>02</b><span>必勝 小論文基礎問題集<em>／プロ講師が厳選</em></span></li>
+          <li><b>03</b><span>総合型選抜 逆転合格の思考法<em>／オリジナル電子書籍</em></span></li>
+          <li><b>04</b><span>面接質問集50選<em>／回答例つき</em></span></li>
+          <li><b>05</b><span>志望理由書 大公開<em>／実物ベース・参考例10選</em></span></li>
+          <li><b>+3</b><span class="iv-gift__more">ほか3点をまとめてお届け</span></li>
+        </ul>
+        <a class="iv-btn-line" href="<?php echo esc_url( $line_url( 'gift' ) ); ?>" target="_blank" rel="noopener noreferrer">LINEで8大特典を受け取る</a>
+        <p class="iv-gift__note">登録無料・勧誘なし・いつでも解除可能</p>
       </div>
     </div>
   </section>
 
-  <!-- ===== INLINE CTA（無料相談）===== -->
-  <section class="iv-inline-cta">
-    <div class="iv-shell iv-inline-cta__inner">
-      <p class="iv-inline-cta__text">総合型選抜について、まず無料で相談してみませんか？</p>
-      <a href="<?php echo esc_url( $consultation_url ); ?>" class="iv-btn iv-btn--red" target="_blank" rel="noopener noreferrer">無料受験相談を申し込む →</a>
-    </div>
-  </section>
+  <!-- ===== 資料ゾーン ===== -->
+  <div class="iv-zone">
+    <div class="iv-zone__head"><p>DATA ＆ PROFILE</p></div>
 
-  <!-- ===== CONTENTS ===== -->
-  <?php if ( $c_story || $c_inquiry || $c_reason || $c_strategy ) : ?>
-  <section class="iv-contents" id="iv-contents">
-    <div class="iv-shell">
-      <div class="iv-contents__header">
-        <p class="iv-eyebrow">Contents</p>
-        <h2 class="iv-section-title">この記事でわかること</h2>
+    <!-- Key Points -->
+    <?php if ( ! empty( $key_points ) ) : ?>
+    <section class="iv-sect" id="iv-summary">
+      <div class="iv-wrap">
+        <p class="iv-sect__label">KEY POINTS</p>
+        <h2 class="iv-sect__title">今回の合格を支えたポイント</h2>
+        <ol class="iv-kp">
+          <?php foreach ( $key_points as $pt ) : ?>
+          <li>
+            <span class="iv-kp__num"><?php echo esc_html( $pt['num'] ); ?></span>
+            <div>
+              <h3 class="iv-kp__title"><?php echo esc_html( $pt['title'] ); ?></h3>
+              <p class="iv-kp__text"><?php echo esc_html( $pt['body'] ); ?></p>
+            </div>
+          </li>
+          <?php endforeach; ?>
+        </ol>
       </div>
-      <div class="iv-contents__grid">
-        <?php if ( $c_story )    : ?><div class="iv-contents__card"><div class="iv-contents__card-icon">◫</div><h3 class="iv-contents__card-title">リアルなストーリー</h3><p class="iv-contents__card-text"><?php echo esc_html( $c_story ); ?></p></div><?php endif; ?>
-        <?php if ( $c_inquiry )  : ?><div class="iv-contents__card"><div class="iv-contents__card-icon">◌</div><h3 class="iv-contents__card-title">探究活動の作り方</h3><p class="iv-contents__card-text"><?php echo esc_html( $c_inquiry ); ?></p></div><?php endif; ?>
-        <?php if ( $c_reason )   : ?><div class="iv-contents__card"><div class="iv-contents__card-icon">▣</div><h3 class="iv-contents__card-title">志望理由書の秘訣</h3><p class="iv-contents__card-text"><?php echo esc_html( $c_reason ); ?></p></div><?php endif; ?>
-        <?php if ( $c_strategy ) : ?><div class="iv-contents__card"><div class="iv-contents__card-icon">◎</div><h3 class="iv-contents__card-title">受験戦略と面接対策</h3><p class="iv-contents__card-text"><?php echo esc_html( $c_strategy ); ?></p></div><?php endif; ?>
-      </div>
-      <?php if ( $youtube_id || ! empty( $c_recs ) ) : ?>
-      <div class="iv-contents__bottom<?php echo ! $youtube_id ? ' iv-contents__bottom--no-video' : ''; ?>">
+    </section>
+    <?php endif; ?>
+
+    <!-- この記事でわかること -->
+    <?php if ( $c_story || $c_inquiry || $c_reason || $c_strategy || $youtube_id ) : ?>
+    <section class="iv-sect">
+      <div class="iv-wrap">
+        <p class="iv-sect__label">CONTENTS</p>
+        <h2 class="iv-sect__title">この記事でわかること</h2>
+        <?php if ( $c_story || $c_inquiry || $c_reason || $c_strategy ) : ?>
+        <ul class="iv-learn">
+          <?php
+          $learn_rows = [
+              [ '01', 'リアルなストーリー', $c_story ],
+              [ '02', '探究活動の作り方',   $c_inquiry ],
+              [ '03', '志望理由書の秘訣',   $c_reason ],
+              [ '04', '受験戦略と面接対策', $c_strategy ],
+          ];
+          foreach ( $learn_rows as $row ) :
+              if ( ! $row[2] ) { continue; }
+          ?>
+          <li>
+            <h3 class="iv-learn__title"><span><?php echo esc_html( $row[0] ); ?></span><?php echo esc_html( $row[1] ); ?></h3>
+            <p class="iv-learn__text"><?php echo esc_html( $row[2] ); ?></p>
+          </li>
+          <?php endforeach; ?>
+        </ul>
+        <?php endif; ?>
         <?php if ( $youtube_id ) : ?>
-        <div class="iv-contents__video">
+        <div class="iv-video">
           <iframe src="https://www.youtube.com/embed/<?php echo esc_attr( $youtube_id ); ?>" title="合格者対談動画" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         <?php endif; ?>
-        <?php if ( ! empty( $c_recs ) ) : ?>
-        <div class="iv-contents__recommend">
-          <h3>こんな人におすすめ</h3>
+      </div>
+    </section>
+    <?php endif; ?>
+
+    <!-- こんな人におすすめ -->
+    <?php if ( ! empty( $c_recs ) ) : ?>
+    <section class="iv-sect">
+      <div class="iv-wrap">
+        <p class="iv-sect__label">FOR YOU</p>
+        <h2 class="iv-sect__title">こんな人におすすめ</h2>
+        <div class="iv-forwho">
           <ul>
             <?php foreach ( $c_recs as $rec ) : ?>
               <li><?php echo esc_html( $rec['recommended_text'] ); ?></li>
             <?php endforeach; ?>
           </ul>
         </div>
+      </div>
+    </section>
+    <?php endif; ?>
+
+    <!-- プロフィール -->
+    <?php if ( $p_name ) : ?>
+    <section class="iv-sect" id="iv-profile">
+      <div class="iv-wrap">
+        <p class="iv-sect__label">PROFILE</p>
+        <h2 class="iv-sect__title">合格者プロフィール</h2>
+        <div class="iv-prof__head">
+          <?php if ( $p_img_url ) : ?>
+            <img class="iv-prof__photo" src="<?php echo esc_url( $p_img_url ); ?>" alt="<?php echo esc_attr( $p_name ); ?>" loading="lazy" />
+          <?php endif; ?>
+          <div>
+            <p class="iv-prof__name"><?php echo esc_html( $p_name ); ?></p>
+            <?php if ( $p_kana ) : ?><p class="iv-prof__kana"><?php echo esc_html( $p_kana ); ?></p><?php endif; ?>
+          </div>
+        </div>
+        <?php if ( $p_quote ) : ?>
+          <p class="iv-prof__quote">「<?php echo esc_html( $p_quote ); ?>」</p>
+        <?php endif; ?>
+        <?php if ( ! empty( $p_detail_rows ) ) : ?>
+        <dl class="iv-dl">
+          <?php foreach ( $p_detail_rows as $row ) : ?>
+            <div class="iv-dl__row">
+              <dt><?php echo esc_html( $row['label'] ); ?></dt>
+              <dd><?php echo esc_html( $row['value'] ); ?></dd>
+            </div>
+          <?php endforeach; ?>
+        </dl>
+        <?php endif; ?>
+        <?php if ( ! empty( $p_chips ) ) : ?>
+        <div class="iv-tags">
+          <?php foreach ( $p_chips as $chip ) : ?>
+            <span class="iv-tag"><?php echo esc_html( $chip['activity_chip_label'] ); ?></span>
+          <?php endforeach; ?>
+        </div>
         <?php endif; ?>
       </div>
-      <?php endif; ?>
-    </div>
-  </section>
-  <?php endif; ?>
+    </section>
+    <?php endif; ?>
 
-  <!-- ===== KEY POINTS ===== -->
-  <?php if ( ! empty( $key_points ) ) : ?>
-  <section class="iv-keypoints">
-    <div class="iv-shell">
-      <div class="iv-keypoints__header">
-        <p class="iv-eyebrow iv-eyebrow--red">Key Points</p>
-        <h2 class="iv-section-title iv-section-title--white">今回の合格を支えたポイント</h2>
+    <!-- 年表 -->
+    <?php if ( ! empty( $tl_items ) ) : ?>
+    <section class="iv-sect">
+      <div class="iv-wrap">
+        <p class="iv-sect__label">TIMELINE</p>
+        <h2 class="iv-sect__title">原体験から合格までの軌跡</h2>
+        <ul class="iv-tl">
+          <?php foreach ( $tl_items as $item ) : ?>
+          <li>
+            <?php $kw = keikyo_iv_val( $item, 'timeline_keyword' ); if ( $kw ) : ?>
+              <span class="iv-tl__badge"><?php echo esc_html( $kw ); ?></span>
+            <?php endif; ?>
+            <?php $per = keikyo_iv_val( $item, 'timeline_period' ); if ( $per ) : ?>
+              <p class="iv-tl__period"><?php echo esc_html( $per ); ?></p>
+            <?php endif; ?>
+            <?php $ttl = keikyo_iv_val( $item, 'timeline_item_title' ); if ( $ttl ) : ?>
+              <h3 class="iv-tl__title"><?php echo esc_html( $ttl ); ?></h3>
+            <?php endif; ?>
+            <?php $bdy = keikyo_iv_val( $item, 'timeline_item_body' ); if ( $bdy ) : ?>
+              <p class="iv-tl__text"><?php echo esc_html( $bdy ); ?></p>
+            <?php endif; ?>
+          </li>
+          <?php endforeach; ?>
+        </ul>
       </div>
-      <div class="iv-keypoints__grid">
-        <?php foreach ( $key_points as $pt ) : ?>
-        <div class="iv-keypoints__card">
-          <span class="iv-keypoints__card-num"><?php echo esc_html( $pt['num'] ); ?></span>
-          <p class="iv-keypoints__card-label">Point <?php echo esc_html( $pt['num'] ); ?></p>
-          <h3 class="iv-keypoints__card-title"><?php echo esc_html( $pt['title'] ); ?></h3>
-          <p class="iv-keypoints__card-text"><?php echo esc_html( $pt['body'] ); ?></p>
-        </div>
-        <?php endforeach; ?>
-      </div>
-    </div>
-  </section>
-  <?php endif; ?>
+    </section>
+    <?php endif; ?>
 
-  <!-- ===== PROFILE ===== -->
-  <?php if ( $p_name ) : ?>
-  <section class="iv-profile">
-    <div class="iv-shell">
-      <div class="iv-profile__header">
-        <p class="iv-eyebrow">Profile</p>
-        <h2 class="iv-section-title">合格者プロフィール</h2>
-      </div>
-      <div class="iv-profile__inner">
-        <div class="iv-profile__visual">
-          <?php if ( $p_img_url ) : ?>
-            <div class="iv-profile__photo"><img src="<?php echo esc_url( $p_img_url ); ?>" alt="<?php echo esc_attr( $p_name ); ?>" loading="lazy" /></div>
-          <?php else : ?>
-            <div class="iv-profile__photo iv-profile__photo--placeholder">PHOTO</div>
-          <?php endif; ?>
-          <?php if ( $p_quote ) : ?>
-            <blockquote class="iv-profile__quote">「<?php echo esc_html( $p_quote ); ?>」</blockquote>
-          <?php endif; ?>
-        </div>
-        <div class="iv-profile__info">
-          <h3 class="iv-profile__name"><?php echo esc_html( $p_name ); ?></h3>
-          <?php if ( $p_kana ) : ?><p class="iv-profile__furigana"><?php echo esc_html( $p_kana ); ?></p><?php endif; ?>
-          <?php if ( ! empty( $p_detail_rows ) ) : ?>
-          <div class="iv-profile__table">
-            <dl>
-              <?php foreach ( $p_detail_rows as $row ) : ?>
-                <dt><?php echo esc_html( $row['label'] ); ?></dt>
-                <dd><?php echo esc_html( $row['value'] ); ?></dd>
-              <?php endforeach; ?>
-            </dl>
-          </div>
-          <?php endif; ?>
-          <?php if ( ! empty( $p_chips ) ) : ?>
-          <div class="iv-profile__chips">
-            <?php foreach ( $p_chips as $chip ) : ?>
-              <span class="iv-profile__chip"><?php echo esc_html( $chip['activity_chip_label'] ); ?></span>
-            <?php endforeach; ?>
-          </div>
-          <?php endif; ?>
-        </div>
-      </div>
-    </div>
-  </section>
-  <?php endif; ?>
-
-  <!-- ===== INLINE CTA（LINE）===== -->
-  <section class="iv-inline-cta iv-inline-cta--line">
-    <div class="iv-shell iv-inline-cta__inner">
-      <div class="iv-inline-cta__left">
-        <span class="iv-inline-cta__icon">💬</span>
-        <div>
-          <p class="iv-inline-cta__text">公式LINEで合格情報を受け取る</p>
-          <p class="iv-inline-cta__sub">合格事例・対策情報を無料配信中</p>
-        </div>
-      </div>
-      <a href="<?php echo esc_url( $line_url ); ?>" class="iv-btn iv-btn--white-line" target="_blank" rel="noopener noreferrer">LINE登録はこちら →</a>
-    </div>
-  </section>
-
-  <!-- ===== ARTICLE BODY（本文）===== -->
-  <?php if ( $has_content ) : ?>
-  <section class="iv-article-body">
-    <div class="iv-shell">
-      <div class="iv-article-body__header">
-        <p class="iv-eyebrow">Story</p>
-        <h2 class="iv-section-title">合格者のストーリー</h2>
-      </div>
-      <div class="iv-article-body__content entry-content">
-        <?php echo apply_filters( 'the_content', $content ); ?>
-      </div>
-    </div>
-  </section>
-  <?php endif; ?>
-
-  <!-- ===== INLINE CTA（無料相談・再掲）===== -->
-  <section class="iv-inline-cta">
-    <div class="iv-shell iv-inline-cta__inner">
-      <p class="iv-inline-cta__text">総合型選抜について、まず無料で相談してみませんか？</p>
-      <a href="<?php echo esc_url( $consultation_url ); ?>" class="iv-btn iv-btn--red" target="_blank" rel="noopener noreferrer">無料受験相談を申し込む →</a>
-    </div>
-  </section>
-
-  <!-- ===== STORY TIMELINE ===== -->
-  <?php if ( ! empty( $tl_items ) ) : ?>
-  <section class="iv-timeline">
-    <div class="iv-shell">
-      <div class="iv-timeline__header">
-        <p class="iv-eyebrow">Story Timeline</p>
-        <h2 class="iv-section-title">原体験から合格までの軌跡</h2>
-      </div>
-      <div class="iv-timeline__track">
-        <?php foreach ( $tl_items as $i => $item ) : ?>
-        <div class="iv-timeline__item">
-          <div class="iv-timeline__card">
-            <?php $kw = keikyo_iv_val($item,'timeline_keyword'); if($kw): ?><span class="iv-timeline__badge"><?php echo esc_html($kw); ?></span><?php endif; ?>
-            <?php $per = keikyo_iv_val($item,'timeline_period'); if($per): ?><p class="iv-timeline__period"><?php echo esc_html($per); ?></p><?php endif; ?>
-            <?php $ttl = keikyo_iv_val($item,'timeline_item_title'); if($ttl): ?><h3 class="iv-timeline__title"><?php echo esc_html($ttl); ?></h3><?php endif; ?>
-            <?php $bdy = keikyo_iv_val($item,'timeline_item_body'); if($bdy): ?><p class="iv-timeline__text"><?php echo esc_html($bdy); ?></p><?php endif; ?>
-          </div>
-        </div>
-        <?php endforeach; ?>
-      </div>
-    </div>
-  </section>
-  <?php endif; ?>
-
-  <!-- ===== MESSAGE ===== -->
-  <?php if ( $msg_img_url || $msg_yt_id ) : ?>
-  <section class="iv-message">
-    <div class="iv-shell">
-      <div class="iv-message__header">
-        <p class="iv-eyebrow">Message</p>
-        <h2 class="iv-section-title">塾長からのメッセージ</h2>
-      </div>
-      <div class="iv-message__inner">
+    <!-- 塾長からのメッセージ -->
+    <?php if ( $msg_img_url || $msg_yt_id ) : ?>
+    <section class="iv-sect">
+      <div class="iv-wrap">
+        <p class="iv-sect__label">MESSAGE</p>
+        <h2 class="iv-sect__title">塾長からのメッセージ</h2>
         <?php if ( $msg_yt_id ) : ?>
-        <div class="iv-message__video">
+        <div class="iv-video">
           <iframe src="https://www.youtube.com/embed/<?php echo esc_attr( $msg_yt_id ); ?>" title="塾長からのメッセージ" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
-        <?php else : ?>
-        <div class="iv-message__video iv-message__video--placeholder">動画</div>
         <?php endif; ?>
-        <div class="iv-message__content">
-          <div class="iv-message__profile">
-            <?php if ( $msg_img_url ) : ?>
-              <div class="iv-message__photo"><img src="<?php echo esc_url( $msg_img_url ); ?>" alt="上林山 大吉" loading="lazy" /></div>
-            <?php else : ?>
-              <div class="iv-message__photo iv-message__photo--placeholder">PHOTO</div>
-            <?php endif; ?>
-            <div>
-              <h3 class="iv-message__name">上林山 大吉</h3>
-              <p class="iv-message__role">慶教ゼミナール 塾長</p>
-            </div>
+        <div class="iv-msg__profile">
+          <?php if ( $msg_img_url ) : ?>
+            <img class="iv-msg__photo" src="<?php echo esc_url( $msg_img_url ); ?>" alt="上林山 大吉" loading="lazy" />
+          <?php endif; ?>
+          <div>
+            <p class="iv-msg__name">上林山 大吉</p>
+            <p class="iv-msg__role">慶教ゼミナール 塾長</p>
           </div>
-          <p class="iv-message__bio">京都大学経済学部に総合型選抜で合格。自身の経験をもとに、受験生一人ひとりの「言葉」を磨くサポートを行っています。</p>
-          <p class="iv-message__list-title">無料相談でできること</p>
-          <ul class="iv-message__list">
-            <li>あなたの経験・成績・志望校から合格可能性を診断</li>
-            <li>活動実績の整理・言語化のアドバイス</li>
-            <li>志望理由書の方向性や構成案の相談</li>
-            <li>面接対策のポイントと練習方法</li>
-            <li>総合型選抜のスケジュールと準備計画</li>
-          </ul>
         </div>
+        <p class="iv-msg__bio">京都大学経済学部に総合型選抜で合格。自身の経験をもとに、受験生一人ひとりの「言葉」を磨くサポートを行っています。</p>
+        <p class="iv-msg__list-title">無料相談でできること</p>
+        <ul class="iv-msg__list">
+          <li>あなたの経験・成績・志望校から合格可能性を診断</li>
+          <li>活動実績の整理・言語化のアドバイス</li>
+          <li>志望理由書の方向性や構成案の相談</li>
+          <li>面接対策のポイントと練習方法</li>
+          <li>総合型選抜のスケジュールと準備計画</li>
+        </ul>
       </div>
-      <div class="iv-message__cta">
-        <a href="<?php echo esc_url( $consultation_url ); ?>" class="iv-btn iv-btn--red-large" target="_blank" rel="noopener noreferrer">無料受験相談を申し込む →</a>
-      </div>
-    </div>
-  </section>
-  <?php endif; ?>
+    </section>
+    <?php endif; ?>
 
-  <!-- ===== FINAL CTA ===== -->
-  <section class="iv-final-cta">
-    <div class="iv-shell">
-      <div class="iv-final-cta__line"></div>
-      <p class="iv-eyebrow">Free Consultation</p>
-      <h2 class="iv-final-cta__title">無料受験相談のお申込みはこちら</h2>
-      <p class="iv-final-cta__text">総合型選抜について、まずは無料で相談してみませんか？あなたの状況に合わせた最適な戦略をご提案します。</p>
-      <div class="iv-final-cta__benefits">
-        <span class="iv-final-cta__benefit">完全無料</span>
-        <span class="iv-final-cta__benefit">オンライン対応</span>
-        <span class="iv-final-cta__benefit">強引な勧誘なし</span>
+    <?php if ( $has_content ) : ?>
+    <div class="iv-wrap"><a class="iv-backtop" href="#iv-read">↑ 本文に戻る</a></div>
+    <?php endif; ?>
+  </div><!-- /.iv-zone -->
+
+  <!-- ===== 最終CTA（無料相談）===== -->
+  <section class="iv-final">
+    <div class="iv-wrap">
+      <p class="iv-eyebrow">FREE CONSULTATION</p>
+      <h2 class="iv-final__title">自分の経験が受験で武器になるか、話してみませんか</h2>
+      <p class="iv-final__text">課外活動・部活・海外経験。何が「合格につながる強み」になるかは、一人ひとり違います。あなたの状況に合わせた最適な戦略をご提案します。</p>
+      <div class="iv-final__benefits">
+        <span class="iv-final__benefit">完全無料</span>
+        <span class="iv-final__benefit">オンライン対応</span>
+        <span class="iv-final__benefit">強引な勧誘なし</span>
       </div>
-      <a href="<?php echo esc_url( $consultation_url ); ?>" class="iv-btn iv-btn--red-large" target="_blank" rel="noopener noreferrer">無料受験相談を申し込む →</a>
-      <p class="iv-final-cta__note">相談は完全無料・オンライン対応可能です</p>
+      <a class="iv-btn-out" href="<?php echo esc_url( $consultation_url ); ?>" target="_blank" rel="noopener noreferrer">無料受験相談を予約する →</a>
+      <p class="iv-final__note">相談は完全無料・オンライン対応可能です</p>
     </div>
   </section>
+
+  <!-- ===== 追従バー（LINE）===== -->
+  <a class="iv-dock" id="iv-dock" href="<?php echo esc_url( $line_url( 'dock' ) ); ?>" target="_blank" rel="noopener noreferrer">
+    <span class="iv-dock__shot">
+      <img src="<?php echo esc_url( KEIKYO_URI . '/assets/img/line-gift-strip.jpg' ); ?>" alt="" loading="lazy" width="820" height="132" />
+      <span class="iv-dock__tag">有料級・非売品</span>
+    </span>
+    <span class="iv-dock__row">
+      <span class="iv-dock__t">
+        <b>電子書籍PDF <i>全8冊</i> を無料プレゼント</b>
+        自己分析・小論文・面接質問集50選ほか
+      </span>
+      <span class="iv-dock__btn">LINEで受け取る</span>
+    </span>
+  </a>
 
 </div><!-- /.iv-page -->
 

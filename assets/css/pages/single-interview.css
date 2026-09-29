@@ -1,65 +1,35 @@
-/* ============================================================
-   single-interview.css — 合格者対談個別ページ
-   V0デザインより変換 / iv- プレフィックス
-   ※ ヘッダー・フッターは base.css のみで管理
-   ============================================================ */
+/* ==========================================================
+   single-interview.css
+   合格者対談 個別ページ — スマホ読み物レイアウト
+   構成: 読み物（ヒーロー→リード→目次→本文）→ 特典CTA → 資料ゾーン → 最終CTA
+   ========================================================== */
 
-/* ========================================
-   リセット・共通
-   ======================================== */
 .iv-page {
-  background: #f8f6f1;
+  --iv-ground:#f7f4ee;
+  --iv-surface:#ffffff;
+  --iv-surface2:#f1ece2;
+  --iv-ink:#16181d;
+  --iv-ink2:#3d434e;
+  --iv-ink3:#7c8390;
+  --iv-rule:#e3ddd1;
+  --iv-rule2:#efe9de;
+  --iv-accent:#b11f2a;
+  --iv-navy:#0f1a33;
+  --iv-navy-ink:#f2efe8;
+  --iv-line:#06C755;
+  --iv-gutter:16px;
+  --iv-top:64px; /* サイトヘッダーの高さ。interview.js が実測して上書きする */
+
+  background:var(--iv-ground);
+  color:var(--iv-ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif;
+  -webkit-font-smoothing:antialiased;
 }
+.iv-page *,
+.iv-page *::before,
+.iv-page *::after { box-sizing:border-box; }
 
-.iv-shell {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.iv-eyebrow {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 12px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #c0392b;
-  margin-bottom: 8px;
-  display: block;
-}
-
-.iv-eyebrow--red   { color: #c0392b; }
-.iv-eyebrow--light { color: rgba(255,255,255,0.6); }
-
-.iv-section-title {
-  font-size: clamp(24px, 4vw, 32px);
-  font-weight: 700;
-  line-height: 1.4;
-  color: #1a1a2e;
-}
-
-.iv-section-title--white { color: #ffffff; }
-
-/* ボタン */
-.iv-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 14px 32px;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-  border-radius: 4px;
-  transition: opacity 0.2s, transform 0.2s;
-  cursor: pointer;
-  border: none;
-  white-space: nowrap;
-}
-.iv-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-
-.iv-btn--navy       { background: #1a1a2e; color: #ffffff; }
-.iv-btn--red        { background: #c0392b; color: #ffffff; }
-.iv-btn--red-large  { background: #c0392b; color: #ffffff; padding: 18px 48px; font-size: 16px; }
-.iv-btn--white-line { background: #ffffff; color: #06C755; font-weight: 600; }
+.iv-wrap { padding-inline:var(--iv-gutter); }
 
 /* ========================================
    base.css の body.single-interview 余白リセット
@@ -77,592 +47,470 @@ body.single-interview #main {
 }
 
 /* ========================================
-   1. HERO
+   1. 記事ナビ（タブ＋読了バー）
    ======================================== */
-.iv-hero {
-  background: #f7f3ec;
-  padding: 80px 0 100px;
+.iv-navbar {
+  position:sticky;
+  top:var(--iv-top);
+  z-index:30;
+  background:rgba(247,244,238,.94);
+  backdrop-filter:saturate(1.4) blur(10px);
 }
-
-.iv-hero__inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
+.iv-navbar__tabs {
+  display:flex;
+  padding-inline:var(--iv-gutter);
+  border-bottom:1px solid var(--iv-rule);
+  margin:0;
 }
-
-.iv-hero__label {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #c0392b;
-  margin-bottom: 16px;
-  display: block;
+.iv-navbar__tab {
+  flex:1;
+  text-align:center;
+  font-size:12.5px;
+  font-weight:700;
+  padding:11px 2px 9px;
+  color:var(--iv-ink3);
+  text-decoration:none;
+  border-bottom:2px solid transparent;
+  margin-bottom:-1px;
+  transition:color .15s ease;
 }
+.iv-navbar__tab:hover { color:var(--iv-ink); }
+.iv-navbar__tab.is-on { color:var(--iv-ink); border-bottom-color:var(--iv-accent); }
+.iv-navbar__progress { height:2px; background:var(--iv-rule2); }
+.iv-navbar__bar { height:100%; width:0; background:var(--iv-accent); transition:width .12s linear; }
 
+/* ========================================
+   2. ヒーロー
+   ======================================== */
+.iv-hero { padding-block:22px 0; }
+.iv-eyebrow {
+  font-size:10.5px;
+  letter-spacing:.2em;
+  color:var(--iv-accent);
+  font-weight:700;
+  margin:0 0 12px;
+}
 .iv-hero__title {
-  font-size: clamp(28px, 5vw, 44px);
-  font-weight: 700;
-  line-height: 1.3;
-  margin-bottom: 8px;
-  color: #1a1a2e;
+  font-size:27px;
+  line-height:1.48;
+  letter-spacing:.01em;
+  font-weight:700;
+  margin:0 0 14px;
+  color:var(--iv-ink);
+  text-wrap:balance;
+}
+.iv-hero__subtitle { font-size:13.5px; line-height:1.75; color:var(--iv-ink2); margin:0 0 18px; }
+.iv-hero__fig { margin:0; background:var(--iv-surface2); }
+.iv-hero__fig img { display:block; width:100%; height:auto; aspect-ratio:16/11; object-fit:cover; }
+.iv-hero__meta { display:flex; flex-wrap:wrap; gap:6px; padding-block:16px 0; }
+.iv-chip {
+  font-size:11.5px;
+  line-height:1;
+  padding:7px 10px;
+  border-radius:2px;
+  background:var(--iv-surface);
+  border:1px solid var(--iv-rule);
+  color:var(--iv-ink2);
+}
+.iv-chip--accent { background:var(--iv-accent); border-color:var(--iv-accent); color:#fff; font-weight:700; }
+.iv-byline {
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  padding-block:14px 0; font-size:11.5px; color:var(--iv-ink3);
+}
+.iv-byline__dot { width:3px; height:3px; border-radius:50%; background:var(--iv-ink3); }
+
+/* ========================================
+   3. リード・目次
+   ======================================== */
+.iv-lede { padding-block:26px 8px; }
+.iv-lede p { font-size:16px; line-height:1.9; color:var(--iv-ink); margin:0 0 1.5em; font-weight:500; }
+.iv-lede p:last-child { margin-bottom:0; }
+.iv-lede p:first-child::first-letter {
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:2.6em; float:left; line-height:.92;
+  padding:.06em .14em 0 0; color:var(--iv-accent); font-weight:700;
 }
 
-.iv-hero__subtitle {
-  font-size: 16px;
-  font-weight: 300;
-  color: #666;
-  margin-bottom: 24px;
+.iv-toc {
+  margin-block:18px 30px;
+  background:var(--iv-surface);
+  border:1px solid var(--iv-rule);
+  border-radius:3px;
 }
-
-.iv-hero__lead {
-  font-size: 15px;
-  line-height: 1.9;
-  color: #444;
-  margin-bottom: 32px;
+.iv-toc > summary {
+  list-style:none; cursor:pointer; padding:13px 14px;
+  font-size:12.5px; letter-spacing:.06em; font-weight:700;
+  color:var(--iv-ink2); display:flex; align-items:center; gap:8px;
 }
-
-.iv-hero__cta {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 40px;
+.iv-toc > summary::-webkit-details-marker { display:none; }
+.iv-toc > summary::after { content:"－"; margin-inline-start:auto; color:var(--iv-ink3); font-size:12px; }
+.iv-toc:not([open]) > summary::after { content:"＋"; }
+.iv-toc__list { margin:0; padding:0 14px 12px; list-style:none; counter-reset:ivtoc; }
+.iv-toc__list li { border-top:1px solid var(--iv-rule2); }
+.iv-toc__list a {
+  display:flex; gap:10px; padding:11px 0; text-decoration:none;
+  color:var(--iv-ink); font-size:13.5px; line-height:1.55;
 }
-
-.iv-hero__scroll {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  color: #999;
-}
-
-.iv-hero__photo {
-  width: 100%;
-  aspect-ratio: 3/4;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.iv-hero__photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.iv-hero__photo--placeholder {
-  background: #f4f0e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #aaa;
-  font-size: 14px;
-}
-
-.iv-hero__visual { position: relative; }
-
-.iv-hero__info-card {
-  position: absolute;
-  bottom: -30px;
-  left: -30px;
-  background: #ffffff;
-  border-radius: 6px;
-  padding: 20px 24px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  min-width: 260px;
-}
-
-.iv-hero__info-card dl {
-  display: grid;
-  grid-template-columns: 80px 1fr;
-  gap: 8px 12px;
-  font-size: 13px;
-}
-
-.iv-hero__info-card dt { color: #888; }
-.iv-hero__info-card dd { font-weight: 500; }
-
-@media (max-width: 767px) {
-  .iv-hero { padding: 60px 0 80px; }
-  .iv-hero__inner { grid-template-columns: 1fr; gap: 40px; }
-  .iv-hero__info-card { position: static; margin-top: 20px; }
+.iv-toc__list a::before {
+  counter-increment:ivtoc;
+  content:counter(ivtoc,decimal-leading-zero);
+  color:var(--iv-accent); font-size:11px; font-weight:700; padding-top:3px; flex:none;
 }
 
 /* ========================================
-   2 & 9. INLINE CTA（無料相談）
+   4. 本文
    ======================================== */
-.iv-inline-cta {
-  background: #1a1a2e;
-  padding: 24px 0;
+.iv-body { scroll-margin-top:calc(var(--iv-top) + 48px); }
+
+.iv-body__content h2 {
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:20px; line-height:1.55; font-weight:700; color:var(--iv-ink);
+  margin:0 0 20px; padding-top:38px;
+  scroll-margin-top:calc(var(--iv-top) + 48px);
+  border-top:2px solid var(--iv-ink);
+  text-wrap:balance;
+}
+.iv-h2num {
+  display:block; font-size:10.5px; letter-spacing:.18em;
+  color:var(--iv-accent); font-weight:700; padding-block:10px 12px;
+}
+.iv-body__content h3 {
+  font-size:16px; line-height:1.6; font-weight:700; color:var(--iv-ink);
+  margin:34px 0 14px; padding-inline-start:11px;
+  border-inline-start:3px solid var(--iv-accent);
+}
+.iv-body__content p {
+  font-size:16.5px; line-height:1.85; letter-spacing:.015em;
+  color:var(--iv-ink); margin:0 0 1.55em;
+}
+.iv-body__content ul,
+.iv-body__content ol { font-size:16.5px; line-height:1.85; color:var(--iv-ink); margin:0 0 1.55em; padding-inline-start:1.4em; }
+.iv-body__content li { margin-bottom:.5em; }
+.iv-body__content a { color:var(--iv-accent); text-underline-offset:3px; }
+
+/* 画像は左右のガターを超えて全幅に */
+.iv-body__content figure,
+.iv-body__content .wp-block-image {
+  margin:26px calc(var(--iv-gutter) * -1);
+  background:var(--iv-surface2);
+}
+.iv-body__content figure img,
+.iv-body__content .wp-block-image img {
+  display:block; width:100%; height:auto; max-width:none;
+}
+.iv-body__content figcaption {
+  font-size:11px; color:var(--iv-ink3); line-height:1.6;
+  padding:8px var(--iv-gutter) 0; background:var(--iv-ground); margin:0;
 }
 
-.iv-inline-cta__inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
-  flex-wrap: wrap;
+/* 引用（本人の言葉） */
+.iv-body__content blockquote {
+  margin:30px 0; padding:0 0 0 16px;
+  border-inline-start:2px solid var(--iv-accent);
+  background:none;
+}
+.iv-body__content blockquote p {
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:19px; line-height:1.72; font-weight:500;
+  color:var(--iv-ink); margin:0; letter-spacing:.01em;
+}
+/* 本文中の案内文（▶ で始まる引用）は読み物と区別する */
+.iv-body__content blockquote.iv-note {
+  background:var(--iv-surface); border:1px solid var(--iv-rule);
+  border-inline-start:3px solid var(--iv-accent);
+  border-radius:3px; padding:13px 14px;
+}
+.iv-body__content blockquote.iv-note p {
+  font-family:inherit; font-size:12.5px; line-height:1.75;
+  color:var(--iv-ink2); font-weight:400;
 }
 
-.iv-inline-cta__text {
-  font-size: 15px;
-  color: #ffffff;
+/* 本文中のLINEバナー（1箇所） */
+.iv-linebar {
+  display:flex; align-items:center; gap:11px;
+  margin:32px 0; padding:13px 14px;
+  border-radius:3px; text-decoration:none;
+  background:var(--iv-surface);
+  border:1px solid var(--iv-rule);
+  border-inline-start:3px solid var(--iv-line);
+}
+.iv-linebar__t { font-size:13px; line-height:1.5; color:var(--iv-ink); font-weight:700; display:block; }
+.iv-linebar__s { font-size:11px; color:var(--iv-ink3); margin-top:3px; line-height:1.45; display:block; }
+.iv-linebar__arw { margin-inline-start:auto; color:var(--iv-line); font-size:15px; flex:none; }
+
+/* ========================================
+   5. 特典CTA（読了直後）
+   ======================================== */
+.iv-gift { background:var(--iv-navy); color:var(--iv-navy-ink); margin-top:44px; }
+.iv-gift__shotwrap { background:linear-gradient(#ffffff,#e9edf5); padding:6px 0 0; }
+.iv-gift__shot { display:block; width:100%; height:auto; }
+.iv-gift__body { padding-block:26px 32px; }
+.iv-gift__badges { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
+.iv-badge {
+  font-size:10.5px; font-weight:700; letter-spacing:.08em;
+  padding:6px 10px; border-radius:2px; line-height:1;
+}
+.iv-badge--red { background:var(--iv-accent); color:#fff; }
+.iv-badge--out { border:1px solid rgba(242,239,232,.32); color:var(--iv-navy-ink); }
+.iv-gift__title {
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:22px; line-height:1.55; margin:0 0 12px; font-weight:700;
+  color:var(--iv-navy-ink); text-wrap:balance;
+}
+.iv-gift__lead { font-size:13.5px; line-height:1.75; margin:0 0 20px; color:rgba(242,239,232,.78); }
+.iv-gift__list { list-style:none; margin:0 0 20px; padding:0; border-top:1px solid rgba(242,239,232,.16); }
+.iv-gift__list li {
+  display:flex; gap:10px; align-items:baseline; padding:9px 0; line-height:1.5;
+  border-bottom:1px solid rgba(242,239,232,.16);
+  font-size:12.5px; font-weight:600;
+}
+.iv-gift__list b { color:var(--iv-line); font-size:10px; letter-spacing:.1em; flex:none; padding-top:1px; }
+.iv-gift__list em { font-style:normal; color:rgba(242,239,232,.62); font-weight:400; font-size:11px; }
+.iv-gift__list .iv-gift__more { color:rgba(242,239,232,.62); font-weight:400; }
+.iv-btn-line {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  background:var(--iv-line); color:#06240f; font-weight:700; font-size:15px;
+  padding:16px; border-radius:4px; text-decoration:none; letter-spacing:.02em;
+}
+.iv-btn-line:hover { opacity:.92; color:#06240f; }
+.iv-gift__note { font-size:11px; text-align:center; color:rgba(242,239,232,.6); margin:11px 0 0; }
+
+/* ========================================
+   6. 資料ゾーン
+   ======================================== */
+.iv-zone { background:var(--iv-surface2); padding-block:6px 44px; }
+.iv-zone__head { text-align:center; padding-block:26px 6px; }
+.iv-zone__head p { margin:0; font-size:10.5px; letter-spacing:.24em; color:var(--iv-ink3); font-weight:700; }
+.iv-sect { padding-block:30px 0; scroll-margin-top:calc(var(--iv-top) + 48px); }
+.iv-sect__label { font-size:10.5px; letter-spacing:.2em; color:var(--iv-accent); font-weight:700; margin:0 0 6px; }
+.iv-sect__title {
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:19px; font-weight:700; margin:0 0 18px; color:var(--iv-ink); line-height:1.5;
 }
 
-/* LINE CTA */
-.iv-inline-cta--line { background: #06C755; }
+/* Key Points */
+.iv-kp { list-style:none; margin:0; padding:0; }
+.iv-kp > li {
+  display:grid; grid-template-columns:32px 1fr; gap:12px;
+  padding:15px 0; border-top:1px solid var(--iv-rule);
+}
+.iv-kp > li:last-child { border-bottom:1px solid var(--iv-rule); }
+.iv-kp__num {
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:21px; font-weight:700; color:var(--iv-accent); line-height:1.1;
+}
+.iv-kp__title { font-size:14.5px; font-weight:700; margin:0 0 6px; line-height:1.55; color:var(--iv-ink); }
+.iv-kp__text { font-size:12.5px; line-height:1.75; color:var(--iv-ink2); margin:0; }
 
-.iv-inline-cta--line .iv-inline-cta__inner {
-  justify-content: space-between;
+/* この記事でわかること */
+.iv-learn { list-style:none; margin:0; padding:0; display:grid; gap:9px; }
+.iv-learn > li { background:var(--iv-surface); border:1px solid var(--iv-rule); border-radius:3px; padding:12px 13px; }
+.iv-learn__title {
+  font-size:13.5px; font-weight:700; margin:0 0 5px; line-height:1.5;
+  display:flex; align-items:baseline; gap:8px; color:var(--iv-ink);
+}
+.iv-learn__title span { color:var(--iv-accent); font-size:11px; flex:none; }
+.iv-learn__text { font-size:12px; line-height:1.7; color:var(--iv-ink2); margin:0; }
+
+/* 動画 */
+.iv-video { margin-top:18px; aspect-ratio:16/9; background:#000; border-radius:3px; overflow:hidden; }
+.iv-video iframe { display:block; width:100%; height:100%; border:0; }
+
+/* こんな人におすすめ */
+.iv-forwho { background:var(--iv-surface); border:1px solid var(--iv-rule); border-radius:3px; padding:14px 15px; }
+.iv-forwho ul { margin:0; padding:0; list-style:none; display:grid; gap:8px; }
+.iv-forwho li { font-size:12.5px; line-height:1.6; color:var(--iv-ink2); padding-inline-start:15px; position:relative; }
+.iv-forwho li::before {
+  content:""; position:absolute; inset-inline-start:0; top:.6em;
+  width:5px; height:5px; border-radius:50%; background:var(--iv-accent);
 }
 
-.iv-inline-cta__left {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+/* プロフィール */
+.iv-prof__head { display:flex; gap:14px; align-items:flex-end; margin-bottom:16px; }
+.iv-prof__photo { width:96px; flex:none; border-radius:3px; display:block; background:var(--iv-surface); }
+.iv-prof__name { font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; font-size:21px; font-weight:700; margin:0; line-height:1.3; color:var(--iv-ink); }
+.iv-prof__kana { font-size:11px; color:var(--iv-ink3); margin:5px 0 0; }
+.iv-prof__quote {
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:14.5px; line-height:1.8; color:var(--iv-ink); margin:0 0 18px;
+  padding-inline-start:12px; border-inline-start:2px solid var(--iv-accent);
+}
+.iv-dl { margin:0; border-top:1px solid var(--iv-rule); }
+.iv-dl__row { display:grid; grid-template-columns:82px 1fr; gap:10px; padding:10px 0; border-bottom:1px solid var(--iv-rule2); }
+.iv-dl dt { font-size:11px; color:var(--iv-ink3); line-height:1.6; padding-top:1px; margin:0; }
+.iv-dl dd { margin:0; font-size:13px; line-height:1.65; color:var(--iv-ink); }
+.iv-tags { display:flex; flex-wrap:wrap; gap:5px; margin-top:14px; }
+.iv-tag {
+  font-size:10.5px; padding:5px 8px; background:var(--iv-surface);
+  border:1px solid var(--iv-rule); color:var(--iv-ink2); border-radius:2px; line-height:1.3;
 }
 
-.iv-inline-cta__icon { font-size: 32px; }
+/* 年表 */
+.iv-tl { margin:0; padding:0; list-style:none; position:relative; }
+.iv-tl::before { content:""; position:absolute; inset-block:6px; inset-inline-start:4px; width:1px; background:var(--iv-rule); }
+.iv-tl > li { position:relative; padding:0 0 22px 22px; }
+.iv-tl > li::before {
+  content:""; position:absolute; inset-inline-start:0; top:6px;
+  width:9px; height:9px; border-radius:50%; background:var(--iv-accent);
+  box-shadow:0 0 0 3px var(--iv-surface2);
+}
+.iv-tl__badge {
+  display:inline-block; font-size:10px; font-weight:700; letter-spacing:.06em;
+  background:var(--iv-accent); color:#fff; padding:3px 7px; border-radius:2px; margin-bottom:6px;
+}
+.iv-tl__period { font-size:10.5px; color:var(--iv-ink3); letter-spacing:.08em; margin:0; }
+.iv-tl__title { font-size:14px; font-weight:700; line-height:1.55; margin:4px 0 5px; color:var(--iv-ink); }
+.iv-tl__text { font-size:12.5px; line-height:1.7; color:var(--iv-ink2); margin:0; }
 
-.iv-inline-cta--line .iv-inline-cta__text {
-  font-size: 16px;
-  font-weight: 600;
-  color: #ffffff;
-  margin: 0;
+/* 塾長メッセージ */
+.iv-msg__profile { display:flex; align-items:center; gap:12px; margin-block:16px 14px; }
+.iv-msg__photo { width:72px; height:72px; flex:none; border-radius:50%; object-fit:cover; display:block; background:var(--iv-surface); }
+.iv-msg__name { font-size:16px; font-weight:700; margin:0; line-height:1.4; color:var(--iv-ink); }
+.iv-msg__role { font-size:11.5px; color:var(--iv-ink3); margin:4px 0 0; }
+.iv-msg__bio { font-size:12.5px; line-height:1.8; color:var(--iv-ink2); margin:0 0 16px; }
+.iv-msg__list-title { font-size:12px; font-weight:700; letter-spacing:.06em; color:var(--iv-ink); margin:0 0 8px; }
+.iv-msg__list { margin:0; padding:0; list-style:none; display:grid; gap:7px; }
+.iv-msg__list li { font-size:12.5px; line-height:1.6; color:var(--iv-ink2); padding-inline-start:18px; position:relative; }
+.iv-msg__list li::before { content:"✓"; position:absolute; inset-inline-start:0; color:var(--iv-accent); font-weight:700; }
+
+.iv-backtop {
+  display:block; text-align:center; margin-top:30px;
+  font-size:12px; font-weight:700; color:var(--iv-ink3); text-decoration:none;
+  padding:12px; border:1px solid var(--iv-rule); border-radius:3px; background:var(--iv-surface);
 }
 
-.iv-inline-cta__sub {
-  font-size: 13px;
-  color: rgba(255,255,255,0.8);
+/* ========================================
+   7. 最終CTA（無料相談・1箇所）
+   ======================================== */
+.iv-final { padding-block:34px; text-align:center; background:var(--iv-ground); }
+.iv-final__title {
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:18px; margin:0 0 8px; font-weight:700; line-height:1.55; color:var(--iv-ink);
+}
+.iv-final__text { font-size:12.5px; line-height:1.75; color:var(--iv-ink2); margin:0 0 14px; }
+.iv-final__benefits { display:flex; justify-content:center; flex-wrap:wrap; gap:14px; margin:0 0 18px; }
+.iv-final__benefit { font-size:11.5px; color:var(--iv-ink3); }
+.iv-final__benefit::before { content:"✓ "; color:var(--iv-accent); font-weight:700; }
+.iv-btn-out {
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  border:1.5px solid var(--iv-accent); color:var(--iv-accent); font-weight:700;
+  font-size:14px; padding:14px 22px; border-radius:3px; text-decoration:none;
+}
+.iv-btn-out:hover { background:var(--iv-accent); color:#fff; }
+.iv-final__note { font-size:11px; color:var(--iv-ink3); margin:14px 0 0; }
+
+/* ========================================
+   8. 追従バー（LINE）
+   ======================================== */
+.iv-dock {
+  position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+  width:min(430px,100%); z-index:50; text-decoration:none;
+  padding:0 0 env(safe-area-inset-bottom,0px);
+  background:var(--iv-navy);
+  border-top:1px solid rgba(0,0,0,.22);
+  box-shadow:0 -10px 26px rgba(0,0,0,.18);
+  display:block;
+  opacity:0; visibility:hidden; translate:0 100%;
+  transition:opacity .22s ease, translate .22s ease, visibility .22s;
+}
+.iv-dock.is-on { opacity:1; visibility:visible; translate:0 0; }
+.iv-dock__shot { position:relative; display:block; background:#eef1f7; }
+.iv-dock__shot img { display:block; width:100%; height:auto; }
+.iv-dock__tag {
+  position:absolute; top:6px; inset-inline-start:var(--iv-gutter);
+  background:var(--iv-accent); color:#fff; font-size:9.5px; font-weight:700;
+  letter-spacing:.1em; padding:4px 7px; border-radius:2px; line-height:1;
+}
+.iv-dock__row { display:flex; align-items:center; gap:10px; padding:9px var(--iv-gutter) 10px; }
+.iv-dock__t { font-size:10.5px; line-height:1.4; color:rgba(242,239,232,.72); }
+.iv-dock__t b { display:block; color:var(--iv-navy-ink); font-size:12.5px; font-weight:700; margin-bottom:2px; }
+.iv-dock__t b i { font-style:normal; color:var(--iv-line); }
+.iv-dock__btn {
+  margin-inline-start:auto; flex:none; background:var(--iv-line); color:#06240f;
+  font-weight:700; font-size:13px; padding:12px 14px; border-radius:3px; white-space:nowrap;
 }
 
-@media (max-width: 767px) {
-  .iv-inline-cta--line .iv-inline-cta__inner {
-    flex-direction: column;
-    text-align: center;
+/* ==========================================================
+   PC（768px以上）— 構造は共通、寸法とグリッドだけ切り替える
+   ========================================================== */
+@media (min-width:768px) {
+  .iv-page { --iv-gutter:24px; }
+  .iv-wrap { max-width:720px; margin-inline:auto; }
+
+  .iv-navbar__tabs { max-width:720px; margin-inline:auto; justify-content:flex-start; gap:8px; }
+  .iv-navbar__tab { font-size:13.5px; padding:12px 2px 10px; flex:0 0 150px; }
+
+  .iv-hero { padding-block:44px 0; }
+  .iv-hero__title { font-size:40px; line-height:1.42; }
+  .iv-hero__subtitle { font-size:15px; }
+  .iv-hero__fig { max-width:880px; margin-inline:auto; }
+  .iv-hero__fig img { aspect-ratio:16/8; }
+  .iv-chip { font-size:12.5px; padding:8px 12px; }
+  .iv-byline { font-size:12.5px; }
+
+  .iv-lede p { font-size:17px; line-height:1.95; }
+  .iv-toc__list a { font-size:14.5px; }
+
+  .iv-body__content p,
+  .iv-body__content ul,
+  .iv-body__content ol { font-size:17px; line-height:1.9; }
+  .iv-body__content h2 { font-size:26px; padding-top:52px; }
+  .iv-body__content h3 { font-size:18px; }
+  .iv-body__content figure,
+  .iv-body__content .wp-block-image { max-width:880px; margin-inline:auto; }
+  .iv-body__content blockquote p { font-size:23px; }
+  .iv-linebar { max-width:720px; margin-inline:auto; }
+
+  .iv-gift__shot { max-width:880px; margin-inline:auto; }
+  .iv-gift__body { padding-block:38px 44px; }
+  .iv-gift__title { font-size:28px; }
+  .iv-gift__lead { font-size:15px; }
+  .iv-gift__list { display:grid; grid-template-columns:1fr 1fr; column-gap:24px; }
+  .iv-gift__list li { font-size:13.5px; }
+  .iv-btn-line { max-width:420px; margin-inline:auto; font-size:16px; }
+
+  .iv-zone { padding-block:10px 64px; }
+  .iv-sect { padding-block:46px 0; }
+  .iv-sect__title { font-size:23px; }
+  .iv-kp > li { grid-template-columns:48px 1fr; padding:20px 0; }
+  .iv-kp__num { font-size:26px; }
+  .iv-kp__title { font-size:16px; }
+  .iv-kp__text { font-size:13.5px; }
+  .iv-learn { grid-template-columns:1fr 1fr; gap:12px; }
+  .iv-forwho ul { grid-template-columns:1fr 1fr; gap:10px 22px; }
+  .iv-forwho li { font-size:13.5px; }
+  .iv-prof__photo { width:150px; }
+  .iv-prof__quote { font-size:17px; }
+  .iv-dl__row { grid-template-columns:140px 1fr; padding:12px 0; }
+  .iv-dl dd { font-size:14px; }
+  .iv-tl__text { font-size:13.5px; }
+  .iv-msg__bio, .iv-msg__list li { font-size:13.5px; }
+  .iv-backtop { max-width:260px; margin-inline:auto; }
+
+  .iv-final { padding-block:56px; }
+  .iv-final__title { font-size:24px; }
+  .iv-final__text { font-size:14px; }
+
+  /* 下部全幅バーはPCでは邪魔なので、右下のカードに変える */
+  .iv-dock {
+    left:auto; right:24px; bottom:24px; transform:none;
+    width:330px; border-radius:8px; overflow:hidden;
+    border:1px solid rgba(0,0,0,.2);
+    padding-bottom:0;
+    box-shadow:0 14px 40px rgba(0,0,0,.26);
   }
-  .iv-inline-cta__left { flex-direction: column; }
+  .iv-dock__row { padding:11px 14px 13px; }
 }
 
-/* ========================================
-   3. CONTENTS
-   ======================================== */
-.iv-contents {
-  background: #f8f6f1;
-  padding: 80px 0;
+@media (min-width:1280px) {
+  .iv-wrap, .iv-navbar__tabs { max-width:760px; }
+  .iv-hero__fig, .iv-body__content figure, .iv-body__content .wp-block-image, .iv-gift__shot { max-width:960px; }
 }
-
-.iv-contents__header {
-  text-align: center;
-  margin-bottom: 48px;
-}
-
-.iv-contents__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  margin-bottom: 48px;
-}
-
-.iv-contents__card {
-  background: #ffffff;
-  border-radius: 6px;
-  padding: 24px;
-  text-align: center;
-}
-
-.iv-contents__card-icon { font-size: 28px; margin-bottom: 12px; color: #c0392b; }
-.iv-contents__card-title { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
-.iv-contents__card-text { font-size: 13px; color: #666; line-height: 1.7; }
-
-.iv-contents__bottom {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: center;
-}
-
-.iv-contents__bottom--no-video { grid-template-columns: 1fr; max-width: 560px; }
-
-.iv-contents__video {
-  aspect-ratio: 16/9;
-  border-radius: 6px;
-  overflow: hidden;
-  background: #1a1a2e;
-}
-
-.iv-contents__video iframe { width: 100%; height: 100%; border: 0; display: block; }
-
-.iv-contents__recommend h3 { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
-.iv-contents__recommend ul { list-style: none; padding: 0; }
-.iv-contents__recommend li {
-  position: relative;
-  padding-left: 20px;
-  margin-bottom: 12px;
-  font-size: 14px;
-  line-height: 1.7;
-}
-.iv-contents__recommend li::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 8px;
-  width: 8px; height: 8px;
-  background: #c0392b;
-  border-radius: 50%;
-}
-
-@media (max-width: 1023px) { .iv-contents__grid { grid-template-columns: repeat(2,1fr); } }
-@media (max-width: 767px) {
-  .iv-contents__grid { grid-template-columns: 1fr; }
-  .iv-contents__bottom { grid-template-columns: 1fr; }
-}
-
-/* ========================================
-   4. KEY POINTS
-   ======================================== */
-.iv-keypoints {
-  background: #203458;
-  padding: 80px 0;
-}
-
-.iv-keypoints__header { text-align: center; margin-bottom: 48px; }
-
-.iv-keypoints__grid {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 24px;
-}
-
-.iv-keypoints__card {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 6px;
-  padding: 32px 24px;
-  position: relative;
-  overflow: hidden;
-}
-
-.iv-keypoints__card-num {
-  position: absolute;
-  top: 16px; right: 20px;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 64px;
-  font-weight: 700;
-  color: rgba(255,255,255,0.06);
-  line-height: 1;
-}
-
-.iv-keypoints__card-label { font-size: 11px; color: #c0392b; letter-spacing: 0.1em; margin-bottom: 12px; }
-.iv-keypoints__card-title { font-size: 18px; font-weight: 600; color: #ffffff; margin-bottom: 12px; }
-.iv-keypoints__card-text  { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.8; }
-
-@media (max-width: 767px) { .iv-keypoints__grid { grid-template-columns: 1fr; } }
-
-/* ========================================
-   5. PROFILE
-   ======================================== */
-.iv-profile {
-  background: #f8f6f1;
-  padding: 80px 0;
-}
-
-.iv-profile__header { text-align: center; margin-bottom: 48px; }
-
-.iv-profile__inner {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 48px;
-}
-
-.iv-profile__photo {
-  aspect-ratio: 3/4;
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 24px;
-}
-
-.iv-profile__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-.iv-profile__photo--placeholder {
-  background: #f4f0e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #aaa;
-  font-size: 14px;
-}
-
-.iv-profile__quote {
-  border-left: 3px solid #c0392b;
-  padding-left: 16px;
-  font-size: 15px;
-  font-style: italic;
-  color: #555;
-  line-height: 1.8;
-}
-
-.iv-profile__name     { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
-.iv-profile__furigana { font-size: 13px; color: #888; margin-bottom: 24px; }
-
-.iv-profile__table { margin-bottom: 24px; }
-.iv-profile__table dl {
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  gap: 12px 16px;
-  font-size: 14px;
-}
-.iv-profile__table dt { color: #888; }
-.iv-profile__table dd { font-weight: 500; }
-
-.iv-profile__chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.iv-profile__chip {
-  background: #1a1a2e;
-  color: #ffffff;
-  font-size: 12px;
-  padding: 6px 12px;
-  border-radius: 3px;
-}
-
-@media (max-width: 767px) { .iv-profile__inner { grid-template-columns: 1fr; } }
-
-/* ========================================
-   7. ARTICLE BODY
-   ======================================== */
-.iv-article-body {
-  background: #f8f6f1;
-  padding: 80px 0;
-}
-
-.iv-article-body__header { text-align: center; margin-bottom: 48px; }
-
-.iv-article-body__content {
-  max-width: 860px;
-  margin: 0 auto;
-  background: #ffffff;
-  border-radius: 8px;
-  padding: 48px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-}
-
-.iv-article-body__content h2 {
-  font-size: 22px;
-  font-weight: 700;
-  color: #1a1a2e;
-  border-left: 4px solid #c0392b;
-  padding-left: 16px;
-  margin: 40px 0 20px;
-  line-height: 1.5;
-}
-
-.iv-article-body__content h2:first-child { margin-top: 0; }
-
-.iv-article-body__content h3 {
-  font-size: 18px;
-  font-weight: 600;
-  color: #1a1a2e;
-  margin: 32px 0 16px;
-}
-
-.iv-article-body__content p {
-  font-size: 15px;
-  line-height: 2.0;
-  color: rgba(26,26,46,0.85);
-  margin-bottom: 24px;
-}
-
-@media (max-width: 767px) {
-  .iv-article-body__content { padding: 32px 24px; }
-}
-
-/* ========================================
-   8. STORY TIMELINE
-   ======================================== */
-.iv-timeline {
-  background: #f8f6f1;
-  padding: 80px 0;
-}
-
-.iv-timeline__header { text-align: center; margin-bottom: 48px; }
-
-.iv-timeline__track {
-  position: relative;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.iv-timeline__track::before {
-  content: '';
-  position: absolute;
-  left: 50%; top: 0; bottom: 0;
-  width: 2px;
-  background: rgba(0,0,0,0.1);
-  transform: translateX(-50%);
-}
-
-.iv-timeline__item {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  margin-bottom: 48px;
-}
-
-.iv-timeline__item:nth-child(odd) .iv-timeline__card  { grid-column: 1; text-align: right; }
-.iv-timeline__item:nth-child(even) .iv-timeline__card { grid-column: 2; }
-
-.iv-timeline__item::before {
-  content: '';
-  position: absolute;
-  left: 50%; top: 20px;
-  width: 14px; height: 14px;
-  background: #c0392b;
-  border-radius: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-}
-
-.iv-timeline__card {
-  background: #ffffff;
-  border-radius: 6px;
-  padding: 24px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-}
-
-.iv-timeline__badge {
-  display: inline-block;
-  background: #c0392b;
-  color: #ffffff;
-  font-size: 10px;
-  padding: 4px 10px;
-  border-radius: 2px;
-  margin-bottom: 8px;
-}
-
-.iv-timeline__period { font-size: 12px; color: #888; margin-bottom: 8px; }
-.iv-timeline__title  { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
-.iv-timeline__text   { font-size: 14px; color: #666; line-height: 1.7; }
-
-@media (max-width: 767px) {
-  .iv-timeline__track::before { left: 20px; }
-  .iv-timeline__item { grid-template-columns: 1fr; padding-left: 50px; }
-  .iv-timeline__item::before { left: 20px; }
-  .iv-timeline__item:nth-child(odd) .iv-timeline__card,
-  .iv-timeline__item:nth-child(even) .iv-timeline__card { grid-column: 1; text-align: left; }
-}
-
-/* ========================================
-   10. MESSAGE
-   ======================================== */
-.iv-message {
-  background: #f8f6f1;
-  padding: 80px 0;
-}
-
-.iv-message__header { text-align: center; margin-bottom: 48px; }
-
-.iv-message__inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: start;
-}
-
-.iv-message__video {
-  aspect-ratio: 16/9;
-  border-radius: 6px;
-  overflow: hidden;
-  background: #1a1a2e;
-}
-
-.iv-message__video iframe { width: 100%; height: 100%; border: 0; display: block; }
-
-.iv-message__video--placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255,255,255,0.4);
-  font-size: 14px;
-}
-
-.iv-message__profile { display: flex; gap: 20px; margin-bottom: 20px; align-items: center; }
-
-.iv-message__photo {
-  width: 80px; height: 80px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.iv-message__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-.iv-message__photo--placeholder {
-  background: #f4f0e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #aaa;
-  font-size: 10px;
-}
-
-.iv-message__name  { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
-.iv-message__role  { font-size: 13px; color: #888; }
-.iv-message__bio   { font-size: 14px; color: #666; line-height: 1.8; margin-bottom: 20px; }
-.iv-message__list-title { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
-
-.iv-message__list { list-style: none; padding: 0; }
-.iv-message__list li {
-  position: relative;
-  padding-left: 20px;
-  margin-bottom: 8px;
-  font-size: 14px;
-}
-.iv-message__list li::before { content: '✓'; position: absolute; left: 0; color: #c0392b; font-weight: 700; }
-
-.iv-message__cta { text-align: center; margin-top: 48px; }
-
-@media (max-width: 767px) { .iv-message__inner { grid-template-columns: 1fr; } }
-
-/* ========================================
-   11. FINAL CTA
-   ======================================== */
-.iv-final-cta {
-  background: #203458;
-  padding: 100px 0;
-  text-align: center;
-}
-
-.iv-final-cta__line { width: 40px; height: 2px; background: #c0392b; margin: 0 auto 16px; }
-.iv-final-cta__title { font-size: clamp(24px,4vw,36px); font-weight: 700; color: #ffffff; margin-bottom: 16px; }
-.iv-final-cta__text  {
-  font-size: 15px;
-  color: rgba(255,255,255,0.7);
-  margin: 0 auto 32px;
-  max-width: 600px;
-}
-
-.iv-final-cta__benefits {
-  display: flex;
-  justify-content: center;
-  gap: 32px;
-  flex-wrap: wrap;
-  margin-bottom: 40px;
-}
-
-.iv-final-cta__benefit {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: rgba(255,255,255,0.8);
-}
-.iv-final-cta__benefit::before { content: '✓'; color: #c0392b; font-weight: 700; }
-
-.iv-final-cta__note { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 20px; }
 
 /* ========================================
    アクセシビリティ
    ======================================== */
 @media (prefers-reduced-motion: reduce) {
-  .iv-btn { transition: none !important; }
+  .iv-dock, .iv-navbar__bar, .iv-navbar__tab { transition:none !important; }
 }
-:focus-visible { outline: 2px solid #c0392b; outline-offset: 3px; }
+.iv-page :focus-visible { outline:2px solid var(--iv-accent); outline-offset:3px; }

@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 // 1. 定数定義
 // ============================================================
 
-define( 'KEIKYO_VERSION', '1.0.2' );
+define( 'KEIKYO_VERSION', '1.0.3' );
 define( 'KEIKYO_DIR',     get_template_directory() );
 define( 'KEIKYO_URI',     get_template_directory_uri() );
 
@@ -107,6 +107,17 @@ add_action( 'wp_enqueue_scripts', function() {
 
     if ( is_page_template( 'template-diagnosis.php' ) ) {
         wp_enqueue_script( 'keikyo-diagnosis', KEIKYO_URI . '/assets/js/diagnosis.js', [ 'jquery' ], $v, true );
+    }
+
+    if ( is_singular( 'interview' ) ) {
+        // 見出し・引用の明朝（この記事テンプレートだけで使う）
+        wp_enqueue_style(
+            'keikyo-font-serif',
+            'https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700&display=swap',
+            [],
+            null
+        );
+        wp_enqueue_script( 'keikyo-interview', KEIKYO_URI . '/assets/js/interview.js', [], $v, true );
     }
 
     wp_localize_script( 'keikyo-main', 'keikyoVars', [
