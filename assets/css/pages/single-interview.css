@@ -214,6 +214,77 @@ body.single-interview #main {
   font-size:19px; line-height:1.72; font-weight:500;
   color:var(--iv-ink); margin:0; letter-spacing:.01em;
 }
+/* ------------------------------------------------
+   WordPress本文ブロックの受け止め
+   ------------------------------------------------ */
+
+/* 日本語を文節で折り返す（対応ブラウザのみ効く） */
+.iv-lede p,
+.iv-body__content p,
+.iv-body__content li,
+.iv-body__content blockquote p,
+.iv-hero__title,
+.iv-body__content h2,
+.iv-body__content h3,
+.iv-body__content h4 { word-break:auto-phrase; }
+
+/* プラグイン（dp-ex-blocks）の見出し装飾を本文では打ち消す */
+.iv-body__content h2[class*="deco-circle"],
+.iv-body__content h3[class*="deco-circle"],
+.iv-body__content h4[class*="deco-circle"] { padding-inline-start:0; }
+.iv-body__content h2[class*="deco-circle"]::after,
+.iv-body__content h3[class*="deco-circle"]::after,
+.iv-body__content h4[class*="deco-circle"]::after { content:none; display:none; }
+
+.iv-body__content h4 {
+  font-size:14.5px; line-height:1.6; font-weight:700; color:var(--iv-ink);
+  margin:28px 0 10px;
+}
+
+/* 太字は走査の手がかりになるので、薄いマーカーを敷く */
+.iv-body__content strong,
+.iv-body__content b {
+  font-weight:700; color:var(--iv-ink);
+  background:linear-gradient(transparent 62%, rgba(177,31,42,.13) 62%);
+}
+
+/* 画像ギャラリー（2枚並び）。外枠だけ全幅にして、中の画像には効かせない */
+.iv-body__content .wp-block-gallery { display:flex; flex-wrap:wrap; gap:6px; }
+.iv-body__content .wp-block-gallery figure,
+.iv-body__content .wp-block-gallery .wp-block-image { margin:0; max-width:none; background:none; }
+.iv-body__content .wp-block-gallery img { border-radius:0; }
+
+/* 本文中の案内ボックス（1×1のテーブルで書かれている） */
+.iv-body__content figure.wp-block-table { margin:28px 0; overflow-x:auto; }
+.iv-body__content figure.wp-block-table table {
+  width:100%; border-collapse:collapse; color:var(--iv-ink2);
+  background:var(--iv-surface); border:1px solid var(--iv-rule);
+}
+.iv-body__content figure.wp-block-table td,
+.iv-body__content figure.wp-block-table th {
+  border:1px solid var(--iv-rule); padding:11px 12px;
+  font-size:13px; line-height:1.7; text-align:start;
+}
+.iv-body__content figure.wp-block-table th { background:var(--iv-surface2); font-weight:700; }
+.iv-body__content figure.wp-block-table a { color:var(--iv-accent); font-weight:700; }
+
+/* セルが1つだけのテーブルは案内カードとして扱う */
+.iv-body__content figure.wp-block-table:has(tr:only-child):has(td:only-child) table {
+  border-inline-start:3px solid var(--iv-accent); border-radius:3px;
+}
+.iv-body__content figure.wp-block-table:has(tr:only-child):has(td:only-child) td {
+  border:0; padding:13px 14px; font-size:12.5px; line-height:1.75;
+}
+.iv-body__content figure.wp-block-table:has(tr:only-child):has(td:only-child) a {
+  text-decoration:none;
+}
+
+/* 本文中のリンクは下線で示す（案内カードのボタン状リンクは除く） */
+.iv-body__content p > a,
+.iv-body__content li > a {
+  text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px;
+}
+
 /* 本文中の案内文（▶ で始まる引用）は読み物と区別する */
 .iv-body__content blockquote.iv-note {
   background:var(--iv-surface); border:1px solid var(--iv-rule);

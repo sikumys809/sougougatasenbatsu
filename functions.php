@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 // 1. 定数定義
 // ============================================================
 
-define( 'KEIKYO_VERSION', '1.0.8' );
+define( 'KEIKYO_VERSION', '1.0.9' );
 define( 'KEIKYO_DIR',     get_template_directory() );
 define( 'KEIKYO_URI',     get_template_directory_uri() );
 
